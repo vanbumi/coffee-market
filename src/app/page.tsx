@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { products } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
+import { useAllProducts } from '@/hooks/useAllProducts';
 
 const categories = [
   {
@@ -29,7 +29,8 @@ const categories = [
 ];
 
 export default function HomePage() {
-  const featuredProducts = products.filter((p) => p.featured).slice(0, 4);
+  const { allProducts } = useAllProducts();
+  const featuredProducts = allProducts.filter((p) => p.featured).slice(0, 4);
   const testimonials = [
     {
       name: 'Rina Wijaya',

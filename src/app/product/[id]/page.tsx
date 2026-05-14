@@ -4,26 +4,27 @@ import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { products } from '@/data/products';
 import { formatRupiah } from '@/utils/helpers';
 import { useCart } from '@/context/CartContext';
 import Toast from '@/components/Toast';
 import ProductCard from '@/components/ProductCard';
+import { useAllProducts } from '@/hooks/useAllProducts';
 
 export default function ProductDetailPage() {
   const params = useParams();
   const { addItem } = useCart();
-  const product = products.find((p) => p.id === params.id);
+  const { allProducts } = useAllProducts();
+  const product = allProducts.find((p) => p.id === params.id);
+
+  // Get 3 random recommended products
+  const recommended = allProducts
+    .filter((p) => p.id !== product?.id)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 3);
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
-
-  // Get 3 random recommended products
-  const recommended = products
-    .filter((p) => p.id !== product?.id)
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 3);
 
   if (!product) {
     return (

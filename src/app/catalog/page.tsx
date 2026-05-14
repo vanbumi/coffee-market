@@ -2,7 +2,7 @@
 
 import { Suspense, useState, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { products } from '@/data/products';
+import { useAllProducts } from '@/hooks/useAllProducts';
 import { CoffeeType } from '@/types/product';
 import ProductGrid from '@/components/ProductGrid';
 import FilterSidebar from '@/components/FilterSidebar';
@@ -12,6 +12,7 @@ const ITEMS_PER_PAGE = 8;
 function CatalogContent() {
   const searchParams = useSearchParams();
   const initialType = searchParams.get('type') as CoffeeType | null;
+  const { allProducts } = useAllProducts();
 
   const [search, setSearch] = useState('');
   const [selectedTypes, setSelectedTypes] = useState<CoffeeType[]>(
@@ -24,7 +25,7 @@ function CatalogContent() {
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
   const filteredProducts = useMemo(() => {
-    let result = [...products];
+    let result = [...allProducts];
 
     // Search filter
     if (search) {
@@ -73,7 +74,7 @@ function CatalogContent() {
     }
 
     return result;
-  }, [search, selectedTypes, selectedRegions, minPrice, maxPrice, sortBy]);
+  }, [search, selectedTypes, selectedRegions, minPrice, maxPrice, sortBy, allProducts]);
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
   const hasMore = visibleCount < filteredProducts.length;

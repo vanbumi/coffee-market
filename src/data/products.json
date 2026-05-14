@@ -1,0 +1,21 @@
+[
+  {
+    "id": "contoh",
+    "name": "Contoh",
+    "origin": "Bandung",
+    "region": "Bandung",
+    "type": "Arabica",
+    "price": 250000,
+    "rating": 0,
+    "images": [
+      "https://res.cloudinary.com/medio/image/upload/v1778767786/coffee-market/y5kqdvafz29rvt2vuvby.png"
+    ],
+    "description": "Contoh gambar",
+    "altitude": "-",
+    "processing": "natural",
+    "roastLevel": "medium",
+    "tastingNotes": [],
+    "stock": 50,
+    "featured": false
+  }
+]
