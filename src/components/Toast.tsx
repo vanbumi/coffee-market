@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 interface ToastProps {
   message: string;
@@ -29,9 +29,9 @@ export default function Toast({
   if (!isVisible) return null;
 
   const bgColor = {
-    success: 'bg-[#2E5A1C]',
-    error: 'bg-red-600',
-    info: 'bg-blue-600',
+    success: 'bg-primary-500',
+    error: 'bg-red-500',
+    info: 'bg-blue-500',
   }[type];
 
   const icon = {
@@ -54,21 +54,6 @@ export default function Toast({
           ✕
         </button>
       </div>
-      <style jsx>{`
-        @keyframes slideIn {
-          from {
-            transform: translateX(100%);
-            opacity: 0;
-          }
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-        .animate-slide-in {
-          animation: slideIn 0.3s ease-out;
-        }
-      `}</style>
     </div>
   );
 }

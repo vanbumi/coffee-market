@@ -15,7 +15,7 @@ export default function ProductGrid({ products, loading = false }: ProductGridPr
         {Array.from({ length: 8 }).map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-xl overflow-hidden shadow-md animate-pulse"
+            className="bg-white rounded-xl border border-gray-200 overflow-hidden animate-pulse"
           >
             <div className="h-48 sm:h-56 bg-gray-200" />
             <div className="p-4 space-y-3">

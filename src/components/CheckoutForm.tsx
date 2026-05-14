@@ -95,7 +95,7 @@ export default function CheckoutForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Shipping Form */}
-      <div className="bg-white rounded-xl shadow-md p-6">
+      <div className="bg-white rounded-xl border border-gray-200 p-6">
         <h2 className="text-lg font-bold text-gray-900 mb-6">
           Informasi Pengiriman
         </h2>
@@ -108,7 +108,7 @@ export default function CheckoutForm({
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F4E37] text-sm ${
+              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm ${
                 errors.fullName ? 'border-red-500' : 'border-gray-200'
               }`}
               placeholder="Masukkan nama lengkap"
@@ -126,7 +126,7 @@ export default function CheckoutForm({
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F4E37] text-sm ${
+              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm ${
                 errors.phone ? 'border-red-500' : 'border-gray-200'
               }`}
               placeholder="08xxxxxxxxxx"
@@ -144,7 +144,7 @@ export default function CheckoutForm({
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               rows={3}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F4E37] text-sm ${
+              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm ${
                 errors.address ? 'border-red-500' : 'border-gray-200'
               }`}
               placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan/desa"
@@ -164,7 +164,7 @@ export default function CheckoutForm({
                 setProvince(e.target.value);
                 setCity('');
               }}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F4E37] text-sm bg-white ${
+              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white ${
                 errors.province ? 'border-red-500' : 'border-gray-200'
               }`}
             >
@@ -188,7 +188,7 @@ export default function CheckoutForm({
               value={city}
               onChange={(e) => setCity(e.target.value)}
               disabled={!province}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F4E37] text-sm bg-white ${
+              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white ${
                 errors.city ? 'border-red-500' : 'border-gray-200'
               }`}
             >
@@ -212,7 +212,7 @@ export default function CheckoutForm({
               type="text"
               value={district}
               onChange={(e) => setDistrict(e.target.value)}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F4E37] text-sm ${
+              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm ${
                 errors.district ? 'border-red-500' : 'border-gray-200'
               }`}
               placeholder="Kecamatan"
@@ -230,7 +230,7 @@ export default function CheckoutForm({
               type="number"
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F4E37] text-sm ${
+              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm ${
                 errors.postalCode ? 'border-red-500' : 'border-gray-200'
               }`}
               placeholder="Kode pos"
@@ -243,7 +243,7 @@ export default function CheckoutForm({
       </div>
 
       {/* Shipping Method */}
-      <div className="bg-white rounded-xl shadow-md p-6">
+      <div className="bg-white rounded-xl border border-gray-200 p-6">
         <h2 className="text-lg font-bold text-gray-900 mb-4">
           Metode Pengiriman
         </h2>
@@ -253,7 +253,7 @@ export default function CheckoutForm({
               key={method.id}
               className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${
                 shippingMethod === method.id
-                  ? 'border-[#6F4E37] bg-[#F5E6D3]'
+                  ? 'border-primary-500 bg-primary-50'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
@@ -263,7 +263,7 @@ export default function CheckoutForm({
                 value={method.id}
                 checked={shippingMethod === method.id}
                 onChange={(e) => setShippingMethod(e.target.value)}
-                className="w-4 h-4 text-[#6F4E37] focus:ring-[#6F4E37]"
+                className="w-4 h-4 text-primary-500 focus:ring-primary-500"
               />
               <div className="ml-3 flex-1">
                 <p className="font-medium text-gray-900">{method.name}</p>
@@ -272,7 +272,7 @@ export default function CheckoutForm({
                 </p>
               </div>
               <div className="text-right">
-                <p className="font-semibold text-[#6F4E37]">
+                <p className="font-semibold text-primary-500">
                   {formatRupiah(method.pricePerKg)}/kg
                 </p>
                 <p className="text-xs text-gray-500">
@@ -288,7 +288,7 @@ export default function CheckoutForm({
       </div>
 
       {/* Payment Method */}
-      <div className="bg-white rounded-xl shadow-md p-6">
+      <div className="bg-white rounded-xl border border-gray-200 p-6">
         <h2 className="text-lg font-bold text-gray-900 mb-4">
           Metode Pembayaran
         </h2>
@@ -298,7 +298,7 @@ export default function CheckoutForm({
               key={method.id}
               className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${
                 paymentMethod === method.id
-                  ? 'border-[#6F4E37] bg-[#F5E6D3]'
+                  ? 'border-primary-500 bg-primary-50'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
@@ -308,7 +308,7 @@ export default function CheckoutForm({
                 value={method.id}
                 checked={paymentMethod === method.id}
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                className="w-4 h-4 text-[#6F4E37] focus:ring-[#6F4E37]"
+                className="w-4 h-4 text-primary-500 focus:ring-primary-500"
               />
               <span className="ml-3 text-sm font-medium text-gray-900">
                 {method.label}
@@ -322,7 +322,7 @@ export default function CheckoutForm({
       </div>
 
       {/* Order Summary */}
-      <div className="bg-white rounded-xl shadow-md p-6">
+      <div className="bg-white rounded-xl border border-gray-200 p-6">
         <h2 className="text-lg font-bold text-gray-900 mb-4">
           Ringkasan Pesanan
         </h2>
@@ -335,7 +335,7 @@ export default function CheckoutForm({
               <span className="text-gray-600">
                 {item.product.name} x{item.quantity}
               </span>
-              <span className="font-medium">
+              <span className="font-medium text-gray-900">
                 {formatRupiah(item.product.price * item.quantity)}
               </span>
             </div>
@@ -343,30 +343,30 @@ export default function CheckoutForm({
         </div>
         <div className="border-t border-gray-100 mt-4 pt-4 space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Subtotal</span>
-            <span className="font-medium">{formatRupiah(subtotal)}</span>
+            <span className="text-gray-500">Subtotal</span>
+            <span className="font-medium text-gray-900">{formatRupiah(subtotal)}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Biaya Pengiriman</span>
-            <span className="font-medium">
+            <span className="text-gray-500">Biaya Pengiriman</span>
+            <span className="font-medium text-gray-900">
               {shippingMethod ? formatRupiah(finalShippingCost) : '-'}
             </span>
           </div>
           {discount > 0 && (
-            <div className="flex justify-between text-sm text-green-600">
+            <div className="flex justify-between text-sm text-primary-600">
               <span>Diskon ({discountPercent}%)</span>
               <span>-{formatRupiah(discount)}</span>
             </div>
           )}
           {freeShip && (
-            <div className="flex justify-between text-sm text-green-600">
+            <div className="flex justify-between text-sm text-primary-600">
               <span>Gratis Ongkir</span>
               <span>-{formatRupiah(shippingCost)}</span>
             </div>
           )}
           <div className="flex justify-between text-lg font-bold border-t border-gray-100 pt-2">
-            <span>Total</span>
-            <span className="text-[#6F4E37]">{formatRupiah(total)}</span>
+            <span className="text-gray-900">Total</span>
+            <span className="text-primary-500">{formatRupiah(total)}</span>
           </div>
         </div>
       </div>
@@ -374,7 +374,7 @@ export default function CheckoutForm({
       {/* Submit Button */}
       <button
         type="submit"
-        className="w-full py-4 bg-[#2E5A1C] hover:bg-[#234715] text-white rounded-xl font-bold text-lg transition-colors shadow-lg hover:shadow-xl"
+        className="w-full py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-bold text-lg transition-colors shadow-sm hover:shadow-md"
       >
         Buat Pesanan
       </button>

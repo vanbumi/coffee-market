@@ -2,17 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  --background: #F9F9F9;
-  --foreground: #171717;
+  --background: #FFFFFF;
+  --foreground: #1F2937;
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
-  font-family: 'Inter', 'Poppins', sans-serif;
+  background: #F9FAFB;
+  font-family: 'Inter', sans-serif;
 }
 
 @layer utilities {
@@ -62,10 +62,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #6F4E37;
+  background: #10B981;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #5a3d2c;
+  background: #059669;
 }

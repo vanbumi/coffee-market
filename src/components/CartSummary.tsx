@@ -44,7 +44,7 @@ export default function CartSummary({
   const total = subtotal - discount + finalShippingCost;
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 space-y-6 sticky top-24">
+    <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-6 sticky top-24">
       <h2 className="text-lg font-bold text-gray-900">Ringkasan Belanja</h2>
 
       {/* Shipping Method */}
@@ -56,7 +56,7 @@ export default function CartSummary({
           <select
             value={selectedShipping}
             onChange={(e) => onShippingChange(e.target.value)}
-            className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F4E37] text-sm bg-white"
+            className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white"
           >
             <option value="">Pilih pengiriman</option>
             {shippingMethods.map((method) => (
@@ -79,8 +79,8 @@ export default function CartSummary({
           Voucher / Kode Promo
         </label>
         {voucherCode ? (
-          <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg px-3 py-2">
-            <span className="text-sm font-medium text-green-700">{voucherCode}</span>
+          <div className="flex items-center justify-between bg-primary-50 border border-primary-200 rounded-lg px-3 py-2">
+            <span className="text-sm font-medium text-primary-700">{voucherCode}</span>
             <button
               onClick={onRemoveVoucher}
               className="text-red-500 hover:text-red-700 text-sm"
@@ -95,11 +95,11 @@ export default function CartSummary({
               placeholder="Masukkan kode"
               value={voucherInput}
               onChange={(e) => onVoucherInputChange(e.target.value)}
-              className="flex-1 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F4E37] text-sm"
+              className="flex-1 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
             />
             <button
               onClick={onApplyVoucher}
-              className="px-4 py-2 bg-[#6F4E37] text-white rounded-lg hover:bg-[#5a3d2c] transition-colors text-sm font-medium"
+              className="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors text-sm font-medium"
             >
               Pakai
             </button>
@@ -116,34 +116,34 @@ export default function CartSummary({
       {/* Totals */}
       <div className="space-y-3 pt-4 border-t border-gray-100">
         <div className="flex justify-between text-sm">
-          <span className="text-gray-600">Subtotal</span>
-          <span className="font-medium">{formatRupiah(subtotal)}</span>
+          <span className="text-gray-500">Subtotal</span>
+          <span className="font-medium text-gray-900">{formatRupiah(subtotal)}</span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-gray-600">Berat Total</span>
-          <span className="font-medium">{totalWeight} kg</span>
+          <span className="text-gray-500">Berat Total</span>
+          <span className="font-medium text-gray-900">{totalWeight} kg</span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-gray-600">Biaya Pengiriman</span>
-          <span className="font-medium">
+          <span className="text-gray-500">Biaya Pengiriman</span>
+          <span className="font-medium text-gray-900">
             {items.length > 0 ? formatRupiah(finalShippingCost) : '-'}
           </span>
         </div>
         {discount > 0 && (
-          <div className="flex justify-between text-sm text-green-600">
+          <div className="flex justify-between text-sm text-primary-600">
             <span>Diskon ({discountPercent}%)</span>
             <span className="font-medium">-{formatRupiah(discount)}</span>
           </div>
         )}
         {freeShip && (
-          <div className="flex justify-between text-sm text-green-600">
+          <div className="flex justify-between text-sm text-primary-600">
             <span>Gratis Ongkir</span>
             <span className="font-medium">-{formatRupiah(shippingCost)}</span>
           </div>
         )}
         <div className="flex justify-between text-lg font-bold border-t border-gray-100 pt-3">
-          <span>Total</span>
-          <span className="text-[#6F4E37]">{formatRupiah(total)}</span>
+          <span className="text-gray-900">Total</span>
+          <span className="text-primary-500">{formatRupiah(total)}</span>
         </div>
       </div>
 
@@ -151,7 +151,7 @@ export default function CartSummary({
       <button
         onClick={onCheckout}
         disabled={items.length === 0}
-        className="w-full py-3 bg-[#2E5A1C] hover:bg-[#234715] disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors"
+        className="w-full py-3 bg-primary-500 hover:bg-primary-600 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-white rounded-full font-semibold transition-colors shadow-sm hover:shadow-md"
       >
         Lanjut ke Checkout
       </button>

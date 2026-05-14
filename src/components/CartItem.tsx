@@ -19,7 +19,7 @@ export default function CartItemComponent({
   const subtotal = item.product.price * item.quantity;
 
   return (
-    <div className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+    <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
       {/* Image */}
       <Link
         href={`/product/${item.product.id}`}
@@ -38,12 +38,12 @@ export default function CartItemComponent({
       <div className="flex-1 min-w-0">
         <Link
           href={`/product/${item.product.id}`}
-          className="font-semibold text-gray-900 hover:text-[#6F4E37] transition-colors truncate block"
+          className="font-semibold text-gray-900 hover:text-primary-500 transition-colors truncate block"
         >
           {item.product.name}
         </Link>
         <p className="text-sm text-gray-500">{item.product.origin}</p>
-        <p className="text-[#6F4E37] font-semibold mt-1">
+        <p className="text-primary-500 font-semibold mt-1">
           {formatRupiah(item.product.price)}
           <span className="text-gray-400 text-xs font-normal"> /kg</span>
         </p>
@@ -54,7 +54,7 @@ export default function CartItemComponent({
         <button
           onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
           disabled={item.quantity <= 1}
-          className="px-3 py-1.5 text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-lg"
+          className="px-3 py-1.5 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-lg"
         >
           -
         </button>
@@ -64,7 +64,7 @@ export default function CartItemComponent({
         <button
           onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
           disabled={item.quantity >= 10}
-          className="px-3 py-1.5 text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-lg"
+          className="px-3 py-1.5 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-lg"
         >
           +
         </button>

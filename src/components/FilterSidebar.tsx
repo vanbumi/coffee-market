@@ -35,7 +35,7 @@ export default function FilterSidebar({
   onReset,
 }: FilterSidebarProps) {
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 space-y-6">
+    <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-6">
       {/* Search */}
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -47,7 +47,7 @@ export default function FilterSidebar({
             placeholder="Cari nama atau asal..."
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F4E37] focus:border-transparent text-sm"
+            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
           />
           <svg
             className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
@@ -73,7 +73,7 @@ export default function FilterSidebar({
         <select
           value={sortBy}
           onChange={(e) => onSortChange(e.target.value)}
-          className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6F4E37] focus:border-transparent text-sm bg-white"
+          className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm bg-white"
         >
           <option value="">Default</option>
           <option value="price-asc">Harga Terendah</option>
@@ -99,7 +99,7 @@ export default function FilterSidebar({
                 type="checkbox"
                 checked={selectedTypes.includes(type)}
                 onChange={() => onTypeToggle(type)}
-                className="w-4 h-4 text-[#6F4E37] border-gray-300 rounded focus:ring-[#6F4E37]"
+                className="w-4 h-4 text-primary-500 border-gray-300 rounded focus:ring-primary-500"
               />
               <span className="text-sm text-gray-600 group-hover:text-gray-900">
                 {type}
@@ -124,7 +124,7 @@ export default function FilterSidebar({
                 type="checkbox"
                 checked={selectedRegions.includes(region)}
                 onChange={() => onRegionToggle(region)}
-                className="w-4 h-4 text-[#6F4E37] border-gray-300 rounded focus:ring-[#6F4E37]"
+                className="w-4 h-4 text-primary-500 border-gray-300 rounded focus:ring-primary-500"
               />
               <span className="text-sm text-gray-600 group-hover:text-gray-900">
                 {region}
@@ -149,7 +149,7 @@ export default function FilterSidebar({
               step={10000}
               value={minPrice}
               onChange={(e) => onMinPriceChange(Number(e.target.value))}
-              className="w-full accent-[#6F4E37]"
+              className="w-full accent-primary-500"
             />
           </div>
           <div>
@@ -161,7 +161,7 @@ export default function FilterSidebar({
               step={10000}
               value={maxPrice}
               onChange={(e) => onMaxPriceChange(Number(e.target.value))}
-              className="w-full accent-[#6F4E37]"
+              className="w-full accent-primary-500"
             />
           </div>
         </div>
