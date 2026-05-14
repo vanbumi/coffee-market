@@ -2,30 +2,36 @@
 
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
+import CategoryCard from '@/components/CategoryCard';
+import StatCard from '@/components/StatCard';
 import { useAllProducts } from '@/hooks/useAllProducts';
 
 const categories = [
   {
     name: 'Arabica',
-    description: 'Kopi premium dengan acidity rendah & aroma kompleks',
+    description: 'Kopi premium dengan acidity rendah & aroma kompleks. Pilihan terbaik untuk pengalaman minum kopi yang halus.',
     icon: '🫘',
-    color: 'bg-primary-500',
-    slug: 'Arabica',
+    slug: 'Arabica' as const,
   },
   {
     name: 'Robusta',
-    description: 'Kopi dengan body kuat & kadar kafein lebih tinggi',
+    description: 'Kopi dengan body kuat & kadar kafein lebih tinggi. Cocok untuk espresso atau kopi yang mantap.',
     icon: '☕',
-    color: 'bg-primary-600',
-    slug: 'Robusta',
+    slug: 'Robusta' as const,
   },
   {
     name: 'Blend',
-    description: 'Racikan spesial dari berbagai biji kopi pilihan',
+    description: 'Racikan spesial dari berbagai biji kopi pilihan. Keseimbangan sempurna dalam setiap tegukan.',
     icon: '✨',
-    color: 'bg-primary-700',
-    slug: 'Blend',
+    slug: 'Blend' as const,
   },
+];
+
+const stats = [
+  { value: '12+', label: 'Varian Kopi Premium', icon: <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg> },
+  { value: '10+', label: 'Daerah Asal Nusantara', icon: <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> },
+  { value: '100%', label: 'Biji Kopi Premium', icon: <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg> },
+  { value: '500+', label: 'Pelanggan Setia', icon: <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg> },
 ];
 
 export default function HomePage() {
@@ -35,110 +41,141 @@ export default function HomePage() {
     {
       name: 'Rina Wijaya',
       role: 'Barista, Jakarta',
-      text: 'Kualitas biji kopi dari Saudara Coffee luar biasa! Gayo Arabica menjadi favorit pelanggan di kafe saya.',
+      text: 'Kualitas biji kopi dari Saudara Coffee luar biasa! Gayo Arabica menjadi favorit pelanggan di kafe saya. Benar-benar premium!',
       rating: 5,
+      avatar: 'RW',
     },
     {
       name: 'Bambang Setiawan',
       role: 'Home Brewer, Bandung',
-      text: 'Pengiriman cepat, biji kopi masih segar. Toraja-nya recommended banget untuk manual brew.',
+      text: 'Pengiriman cepat, biji kopi masih segar. Toraja-nya recommended banget untuk manual brew. Aromanya sempurna!',
       rating: 5,
+      avatar: 'BS',
     },
     {
       name: 'Dewi Lestari',
       role: 'Coffee Shop Owner, Surabaya',
-      text: 'Sudah langganan sejak 2 tahun lalu. Kualitas konsisten dan pelayanan ramah. Highly recommended!',
+      text: 'Sudah langganan sejak 2 tahun lalu. Kualitas konsisten dan pelayanan ramah. Highly recommended untuk pebisnis kopi!',
       rating: 5,
+      avatar: 'DL',
     },
   ];
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Jual Beli Biji Kopi Premium
-              <span className="block text-primary-500">dari Seluruh Nusantara</span>
+      {/* ========== HERO SECTION ========== */}
+      <section className="relative overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-[#0A0A0A]">
+          <div className="absolute inset-0 bg-dot-pattern opacity-30" />
+          <div className="absolute inset-0 bg-hero-overlay" />
+          <div className="absolute inset-0 bg-gradient-to-b from-gold/5 via-transparent to-[#0A0A0A]" />
+        </div>
+        
+        {/* Decorative elements */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold/5 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gold/5 rounded-full blur-[100px]" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Badge */}
+            <div className="inline-flex items-center px-4 py-1.5 border border-gold/30 rounded-full text-xs text-gold tracking-wider uppercase mb-8 animate-fade-in-down">
+              <span className="w-1.5 h-1.5 bg-gold rounded-full mr-2 animate-glow-pulse" />
+              Since 2025 — Premium Coffee Roastery
+            </div>
+
+            {/* Heading */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-[1.1] animate-fade-in-up">
+              <span className="text-white">Discover the Art of</span>
+              <br />
+              <span className="text-gradient-hero">Premium Coffee</span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto">
-              Temukan biji kopi terbaik dari petani pilihan di berbagai daerah Indonesia.
-              Dari Gayo hingga Papua, kami hadirkan cita rasa Nusantara untuk Anda.
+
+            {/* Subtitle */}
+            <p className="text-lg md:text-xl text-[#A3A3A3] mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
+              Menghadirkan biji kopi pilihan terbaik dari seluruh Nusantara. 
+              Dari petani kopi pilihan, langsung ke cangkir Anda.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{ animationDelay: '400ms', animationFillMode: 'both' }}>
               <Link
                 href="/catalog"
-                className="inline-flex items-center justify-center px-8 py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-semibold text-lg transition-all shadow-md hover:shadow-lg"
+                className="inline-flex items-center justify-center px-8 py-4 bg-gold hover:bg-gold-light text-black rounded-xl font-bold text-lg transition-all duration-300 shadow-lg shadow-gold/20 hover:shadow-gold/30 hover:scale-105"
               >
-                Jelajahi Katalog
+                Shop Now
                 <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
               <Link
                 href="/catalog"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-200 hover:border-gray-300 text-gray-700 rounded-full font-semibold text-lg transition-all"
+                className="inline-flex items-center justify-center px-8 py-4 border border-gold/40 text-gold hover:bg-gold/10 rounded-xl font-semibold text-lg transition-all duration-300 hover:border-gold"
               >
-                Lihat Produk Unggulan
+                Learn More
               </Link>
             </div>
           </div>
         </div>
-        {/* Stats */}
-        <div className="bg-gray-50 border-t border-gray-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="grid grid-cols-3 gap-4 md:gap-8 text-center">
-              <div>
-                <p className="text-2xl md:text-3xl font-bold text-gray-900">12+</p>
-                <p className="text-gray-500 text-sm">Varian Kopi</p>
-              </div>
-              <div>
-                <p className="text-2xl md:text-3xl font-bold text-gray-900">10+</p>
-                <p className="text-gray-500 text-sm">Daerah Asal</p>
-              </div>
-              <div>
-                <p className="text-2xl md:text-3xl font-bold text-gray-900">100%</p>
-                <p className="text-gray-500 text-sm">Biji Kopi Premium</p>
-              </div>
-            </div>
+
+        {/* Decorative bottom gradient */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0A0A0A] to-transparent" />
+      </section>
+
+      {/* ========== STATISTICS SECTION ========== */}
+      <section className="relative -mt-16 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {stats.map((stat, index) => (
+              <StatCard
+                key={stat.label}
+                value={stat.value}
+                label={stat.label}
+                icon={stat.icon}
+                index={index}
+              />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Kategori Kopi
+      {/* ========== CATEGORIES SECTION ========== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="text-center mb-16">
+          <span className="text-gold text-sm tracking-widest uppercase font-medium">Categories</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 mb-4">
+            Pilih Kategori Kopi Favorit
           </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto">
+          <p className="text-[#A3A3A3] max-w-2xl mx-auto">
             Kami menyediakan berbagai jenis biji kopi premium dari seluruh Nusantara
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {categories.map((cat) => (
-            <Link
+          {categories.map((cat, index) => (
+            <CategoryCard
               key={cat.name}
-              href={`/catalog?type=${cat.slug}`}
-              className={`${cat.color} text-white rounded-2xl p-8 hover:shadow-xl transition-all duration-300 shadow-md`}
-            >
-              <div className="text-5xl mb-4">{cat.icon}</div>
-              <h3 className="text-2xl font-bold mb-2">{cat.name}</h3>
-              <p className="text-white/80">{cat.description}</p>
-            </Link>
+              name={cat.name}
+              description={cat.description}
+              icon={cat.icon}
+              slug={cat.slug}
+              index={index}
+            />
           ))}
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="bg-white py-16 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      {/* ========== FEATURED PRODUCTS ========== */}
+      <section className="relative py-24 bg-gradient-to-b from-[#0A0A0A] via-[#111111] to-[#0A0A0A] border-y border-[#2A2A2A]">
+        {/* Background pattern */}
+        <div className="absolute inset-0 bg-dot-pattern opacity-10" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="text-gold text-sm tracking-widest uppercase font-medium">Featured Products</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 mb-4">
               Produk Unggulan
             </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">
+            <p className="text-[#A3A3A3] max-w-2xl mx-auto">
               Koleksi biji kopi terbaik pilihan kami untuk Anda
             </p>
           </div>
@@ -147,13 +184,13 @@ export default function HomePage() {
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
-          <div className="text-center mt-10">
+          <div className="text-center mt-12">
             <Link
               href="/catalog"
-              className="inline-flex items-center px-6 py-3 bg-primary-500 text-white rounded-full hover:bg-primary-600 transition-colors font-semibold shadow-sm hover:shadow-md"
+              className="inline-flex items-center px-8 py-3.5 bg-gold hover:bg-gold-light text-black rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-gold/10 hover:shadow-gold/20 group"
             >
               Lihat Semua Produk
-              <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </Link>
@@ -161,65 +198,82 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      {/* ========== WHY CHOOSE US ========== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="text-center mb-16">
+          <span className="text-gold text-sm tracking-widest uppercase font-medium">Why Us</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 mb-4">
             Mengapa Memilih Kami?
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="text-center">
-            <div className="text-5xl mb-4">🌱</div>
-            <h3 className="font-bold text-lg text-gray-900 mb-2">Langsung dari Petani</h3>
-            <p className="text-gray-500 text-sm">
-              Bekerja sama langsung dengan petani kopi pilihan di seluruh Indonesia
-            </p>
-          </div>
-          <div className="text-center">
-            <div className="text-5xl mb-4">🏆</div>
-            <h3 className="font-bold text-lg text-gray-900 mb-2">Kualitas Premium</h3>
-            <p className="text-gray-500 text-sm">
-              Hanya biji kopi dengan kualitas terbaik yang kami jual
-            </p>
-          </div>
-          <div className="text-center">
-            <div className="text-5xl mb-4">🚚</div>
-            <h3 className="font-bold text-lg text-gray-900 mb-2">Pengiriman Cepat</h3>
-            <p className="text-gray-500 text-sm">
-              Dikirim langsung setelah dipesan dengan kemasan vakum
-            </p>
-          </div>
-          <div className="text-center">
-            <div className="text-5xl mb-4">💚</div>
-            <h3 className="font-bold text-lg text-gray-900 mb-2">Ramah Lingkungan</h3>
-            <p className="text-gray-500 text-sm">
-              Mendukung praktik pertanian kopi yang berkelanjutan
-            </p>
-          </div>
+          {[
+            { icon: '🌱', title: 'Langsung dari Petani', desc: 'Bekerja sama langsung dengan petani kopi pilihan di seluruh Indonesia' },
+            { icon: '🏆', title: 'Kualitas Premium', desc: 'Hanya biji kopi dengan kualitas terbaik yang kami jual' },
+            { icon: '🚚', title: 'Pengiriman Cepat', desc: 'Dikirim langsung setelah dipesan dengan kemasan vakum' },
+            { icon: '💚', title: 'Ramah Lingkungan', desc: 'Mendukung praktik pertanian kopi yang berkelanjutan' },
+          ].map((item, i) => (
+            <div
+              key={item.title}
+              className="text-center group p-6 rounded-xl bg-[#111111] border border-[#2A2A2A] hover:border-gold/30 transition-all duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.08)] animate-fade-in-up"
+              style={{ animationDelay: `${i * 100}ms`, animationFillMode: 'both' }}
+            >
+              <div className="text-5xl mb-5 group-hover:scale-110 transition-transform duration-500">{item.icon}</div>
+              <h3 className="font-bold text-lg text-white mb-2 group-hover:text-gold transition-colors duration-300">{item.title}</h3>
+              <p className="text-[#A3A3A3] text-sm leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="bg-gray-50 py-16 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      {/* ========== TESTIMONIALS ========== */}
+      <section className="relative py-24 bg-[#111111] border-y border-[#2A2A2A] overflow-hidden">
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-[0.03]">
+          <div className="absolute inset-0" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=1920&q=10)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        </div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="text-gold text-sm tracking-widest uppercase font-medium">Testimonials</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 mb-4">
               Apa Kata Pelanggan?
             </h2>
+            <p className="text-[#A3A3A3] max-w-2xl mx-auto">
+              Kepercayaan dan kepuasan pelanggan adalah prioritas utama kami
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((t, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <div className="flex text-yellow-400 mb-3">
+              <div
+                key={i}
+                className="bg-[#1A1A1A] rounded-2xl p-8 border border-[#2A2A2A] hover:border-gold/20 transition-all duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.08)] animate-fade-in-up"
+                style={{ animationDelay: `${i * 150}ms`, animationFillMode: 'both' }}
+              >
+                {/* Gold left border accent */}
+                <div className="absolute top-0 left-0 w-1 h-full bg-gold rounded-l-2xl" />
+                
+                {/* Stars */}
+                <div className="flex text-gold mb-4">
                   {Array.from({ length: t.rating }).map((_, j) => (
-                    <span key={j}>★</span>
+                    <span key={j} className="text-xl">★</span>
                   ))}
                 </div>
-                <p className="text-gray-600 mb-4 italic">&ldquo;{t.text}&rdquo;</p>
-                <div>
-                  <p className="font-semibold text-gray-900">{t.name}</p>
-                  <p className="text-sm text-gray-500">{t.role}</p>
+                
+                {/* Quote */}
+                <p className="text-[#A3A3A3] mb-6 italic leading-relaxed text-sm">
+                  &ldquo;{t.text}&rdquo;
+                </p>
+                
+                {/* Profile */}
+                <div className="flex items-center">
+                  <div className="w-12 h-12 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center text-gold font-bold text-sm mr-3">
+                    {t.avatar}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-white text-sm">{t.name}</p>
+                    <p className="text-xs text-[#A3A3A3]">{t.role}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -227,24 +281,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-primary-500 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Siap Menikmati Kopi Nusantara?
-          </h2>
-          <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
-            Pesan sekarang dan rasakan kelezatan biji kopi premium dari berbagai daerah di Indonesia
-          </p>
-          <Link
-            href="/catalog"
-            className="inline-flex items-center px-8 py-4 bg-white text-primary-500 rounded-full font-bold text-lg hover:bg-gray-50 transition-colors shadow-lg"
-          >
-            Mulai Belanja
-            <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
+      {/* ========== NEWSLETTER / CTA ========== */}
+      <section className="relative py-24 bg-gradient-to-b from-[#0A0A0A] to-[#1A1A0A]">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-2xl mx-auto">
+            <span className="text-gold text-sm tracking-widest uppercase font-medium">Newsletter</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 mb-4">
+              Siap Menikmati Kopi Nusantara?
+            </h2>
+            <p className="text-[#A3A3A3] text-lg mb-10 max-w-xl mx-auto">
+              Dapatkan informasi promo, produk baru, dan tips brewing langsung di email Anda.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input
+                type="email"
+                placeholder="Masukkan email Anda"
+                className="flex-1 px-5 py-3.5 bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl text-white placeholder-[#A3A3A3] focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300"
+              />
+              <button
+                className="px-6 py-3.5 bg-gold hover:bg-gold-light text-black rounded-xl font-bold transition-all duration-300 shadow-lg shadow-gold/10 hover:shadow-gold/20"
+              >
+                Subscribe
+              </button>
+            </div>
+            <p className="text-[#A3A3A3] text-xs mt-4">
+              Bergabung dengan 500+ subscriber lainnya. Kami tidak mengirim spam.
+            </p>
+          </div>
         </div>
       </section>
     </div>

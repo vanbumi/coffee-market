@@ -30,15 +30,15 @@ export default function ProductDetailPage() {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center">
         <div className="text-6xl mb-4">🔍</div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+        <h1 className="text-2xl font-bold text-white mb-2">
           Produk Tidak Ditemukan
         </h1>
-        <p className="text-gray-500 mb-6">
+        <p className="text-[#A3A3A3] mb-6">
           Maaf, produk yang Anda cari tidak tersedia.
         </p>
         <Link
           href="/catalog"
-          className="inline-flex px-6 py-3 bg-primary-500 text-white rounded-full hover:bg-primary-600 transition-colors font-semibold shadow-sm"
+          className="inline-flex px-6 py-3 bg-gold text-black rounded-xl hover:bg-gold-light transition-all duration-300 font-semibold shadow-lg shadow-gold/10"
         >
           Kembali ke Katalog
         </Link>
@@ -71,23 +71,23 @@ export default function ProductDetailPage() {
       />
 
       {/* Breadcrumb */}
-      <nav className="flex items-center space-x-2 text-sm text-gray-500 mb-6">
-        <Link href="/" className="hover:text-primary-500 transition-colors">
+      <nav className="flex items-center space-x-2 text-sm text-[#A3A3A3] mb-8">
+        <Link href="/" className="hover:text-gold transition-colors">
           Beranda
         </Link>
         <span>/</span>
-        <Link href="/catalog" className="hover:text-primary-500 transition-colors">
+        <Link href="/catalog" className="hover:text-gold transition-colors">
           Katalog
         </Link>
         <span>/</span>
-        <span className="text-gray-900 font-medium">{product.name}</span>
+        <span className="text-gold font-medium">{product.name}</span>
       </nav>
 
       {/* Product Detail */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
         {/* Image Gallery */}
         <div>
-          <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden mb-4 bg-gray-50 border border-gray-100">
+          <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden mb-4 bg-[#111111] border border-[#2A2A2A]">
             <Image
               src={product.images[selectedImage]}
               alt={product.name}
@@ -96,6 +96,7 @@ export default function ProductDetailPage() {
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/30 to-transparent" />
           </div>
           {product.images.length > 1 && (
             <div className="flex gap-3">
@@ -105,8 +106,8 @@ export default function ProductDetailPage() {
                   onClick={() => setSelectedImage(i)}
                   className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
                     selectedImage === i
-                      ? 'border-primary-500 ring-2 ring-primary-500/20'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-gold ring-2 ring-gold/20'
+                      : 'border-[#2A2A2A] hover:border-gold/50'
                   }`}
                 >
                   <Image
@@ -124,64 +125,68 @@ export default function ProductDetailPage() {
 
         {/* Product Info */}
         <div>
-          <div className="flex items-center gap-3 mb-3">
+          <div className="flex items-center gap-3 mb-4">
             <span
-              className={`px-3 py-1 rounded-full text-sm font-semibold ${
+              className={`px-3 py-1 rounded-full text-sm font-semibold border ${
                 product.type === 'Arabica'
-                  ? 'bg-primary-500 text-white'
+                  ? 'bg-gold/20 text-gold border-gold/30'
                   : product.type === 'Robusta'
-                  ? 'bg-primary-600 text-white'
-                  : 'bg-primary-700 text-white'
+                  ? 'bg-[#A3A3A3]/20 text-[#A3A3A3] border-[#A3A3A3]/30'
+                  : 'bg-gold/30 text-gold border-gold/40'
               }`}
             >
               {product.type}
             </span>
-            <span className="flex items-center text-yellow-500 font-semibold">
+            <span className="flex items-center text-gold font-semibold">
               ★ {product.rating}
             </span>
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
             {product.name}
           </h1>
-          <p className="text-lg text-gray-500 mb-4">
-            📍 {product.origin}, {product.region}
+          <p className="text-lg text-[#A3A3A3] mb-6 flex items-center">
+            <svg className="w-5 h-5 mr-2 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            {product.origin}, {product.region}
           </p>
 
-          <p className="text-gray-600 leading-relaxed mb-6">
+          <p className="text-[#A3A3A3] leading-relaxed mb-8">
             {product.description}
           </p>
 
           {/* Detail Info */}
-          <div className="grid grid-cols-3 gap-4 mb-6">
-            <div className="bg-gray-50 rounded-xl p-3 text-center border border-gray-100">
-              <p className="text-xs text-gray-500">Ketinggian</p>
-              <p className="font-semibold text-sm text-gray-900">{product.altitude}</p>
+          <div className="grid grid-cols-3 gap-4 mb-8">
+            <div className="bg-[#111111] rounded-xl p-4 text-center border border-[#2A2A2A]">
+              <p className="text-xs text-[#A3A3A3] mb-1">Ketinggian</p>
+              <p className="font-semibold text-sm text-gold">{product.altitude}</p>
             </div>
-            <div className="bg-gray-50 rounded-xl p-3 text-center border border-gray-100">
-              <p className="text-xs text-gray-500">Proses</p>
-              <p className="font-semibold text-sm text-gray-900 capitalize">
+            <div className="bg-[#111111] rounded-xl p-4 text-center border border-[#2A2A2A]">
+              <p className="text-xs text-[#A3A3A3] mb-1">Proses</p>
+              <p className="font-semibold text-sm text-white capitalize">
                 {product.processing}
               </p>
             </div>
-            <div className="bg-gray-50 rounded-xl p-3 text-center border border-gray-100">
-              <p className="text-xs text-gray-500">Roast</p>
-              <p className="font-semibold text-sm text-gray-900 capitalize">
+            <div className="bg-[#111111] rounded-xl p-4 text-center border border-[#2A2A2A]">
+              <p className="text-xs text-[#A3A3A3] mb-1">Roast</p>
+              <p className="font-semibold text-sm text-white capitalize">
                 {product.roastLevel}
               </p>
             </div>
           </div>
 
           {/* Tasting Notes */}
-          <div className="mb-6">
-            <h3 className="text-sm font-semibold text-gray-700 mb-2">
+          <div className="mb-8">
+            <h3 className="text-sm font-semibold text-gold mb-3 tracking-wide uppercase">
               Tasting Notes
             </h3>
             <div className="flex flex-wrap gap-2">
               {product.tastingNotes.map((note) => (
                 <span
                   key={note}
-                  className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium capitalize"
+                  className="px-3 py-1.5 bg-[#1A1A1A] text-[#A3A3A3] border border-[#2A2A2A] rounded-full text-sm font-medium capitalize"
                 >
                   {note}
                 </span>
@@ -191,36 +196,36 @@ export default function ProductDetailPage() {
 
           {/* Price */}
           <div className="mb-6">
-            <p className="text-sm text-gray-500">Harga per kg</p>
-            <p className="text-3xl font-bold text-primary-500">
+            <p className="text-sm text-[#A3A3A3]">Harga per kg</p>
+            <p className="text-4xl font-bold text-gold">
               {formatRupiah(product.price)}
             </p>
           </div>
 
           {/* Quantity & Add to Cart */}
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-            <div className="flex items-center border border-gray-200 rounded-full">
+            <div className="flex items-center border border-[#2A2A2A] rounded-xl bg-[#111111]">
               <button
                 onClick={decrementQty}
                 disabled={quantity <= 1}
-                className="px-4 py-3 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xl font-medium rounded-l-full"
+                className="px-4 py-3 text-[#A3A3A3] hover:text-gold disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xl font-medium rounded-l-xl"
               >
                 -
               </button>
-              <span className="px-6 py-3 text-gray-900 font-semibold text-lg min-w-[60px] text-center">
+              <span className="px-6 py-3 text-white font-semibold text-lg min-w-[60px] text-center border-x border-[#2A2A2A]">
                 {quantity}
               </span>
               <button
                 onClick={incrementQty}
                 disabled={quantity >= 10}
-                className="px-4 py-3 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xl font-medium rounded-r-full"
+                className="px-4 py-3 text-[#A3A3A3] hover:text-gold disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xl font-medium rounded-r-xl"
               >
                 +
               </button>
             </div>
             <button
               onClick={handleAddToCart}
-              className="flex-1 w-full sm:w-auto px-8 py-3.5 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-bold text-lg transition-all shadow-sm hover:shadow-md flex items-center justify-center"
+              className="flex-1 w-full sm:w-auto px-8 py-3.5 bg-gold hover:bg-gold-light text-black rounded-xl font-bold text-lg transition-all duration-300 shadow-lg shadow-gold/10 hover:shadow-gold/20 flex items-center justify-center"
             >
               <svg
                 className="h-6 w-6 mr-2"
@@ -240,7 +245,7 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Stock Info */}
-          <p className="text-sm text-gray-500 mt-3">
+          <p className="text-sm text-[#A3A3A3] mt-4">
             {product.stock > 0
               ? `Stok tersedia: ${product.stock} kg`
               : 'Stok habis'}
@@ -249,8 +254,8 @@ export default function ProductDetailPage() {
       </div>
 
       {/* Recommended Products */}
-      <section>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+      <section className="border-t border-[#2A2A2A] pt-12">
+        <h2 className="text-2xl font-bold text-white mb-8">
           Produk Rekomendasi
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">

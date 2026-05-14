@@ -35,10 +35,10 @@ export default function FilterSidebar({
   onReset,
 }: FilterSidebarProps) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-6">
+    <div className="bg-[#111111] rounded-xl border border-[#2A2A2A] p-6 space-y-6">
       {/* Search */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+        <label className="block text-sm font-semibold text-gold mb-2 tracking-wide">
           Cari Produk
         </label>
         <div className="relative">
@@ -47,10 +47,10 @@ export default function FilterSidebar({
             placeholder="Cari nama atau asal..."
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+            className="w-full pl-10 pr-4 py-2.5 bg-[#1A1A1A] border border-[#2A2A2A] rounded-lg text-white placeholder-[#A3A3A3] text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300"
           />
           <svg
-            className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
+            className="absolute left-3 top-2.5 h-5 w-5 text-[#A3A3A3]"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -67,13 +67,13 @@ export default function FilterSidebar({
 
       {/* Sort */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+        <label className="block text-sm font-semibold text-gold mb-2 tracking-wide">
           Urutkan
         </label>
         <select
           value={sortBy}
           onChange={(e) => onSortChange(e.target.value)}
-          className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm bg-white"
+          className="w-full px-3 py-2.5 bg-[#1A1A1A] border border-[#2A2A2A] rounded-lg text-white text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300"
         >
           <option value="">Default</option>
           <option value="price-asc">Harga Terendah</option>
@@ -86,7 +86,7 @@ export default function FilterSidebar({
 
       {/* Type Filter */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+        <label className="block text-sm font-semibold text-gold mb-2 tracking-wide">
           Tipe Kopi
         </label>
         <div className="space-y-2">
@@ -99,9 +99,8 @@ export default function FilterSidebar({
                 type="checkbox"
                 checked={selectedTypes.includes(type)}
                 onChange={() => onTypeToggle(type)}
-                className="w-4 h-4 text-primary-500 border-gray-300 rounded focus:ring-primary-500"
               />
-              <span className="text-sm text-gray-600 group-hover:text-gray-900">
+              <span className="text-sm text-[#A3A3A3] group-hover:text-gold transition-colors">
                 {type}
               </span>
             </label>
@@ -111,10 +110,10 @@ export default function FilterSidebar({
 
       {/* Region Filter */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+        <label className="block text-sm font-semibold text-gold mb-2 tracking-wide">
           Asal Daerah
         </label>
-        <div className="space-y-2 max-h-48 overflow-y-auto">
+        <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
           {regions.map((region) => (
             <label
               key={region}
@@ -124,9 +123,8 @@ export default function FilterSidebar({
                 type="checkbox"
                 checked={selectedRegions.includes(region)}
                 onChange={() => onRegionToggle(region)}
-                className="w-4 h-4 text-primary-500 border-gray-300 rounded focus:ring-primary-500"
               />
-              <span className="text-sm text-gray-600 group-hover:text-gray-900">
+              <span className="text-sm text-[#A3A3A3] group-hover:text-gold transition-colors">
                 {region}
               </span>
             </label>
@@ -136,12 +134,15 @@ export default function FilterSidebar({
 
       {/* Price Range */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+        <label className="block text-sm font-semibold text-gold mb-2 tracking-wide">
           Rentang Harga
         </label>
         <div className="space-y-3">
           <div>
-            <label className="text-xs text-gray-500">Min: Rp {minPrice.toLocaleString()}</label>
+            <div className="flex justify-between text-xs mb-1">
+              <span className="text-[#A3A3A3]">Min</span>
+              <span className="text-gold">Rp {minPrice.toLocaleString()}</span>
+            </div>
             <input
               type="range"
               min={0}
@@ -149,11 +150,14 @@ export default function FilterSidebar({
               step={10000}
               value={minPrice}
               onChange={(e) => onMinPriceChange(Number(e.target.value))}
-              className="w-full accent-primary-500"
+              className="w-full"
             />
           </div>
           <div>
-            <label className="text-xs text-gray-500">Max: Rp {maxPrice.toLocaleString()}</label>
+            <div className="flex justify-between text-xs mb-1">
+              <span className="text-[#A3A3A3]">Max</span>
+              <span className="text-gold">Rp {maxPrice.toLocaleString()}</span>
+            </div>
             <input
               type="range"
               min={0}
@@ -161,7 +165,7 @@ export default function FilterSidebar({
               step={10000}
               value={maxPrice}
               onChange={(e) => onMaxPriceChange(Number(e.target.value))}
-              className="w-full accent-primary-500"
+              className="w-full"
             />
           </div>
         </div>
@@ -170,7 +174,7 @@ export default function FilterSidebar({
       {/* Reset */}
       <button
         onClick={onReset}
-        className="w-full py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm font-medium"
+        className="w-full py-2.5 bg-[#1A1A1A] hover:bg-gold hover:text-black text-gold border border-gold/30 rounded-lg transition-all duration-300 text-sm font-medium"
       >
         Reset Filter
       </button>

@@ -19,17 +19,17 @@ export default function CartItemComponent({
   const subtotal = item.product.price * item.quantity;
 
   return (
-    <div className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200">
+    <div className="flex items-center gap-4 p-4 bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] hover:border-gold/20 transition-all duration-300 group">
       {/* Image */}
       <Link
         href={`/product/${item.product.id}`}
-        className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden flex-shrink-0"
+        className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden flex-shrink-0 border border-[#2A2A2A]"
       >
         <Image
           src={item.product.images[0]}
           alt={item.product.name}
           fill
-          className="object-cover"
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
           sizes="96px"
         />
       </Link>
@@ -38,33 +38,33 @@ export default function CartItemComponent({
       <div className="flex-1 min-w-0">
         <Link
           href={`/product/${item.product.id}`}
-          className="font-semibold text-gray-900 hover:text-primary-500 transition-colors truncate block"
+          className="font-semibold text-white hover:text-gold transition-colors truncate block"
         >
           {item.product.name}
         </Link>
-        <p className="text-sm text-gray-500">{item.product.origin}</p>
-        <p className="text-primary-500 font-semibold mt-1">
+        <p className="text-sm text-[#A3A3A3]">{item.product.origin}</p>
+        <p className="text-gold font-semibold mt-1">
           {formatRupiah(item.product.price)}
-          <span className="text-gray-400 text-xs font-normal"> /kg</span>
+          <span className="text-[#A3A3A3] text-xs font-normal"> /kg</span>
         </p>
       </div>
 
       {/* Quantity Controls */}
-      <div className="flex items-center border border-gray-200 rounded-lg">
+      <div className="flex items-center border border-[#2A2A2A] rounded-lg bg-[#111111]">
         <button
           onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
           disabled={item.quantity <= 1}
-          className="px-3 py-1.5 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-lg"
+          className="px-3 py-1.5 text-[#A3A3A3] hover:text-gold disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-lg"
         >
           -
         </button>
-        <span className="px-3 py-1.5 text-gray-900 font-medium min-w-[40px] text-center text-sm">
+        <span className="px-3 py-1.5 text-white font-medium min-w-[40px] text-center text-sm">
           {item.quantity}
         </span>
         <button
           onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
           disabled={item.quantity >= 10}
-          className="px-3 py-1.5 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-lg"
+          className="px-3 py-1.5 text-[#A3A3A3] hover:text-gold disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-lg"
         >
           +
         </button>
@@ -72,14 +72,14 @@ export default function CartItemComponent({
 
       {/* Subtotal */}
       <div className="text-right min-w-[100px]">
-        <p className="text-sm text-gray-500">Subtotal</p>
-        <p className="font-bold text-gray-900">{formatRupiah(subtotal)}</p>
+        <p className="text-sm text-[#A3A3A3]">Subtotal</p>
+        <p className="font-bold text-gold">{formatRupiah(subtotal)}</p>
       </div>
 
       {/* Remove Button */}
       <button
         onClick={() => onRemove(item.id)}
-        className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+        className="p-2 text-[#A3A3A3] hover:text-red-500 transition-colors"
         title="Hapus item"
       >
         <svg

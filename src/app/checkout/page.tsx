@@ -19,16 +19,16 @@ export default function CheckoutPage() {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
-          <div className="text-8xl mb-6">🛒</div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-3">
+          <div className="text-8xl mb-6 opacity-50">🛒</div>
+          <h1 className="text-3xl font-bold text-white mb-3">
             Tidak Ada Item untuk Checkout
           </h1>
-          <p className="text-gray-500 mb-8">
+          <p className="text-[#A3A3A3] mb-8">
             Keranjang belanja Anda kosong. Silakan tambahkan produk terlebih dahulu.
           </p>
           <Link
             href="/catalog"
-            className="inline-flex items-center px-8 py-4 bg-primary-500 text-white rounded-full hover:bg-primary-600 transition-colors font-semibold shadow-sm"
+            className="inline-flex items-center px-8 py-4 bg-gold text-black rounded-xl hover:bg-gold-light transition-all duration-300 font-semibold shadow-lg shadow-gold/10"
           >
             Lihat Katalog
           </Link>
@@ -108,8 +108,8 @@ export default function CheckoutPage() {
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Checkout</h1>
-        <p className="text-gray-500">
+        <h1 className="text-3xl font-bold text-white mb-2">Checkout</h1>
+        <p className="text-[#A3A3A3]">
           Lengkapi informasi pengiriman dan pembayaran Anda
         </p>
       </div>

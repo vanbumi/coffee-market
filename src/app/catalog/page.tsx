@@ -2,6 +2,7 @@
 
 import { Suspense, useState, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { useAllProducts } from '@/hooks/useAllProducts';
 import { CoffeeType } from '@/types/product';
 import ProductGrid from '@/components/ProductGrid';
@@ -108,69 +109,81 @@ function CatalogContent() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Page Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-          Katalog Produk
-        </h1>
-        <p className="text-gray-500">
-          Menampilkan {filteredProducts.length} produk biji kopi premium
-        </p>
-      </div>
-
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Sidebar */}
-        <div className="w-full lg:w-80 flex-shrink-0">
-          <div className="lg:sticky lg:top-24">
-            <FilterSidebar
-              search={search}
-              selectedTypes={selectedTypes}
-              selectedRegions={selectedRegions}
-              minPrice={minPrice}
-              maxPrice={maxPrice}
-              sortBy={sortBy}
-              onSearchChange={(v) => {
-                setSearch(v);
-                setVisibleCount(ITEMS_PER_PAGE);
-              }}
-              onTypeToggle={handleTypeToggle}
-              onRegionToggle={handleRegionToggle}
-              onMinPriceChange={(v) => {
-                setMinPrice(v);
-                setVisibleCount(ITEMS_PER_PAGE);
-              }}
-              onMaxPriceChange={(v) => {
-                setMaxPrice(v);
-                setVisibleCount(ITEMS_PER_PAGE);
-              }}
-              onSortChange={(v) => {
-                setSortBy(v);
-                setVisibleCount(ITEMS_PER_PAGE);
-              }}
-              onReset={handleReset}
-            />
-          </div>
+    <div>
+      {/* Header */}
+      <section className="relative bg-gradient-to-b from-[#111111] to-[#0A0A0A] border-b border-[#2A2A2A] py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumb */}
+          <nav className="flex items-center space-x-2 text-sm text-[#A3A3A3] mb-4">
+            <Link href="/" className="hover:text-gold transition-colors">
+              Home
+            </Link>
+            <span>/</span>
+            <span className="text-gold">Catalog</span>
+          </nav>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+            Our Premium <span className="text-gold">Collection</span>
+          </h1>
+          <p className="text-[#A3A3A3]">
+            Menampilkan {filteredProducts.length} produk biji kopi premium
+          </p>
         </div>
+      </section>
 
-        {/* Product Grid */}
-        <div className="flex-1">
-          {visibleProducts.length > 0 && (
-            <div className="mb-4 text-sm text-gray-500">
-              Menampilkan {visibleProducts.length} dari {filteredProducts.length} produk
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Sidebar */}
+          <div className="w-full lg:w-80 flex-shrink-0">
+            <div className="lg:sticky lg:top-24">
+              <FilterSidebar
+                search={search}
+                selectedTypes={selectedTypes}
+                selectedRegions={selectedRegions}
+                minPrice={minPrice}
+                maxPrice={maxPrice}
+                sortBy={sortBy}
+                onSearchChange={(v) => {
+                  setSearch(v);
+                  setVisibleCount(ITEMS_PER_PAGE);
+                }}
+                onTypeToggle={handleTypeToggle}
+                onRegionToggle={handleRegionToggle}
+                onMinPriceChange={(v) => {
+                  setMinPrice(v);
+                  setVisibleCount(ITEMS_PER_PAGE);
+                }}
+                onMaxPriceChange={(v) => {
+                  setMaxPrice(v);
+                  setVisibleCount(ITEMS_PER_PAGE);
+                }}
+                onSortChange={(v) => {
+                  setSortBy(v);
+                  setVisibleCount(ITEMS_PER_PAGE);
+                }}
+                onReset={handleReset}
+              />
             </div>
-          )}
-          <ProductGrid products={visibleProducts} />
-          {hasMore && (
-            <div className="text-center mt-8">
-              <button
-                onClick={() => setVisibleCount((prev) => prev + ITEMS_PER_PAGE)}
-                className="px-8 py-3 bg-primary-500 text-white rounded-full hover:bg-primary-600 transition-colors font-semibold shadow-sm hover:shadow-md"
-              >
-                Tampilkan Lebih Banyak
-              </button>
-            </div>
-          )}
+          </div>
+
+          {/* Product Grid */}
+          <div className="flex-1">
+            {visibleProducts.length > 0 && (
+              <div className="mb-4 text-sm text-[#A3A3A3] bg-[#111111] rounded-lg px-4 py-2 border border-[#2A2A2A]">
+                Menampilkan {visibleProducts.length} dari {filteredProducts.length} produk
+              </div>
+            )}
+            <ProductGrid products={visibleProducts} />
+            {hasMore && (
+              <div className="text-center mt-8">
+                <button
+                  onClick={() => setVisibleCount((prev) => prev + ITEMS_PER_PAGE)}
+                  className="px-8 py-3 bg-gold text-black rounded-xl hover:bg-gold-light transition-all duration-300 font-semibold shadow-lg shadow-gold/10 hover:shadow-gold/20"
+                >
+                  Tampilkan Lebih Banyak
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -179,42 +192,46 @@ function CatalogContent() {
 
 function CatalogFallback() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-          Katalog Produk
-        </h1>
-        <p className="text-gray-500">Memuat katalog...</p>
-      </div>
-      <div className="flex flex-col lg:flex-row gap-8">
-        <div className="w-full lg:w-80 flex-shrink-0">
-          <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-6 animate-pulse">
-            <div className="h-10 bg-gray-200 rounded-lg" />
-            <div className="h-10 bg-gray-200 rounded-lg" />
-            <div className="space-y-2">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-6 bg-gray-200 rounded" />
-              ))}
-            </div>
-            <div className="space-y-2">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="h-6 bg-gray-200 rounded" />
-              ))}
-            </div>
-            <div className="h-16 bg-gray-200 rounded-lg" />
-            <div className="h-10 bg-gray-200 rounded-lg" />
-          </div>
+    <div>
+      <section className="relative bg-gradient-to-b from-[#111111] to-[#0A0A0A] border-b border-[#2A2A2A] py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+            Our Premium <span className="text-gold">Collection</span>
+          </h1>
+          <p className="text-[#A3A3A3]">Memuat katalog...</p>
         </div>
-        <div className="flex-1">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="bg-white rounded-xl border border-gray-200 p-4 animate-pulse">
-                <div className="aspect-square bg-gray-200 rounded-lg mb-4" />
-                <div className="h-5 bg-gray-200 rounded mb-2" />
-                <div className="h-4 bg-gray-200 rounded w-2/3 mb-2" />
-                <div className="h-4 bg-gray-200 rounded w-1/2" />
+      </section>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="w-full lg:w-80 flex-shrink-0">
+            <div className="bg-[#111111] rounded-xl border border-[#2A2A2A] p-6 space-y-6 animate-pulse">
+              <div className="h-10 bg-[#2A2A2A] rounded-lg" />
+              <div className="h-10 bg-[#2A2A2A] rounded-lg" />
+              <div className="space-y-2">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="h-6 bg-[#2A2A2A] rounded" />
+                ))}
               </div>
-            ))}
+              <div className="space-y-2">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="h-6 bg-[#2A2A2A] rounded" />
+                ))}
+              </div>
+              <div className="h-16 bg-[#2A2A2A] rounded-lg" />
+              <div className="h-10 bg-[#2A2A2A] rounded-lg" />
+            </div>
+          </div>
+          <div className="flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-4 animate-pulse">
+                  <div className="aspect-square bg-[#2A2A2A] rounded-lg mb-4" />
+                  <div className="h-5 bg-[#2A2A2A] rounded mb-2" />
+                  <div className="h-4 bg-[#2A2A2A] rounded w-2/3 mb-2" />
+                  <div className="h-4 bg-[#2A2A2A] rounded w-1/2" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

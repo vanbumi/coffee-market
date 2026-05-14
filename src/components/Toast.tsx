@@ -28,28 +28,22 @@ export default function Toast({
 
   if (!isVisible) return null;
 
-  const bgColor = {
-    success: 'bg-primary-500',
-    error: 'bg-red-500',
-    info: 'bg-blue-500',
-  }[type];
-
-  const icon = {
-    success: '✓',
-    error: '✕',
-    info: 'ℹ',
+  const config = {
+    success: { bg: 'bg-gold/90', border: 'border-gold', icon: '✓', text: 'text-black' },
+    error: { bg: 'bg-red-600/90', border: 'border-red-500', icon: '✕', text: 'text-white' },
+    info: { bg: 'bg-gold/80', border: 'border-gold', icon: 'ℹ', text: 'text-black' },
   }[type];
 
   return (
-    <div className="fixed top-20 right-4 z-[100] animate-slide-in">
+    <div className="fixed top-24 right-4 z-[100] animate-slide-in">
       <div
-        className={`${bgColor} text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-3 min-w-[280px]`}
+        className={`${config.bg} ${config.text} backdrop-blur-xl border ${config.border} px-6 py-3.5 rounded-xl shadow-2xl flex items-center space-x-3 min-w-[300px] shadow-black/20`}
       >
-        <span className="text-lg font-bold">{icon}</span>
-        <span className="text-sm font-medium">{message}</span>
+        <span className="text-lg font-bold">{config.icon}</span>
+        <span className="text-sm font-medium flex-1">{message}</span>
         <button
           onClick={onClose}
-          className="ml-auto text-white/80 hover:text-white"
+          className={`ml-auto ${config.text}/60 hover:${config.text} transition-colors`}
         >
           ✕
         </button>

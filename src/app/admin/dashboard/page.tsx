@@ -191,21 +191,21 @@ export default function AdminDashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#0A0A0A]">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 shadow-sm">
+      <header className="bg-[#111111] border-b border-[#2A2A2A] shadow-sm shadow-black/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-              <p className="text-sm text-gray-500 mt-1">
+              <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
+              <p className="text-sm text-[#A3A3A3] mt-1">
                 Kelola produk dan upload gambar kopi ke Cloudinary
               </p>
             </div>
             <div className="flex items-center gap-3">
               <a
                 href="/"
-                className="inline-flex items-center px-4 py-2 text-sm text-gray-600 hover:text-gray-900 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+                className="inline-flex items-center px-4 py-2 text-sm text-[#A3A3A3] hover:text-white bg-[#1A1A1A] hover:bg-[#2A2A2A] border border-[#2A2A2A] rounded-lg transition-all"
               >
                 <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -216,7 +216,7 @@ export default function AdminDashboardPage() {
               <form action="/api/admin/logout" method="POST">
                 <button
                   type="submit"
-                  className="inline-flex items-center px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors shadow-sm"
+                  className="inline-flex items-center px-4 py-2 text-sm text-black bg-gold hover:bg-gold-light rounded-lg transition-all shadow-sm font-medium"
                 >
                   <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -233,19 +233,19 @@ export default function AdminDashboardPage() {
         {/* Notification */}
         {notification && (
           <div
-            className={`mb-6 px-4 py-3 rounded-lg shadow-sm border flex items-center justify-between ${
+            className={`mb-6 px-4 py-3 rounded-xl border flex items-center justify-between backdrop-blur-sm ${
               notification.type === 'success'
-                ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
-                : 'bg-red-50 border-red-200 text-red-800'
+                ? 'bg-gold/10 border-gold/30 text-gold'
+                : 'bg-red-500/10 border-red-500/30 text-red-400'
             }`}
           >
             <div className="flex items-center gap-2">
               {notification.type === 'success' ? (
-                <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               ) : (
-                <svg className="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               )}
@@ -263,13 +263,13 @@ export default function AdminDashboardPage() {
         )}
 
         {/* Tabs */}
-        <div className="flex gap-1 mb-6 bg-white rounded-xl p-1 border border-gray-200 shadow-sm">
+        <div className="flex gap-1 mb-6 bg-[#111111] rounded-xl p-1 border border-[#2A2A2A] shadow-sm shadow-black/20">
           <button
             onClick={() => setActiveTab('add')}
             className={`flex-1 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
               activeTab === 'add'
-                ? 'bg-primary-500 text-white shadow-sm'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                ? 'bg-gold text-black shadow-sm shadow-gold/20'
+                : 'text-[#A3A3A3] hover:text-white hover:bg-[#1A1A1A]'
             }`}
           >
             <span className="hidden sm:inline">➕ </span>
@@ -279,8 +279,8 @@ export default function AdminDashboardPage() {
             onClick={() => setActiveTab('manage')}
             className={`flex-1 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
               activeTab === 'manage'
-                ? 'bg-primary-500 text-white shadow-sm'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                ? 'bg-gold text-black shadow-sm shadow-gold/20'
+                : 'text-[#A3A3A3] hover:text-white hover:bg-[#1A1A1A]'
             }`}
           >
             <span className="hidden sm:inline">📦 </span>
@@ -294,11 +294,11 @@ export default function AdminDashboardPage() {
             {/* Left Column: Upload & Gallery */}
             <div className="lg:col-span-1 space-y-6">
               {/* Upload Widget */}
-              <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              <div className="bg-[#111111] rounded-xl border border-[#2A2A2A] p-6 shadow-sm shadow-black/20">
+                <h2 className="text-lg font-semibold text-white mb-4">
                   Upload Gambar
                 </h2>
-                <p className="text-sm text-gray-500 mb-4">
+                <p className="text-sm text-[#A3A3A3] mb-4">
                   Upload gambar produk kopi ke Cloudinary. Format: JPG, PNG, WebP.
                 </p>
 
@@ -312,18 +312,18 @@ export default function AdminDashboardPage() {
                     sources: ['local', 'url', 'camera'],
                     styles: {
                       palette: {
-                        window: '#FFFFFF',
-                        sourceBg: '#F8FAFC',
-                        windowBorder: '#E2E8F0',
-                        tabIcon: '#10B981',
-                        inactiveTabIcon: '#94A3B8',
-                        menuIcons: '#64748B',
-                        link: '#10B981',
-                        action: '#10B981',
-                        inProgress: '#10B981',
+                        window: '#1A1A1A',
+                        sourceBg: '#111111',
+                        windowBorder: '#2A2A2A',
+                        tabIcon: '#D4AF37',
+                        inactiveTabIcon: '#555555',
+                        menuIcons: '#A3A3A3',
+                        link: '#D4AF37',
+                        action: '#D4AF37',
+                        inProgress: '#D4AF37',
                         complete: '#22C55E',
                         error: '#EF4444',
-                        textDark: '#1E293B',
+                        textDark: '#FFFFFF',
                         textLight: '#FFFFFF',
                       },
                     },
@@ -333,24 +333,24 @@ export default function AdminDashboardPage() {
                     <button
                       type="button"
                       onClick={() => open()}
-                      className="w-full px-4 py-8 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-primary-400 hover:text-primary-500 hover:bg-primary-50/50 transition-all flex flex-col items-center gap-2"
+                      className="w-full px-4 py-8 border-2 border-dashed border-[#2A2A2A] rounded-xl text-[#555555] hover:border-gold/40 hover:text-gold hover:bg-gold/5 transition-all flex flex-col items-center gap-2 group"
                     >
-                      <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-10 h-10 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                       <span className="text-sm font-medium">Klik untuk Upload</span>
-                      <span className="text-xs text-gray-400">Maks 5 gambar, 5MB per file</span>
+                      <span className="text-xs text-[#555555] group-hover:text-[#A3A3A3] transition-colors">Maks 5 gambar, 5MB per file</span>
                     </button>
                   )}
                 </CldUploadWidget>
               </div>
 
               {/* Image Gallery Preview */}
-              <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              <div className="bg-[#111111] rounded-xl border border-[#2A2A2A] p-6 shadow-sm shadow-black/20">
+                <h2 className="text-lg font-semibold text-white mb-4">
                   Preview Gambar
                   {uploadedImages.length > 0 && (
-                    <span className="ml-2 text-sm font-normal text-gray-500">
+                    <span className="ml-2 text-sm font-normal text-[#A3A3A3]">
                       ({uploadedImages.length} gambar)
                     </span>
                   )}
@@ -365,16 +365,16 @@ export default function AdminDashboardPage() {
             {/* Right Column: Product Form */}
             <div className="lg:col-span-2">
               <form onSubmit={handleSubmit}>
-                <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-6">
+                <div className="bg-[#111111] rounded-xl border border-[#2A2A2A] p-6 shadow-sm shadow-black/20">
+                  <h2 className="text-lg font-semibold text-white mb-6">
                     Form Tambah Produk
                   </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {/* Nama Produk */}
                     <div className="md:col-span-2">
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1.5">
-                        Nama Produk <span className="text-red-500">*</span>
+                      <label htmlFor="name" className="block text-sm font-medium text-[#A3A3A3] mb-1.5">
+                        Nama Produk <span className="text-red-400">*</span>
                       </label>
                       <input
                         type="text"
@@ -383,15 +383,15 @@ export default function AdminDashboardPage() {
                         value={form.name}
                         onChange={handleFormChange}
                         placeholder="Contoh: Gayo Wine Honey"
-                        className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all text-sm"
+                        className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#2A2A2A] rounded-lg focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none transition-all text-sm text-white placeholder-[#555555]"
                         required
                       />
                     </div>
 
                     {/* Harga */}
                     <div>
-                      <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1.5">
-                        Harga (Rp) <span className="text-red-500">*</span>
+                      <label htmlFor="price" className="block text-sm font-medium text-[#A3A3A3] mb-1.5">
+                        Harga (Rp) <span className="text-red-400">*</span>
                       </label>
                       <input
                         type="number"
@@ -401,14 +401,14 @@ export default function AdminDashboardPage() {
                         onChange={handleFormChange}
                         placeholder="200000"
                         min="0"
-                        className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all text-sm"
+                        className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#2A2A2A] rounded-lg focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none transition-all text-sm text-white placeholder-[#555555]"
                         required
                       />
                     </div>
 
                     {/* Stok */}
                     <div>
-                      <label htmlFor="stock" className="block text-sm font-medium text-gray-700 mb-1.5">
+                      <label htmlFor="stock" className="block text-sm font-medium text-[#A3A3A3] mb-1.5">
                         Stok (kg)
                       </label>
                       <input
@@ -419,14 +419,14 @@ export default function AdminDashboardPage() {
                         onChange={handleFormChange}
                         placeholder="50"
                         min="0"
-                        className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all text-sm"
+                        className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#2A2A2A] rounded-lg focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none transition-all text-sm text-white placeholder-[#555555]"
                       />
                     </div>
 
                     {/* Asal Daerah */}
                     <div>
-                      <label htmlFor="origin" className="block text-sm font-medium text-gray-700 mb-1.5">
-                        Asal Daerah <span className="text-red-500">*</span>
+                      <label htmlFor="origin" className="block text-sm font-medium text-[#A3A3A3] mb-1.5">
+                        Asal Daerah <span className="text-red-400">*</span>
                       </label>
                       <input
                         type="text"
@@ -435,22 +435,22 @@ export default function AdminDashboardPage() {
                         value={form.origin}
                         onChange={handleFormChange}
                         placeholder="Contoh: Aceh, Toraja, Bali"
-                        className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all text-sm"
+                        className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#2A2A2A] rounded-lg focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none transition-all text-sm text-white placeholder-[#555555]"
                         required
                       />
                     </div>
 
                     {/* Tipe Kopi */}
                     <div>
-                      <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-1.5">
-                        Tipe Kopi <span className="text-red-500">*</span>
+                      <label htmlFor="type" className="block text-sm font-medium text-[#A3A3A3] mb-1.5">
+                        Tipe Kopi <span className="text-red-400">*</span>
                       </label>
                       <select
                         id="type"
                         name="type"
                         value={form.type}
                         onChange={handleFormChange}
-                        className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all text-sm bg-white"
+                        className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#2A2A2A] rounded-lg focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none transition-all text-sm text-white"
                         required
                       >
                         <option value="Arabica">Arabica</option>
@@ -461,7 +461,7 @@ export default function AdminDashboardPage() {
 
                     {/* Roast Level */}
                     <div>
-                      <label htmlFor="roastedLevel" className="block text-sm font-medium text-gray-700 mb-1.5">
+                      <label htmlFor="roastedLevel" className="block text-sm font-medium text-[#A3A3A3] mb-1.5">
                         Roast Level
                       </label>
                       <select
@@ -469,7 +469,7 @@ export default function AdminDashboardPage() {
                         name="roastedLevel"
                         value={form.roastedLevel}
                         onChange={handleFormChange}
-                        className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all text-sm bg-white"
+                        className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#2A2A2A] rounded-lg focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none transition-all text-sm text-white"
                       >
                         <option value="light">Light Roast</option>
                         <option value="medium">Medium Roast</option>
@@ -479,7 +479,7 @@ export default function AdminDashboardPage() {
 
                     {/* Processing Method */}
                     <div>
-                      <label htmlFor="processing" className="block text-sm font-medium text-gray-700 mb-1.5">
+                      <label htmlFor="processing" className="block text-sm font-medium text-[#A3A3A3] mb-1.5">
                         Metode Proses
                       </label>
                       <select
@@ -487,7 +487,7 @@ export default function AdminDashboardPage() {
                         name="processing"
                         value={form.processing}
                         onChange={handleFormChange}
-                        className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all text-sm bg-white"
+                        className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#2A2A2A] rounded-lg focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none transition-all text-sm text-white"
                       >
                         <option value="natural">Natural</option>
                         <option value="washed">Washed</option>
@@ -500,7 +500,7 @@ export default function AdminDashboardPage() {
 
                     {/* Deskripsi */}
                     <div className="md:col-span-2">
-                      <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1.5">
+                      <label htmlFor="description" className="block text-sm font-medium text-[#A3A3A3] mb-1.5">
                         Deskripsi Produk
                       </label>
                       <textarea
@@ -510,7 +510,7 @@ export default function AdminDashboardPage() {
                         onChange={handleFormChange}
                         rows={4}
                         placeholder="Deskripsi singkat tentang produk kopi ini..."
-                        className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all text-sm resize-none"
+                        className="w-full px-4 py-2.5 bg-[#0A0A0A] border border-[#2A2A2A] rounded-lg focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none transition-all text-sm text-white placeholder-[#555555] resize-none"
                       />
                     </div>
                   </div>
@@ -520,12 +520,12 @@ export default function AdminDashboardPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="px-6 py-3 bg-primary-500 hover:bg-primary-600 disabled:bg-primary-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold text-sm transition-all shadow-sm hover:shadow-md flex items-center gap-2"
+                      className="px-6 py-3 bg-gold hover:bg-gold-light disabled:bg-gold/50 disabled:cursor-not-allowed text-black rounded-lg font-semibold text-sm transition-all shadow-sm shadow-gold/20 hover:shadow-gold/30 flex items-center gap-2"
                     >
                       {isSubmitting ? (
                         <>
                           {/* Loading Spinner */}
-                          <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <svg className="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                           </svg>
@@ -546,7 +546,7 @@ export default function AdminDashboardPage() {
                         setForm(initialFormState);
                         setUploadedImages([]);
                       }}
-                      className="px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors text-sm font-medium"
+                      className="px-4 py-3 text-[#A3A3A3] hover:text-white hover:bg-[#1A1A1A] rounded-lg transition-colors text-sm font-medium"
                     >
                       Reset Form
                     </button>
@@ -557,19 +557,19 @@ export default function AdminDashboardPage() {
           </div>
         ) : (
           /* Manage Products Tab */
-          <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+          <div className="bg-[#111111] rounded-xl border border-[#2A2A2A] p-6 shadow-sm shadow-black/20">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-lg font-semibold text-gray-900">
+                <h2 className="text-lg font-semibold text-white">
                   Kelola Produk Admin
                 </h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-[#A3A3A3] mt-1">
                   Produk yang ditambahkan melalui dashboard ini
                 </p>
               </div>
               <button
                 onClick={fetchAdminProducts}
-                className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+                className="p-2 text-[#555555] hover:text-gold hover:bg-gold/10 rounded-lg transition-all"
                 title="Refresh data"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -582,13 +582,13 @@ export default function AdminDashboardPage() {
               // Loading state
               <div className="space-y-3">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="bg-gray-50 rounded-lg p-4 animate-pulse flex items-center gap-4">
-                    <div className="w-16 h-16 bg-gray-200 rounded-lg" />
+                  <div key={i} className="bg-[#1A1A1A] rounded-lg p-4 animate-pulse flex items-center gap-4 border border-[#2A2A2A]">
+                    <div className="w-16 h-16 bg-[#2A2A2A] rounded-lg" />
                     <div className="flex-1 space-y-2">
-                      <div className="h-4 bg-gray-200 rounded w-1/3" />
-                      <div className="h-3 bg-gray-200 rounded w-1/4" />
+                      <div className="h-4 bg-[#2A2A2A] rounded w-1/3" />
+                      <div className="h-3 bg-[#2A2A2A] rounded w-1/4" />
                     </div>
-                    <div className="w-8 h-8 bg-gray-200 rounded-lg" />
+                    <div className="w-8 h-8 bg-[#2A2A2A] rounded-lg" />
                   </div>
                 ))}
               </div>

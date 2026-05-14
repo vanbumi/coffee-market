@@ -55,16 +55,16 @@ export default function CartPage() {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
-          <div className="text-8xl mb-6">🛒</div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-3">
+          <div className="text-8xl mb-6 opacity-50">🛒</div>
+          <h1 className="text-3xl font-bold text-white mb-3">
             Keranjang Belanja Kosong
           </h1>
-          <p className="text-gray-500 mb-8 max-w-md mx-auto">
+          <p className="text-[#A3A3A3] mb-8 max-w-md mx-auto">
             Anda belum menambahkan produk apapun ke keranjang. Yuk, jelajahi katalog kami!
           </p>
           <Link
             href="/catalog"
-            className="inline-flex items-center px-8 py-4 bg-primary-500 text-white rounded-full hover:bg-primary-600 transition-colors font-semibold text-lg shadow-sm"
+            className="inline-flex items-center px-8 py-4 bg-gold text-black rounded-xl hover:bg-gold-light transition-all duration-300 font-semibold text-lg shadow-lg shadow-gold/10"
           >
             <svg
               className="h-5 w-5 mr-2"
@@ -97,15 +97,15 @@ export default function CartPage() {
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="text-3xl font-bold text-white mb-2">
           Keranjang Belanja
         </h1>
-        <p className="text-gray-500">
+        <p className="text-[#A3A3A3]">
           {items.length} item ({items.reduce((sum, i) => sum + i.quantity, 0)} kg)
         </p>
       </div>
 
-      {/* Mobile: Items on top, Summary below */}
+      {/* Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Cart Items */}
         <div className="lg:col-span-2 space-y-4">

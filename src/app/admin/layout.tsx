@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Admin Dashboard - Coffee Market',
-  description: 'Kelola produk dan upload gambar kopi',
+  title: 'Admin Dashboard - Saudara Coffee',
+  description: 'Kelola produk dan upload gambar kopi - Premium Coffee Roastery',
 };
 
 export default function AdminLayout({
@@ -11,7 +11,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#0A0A0A]">
       {children}
     </div>
   );

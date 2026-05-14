@@ -95,68 +95,68 @@ export default function CheckoutForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Shipping Form */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="text-lg font-bold text-gray-900 mb-6">
+      <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6">
+        <h2 className="text-lg font-bold text-gold mb-6 tracking-wide">
           Informasi Pengiriman
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Nama Lengkap <span className="text-red-500">*</span>
+            <label className="block text-sm font-medium text-white mb-1">
+              Nama Lengkap <span className="text-red-400">*</span>
             </label>
             <input
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm ${
-                errors.fullName ? 'border-red-500' : 'border-gray-200'
+              className={`w-full px-3 py-2.5 bg-[#111111] border rounded-lg text-white placeholder-[#A3A3A3] text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300 ${
+                errors.fullName ? 'border-red-500' : 'border-[#2A2A2A]'
               }`}
               placeholder="Masukkan nama lengkap"
             />
             {errors.fullName && (
-              <p className="text-xs text-red-500 mt-1">{errors.fullName}</p>
+              <p className="text-xs text-red-400 mt-1">{errors.fullName}</p>
             )}
           </div>
 
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Nomor HP <span className="text-red-500">*</span>
+            <label className="block text-sm font-medium text-white mb-1">
+              Nomor HP <span className="text-red-400">*</span>
             </label>
             <input
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm ${
-                errors.phone ? 'border-red-500' : 'border-gray-200'
+              className={`w-full px-3 py-2.5 bg-[#111111] border rounded-lg text-white placeholder-[#A3A3A3] text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300 ${
+                errors.phone ? 'border-red-500' : 'border-[#2A2A2A]'
               }`}
               placeholder="08xxxxxxxxxx"
             />
             {errors.phone && (
-              <p className="text-xs text-red-500 mt-1">{errors.phone}</p>
+              <p className="text-xs text-red-400 mt-1">{errors.phone}</p>
             )}
           </div>
 
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Alamat Lengkap <span className="text-red-500">*</span>
+            <label className="block text-sm font-medium text-white mb-1">
+              Alamat Lengkap <span className="text-red-400">*</span>
             </label>
             <textarea
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               rows={3}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm ${
-                errors.address ? 'border-red-500' : 'border-gray-200'
+              className={`w-full px-3 py-2.5 bg-[#111111] border rounded-lg text-white placeholder-[#A3A3A3] text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300 ${
+                errors.address ? 'border-red-500' : 'border-[#2A2A2A]'
               }`}
               placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan/desa"
             />
             {errors.address && (
-              <p className="text-xs text-red-500 mt-1">{errors.address}</p>
+              <p className="text-xs text-red-400 mt-1">{errors.address}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Provinsi <span className="text-red-500">*</span>
+            <label className="block text-sm font-medium text-white mb-1">
+              Provinsi <span className="text-red-400">*</span>
             </label>
             <select
               value={province}
@@ -164,8 +164,8 @@ export default function CheckoutForm({
                 setProvince(e.target.value);
                 setCity('');
               }}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white ${
-                errors.province ? 'border-red-500' : 'border-gray-200'
+              className={`w-full px-3 py-2.5 bg-[#111111] border rounded-lg text-white text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300 ${
+                errors.province ? 'border-red-500' : 'border-[#2A2A2A]'
               }`}
             >
               <option value="">Pilih Provinsi</option>
@@ -176,20 +176,20 @@ export default function CheckoutForm({
               ))}
             </select>
             {errors.province && (
-              <p className="text-xs text-red-500 mt-1">{errors.province}</p>
+              <p className="text-xs text-red-400 mt-1">{errors.province}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Kota/Kabupaten <span className="text-red-500">*</span>
+            <label className="block text-sm font-medium text-white mb-1">
+              Kota/Kabupaten <span className="text-red-400">*</span>
             </label>
             <select
               value={city}
               onChange={(e) => setCity(e.target.value)}
               disabled={!province}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white ${
-                errors.city ? 'border-red-500' : 'border-gray-200'
+              className={`w-full px-3 py-2.5 bg-[#111111] border rounded-lg text-white text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300 ${
+                errors.city ? 'border-red-500' : 'border-[#2A2A2A]'
               }`}
             >
               <option value="">Pilih Kota</option>
@@ -200,51 +200,51 @@ export default function CheckoutForm({
               ))}
             </select>
             {errors.city && (
-              <p className="text-xs text-red-500 mt-1">{errors.city}</p>
+              <p className="text-xs text-red-400 mt-1">{errors.city}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Kecamatan <span className="text-red-500">*</span>
+            <label className="block text-sm font-medium text-white mb-1">
+              Kecamatan <span className="text-red-400">*</span>
             </label>
             <input
               type="text"
               value={district}
               onChange={(e) => setDistrict(e.target.value)}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm ${
-                errors.district ? 'border-red-500' : 'border-gray-200'
+              className={`w-full px-3 py-2.5 bg-[#111111] border rounded-lg text-white placeholder-[#A3A3A3] text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300 ${
+                errors.district ? 'border-red-500' : 'border-[#2A2A2A]'
               }`}
               placeholder="Kecamatan"
             />
             {errors.district && (
-              <p className="text-xs text-red-500 mt-1">{errors.district}</p>
+              <p className="text-xs text-red-400 mt-1">{errors.district}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Kode Pos <span className="text-red-500">*</span>
+            <label className="block text-sm font-medium text-white mb-1">
+              Kode Pos <span className="text-red-400">*</span>
             </label>
             <input
               type="number"
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
-              className={`w-full px-3 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm ${
-                errors.postalCode ? 'border-red-500' : 'border-gray-200'
+              className={`w-full px-3 py-2.5 bg-[#111111] border rounded-lg text-white placeholder-[#A3A3A3] text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300 ${
+                errors.postalCode ? 'border-red-500' : 'border-[#2A2A2A]'
               }`}
               placeholder="Kode pos"
             />
             {errors.postalCode && (
-              <p className="text-xs text-red-500 mt-1">{errors.postalCode}</p>
+              <p className="text-xs text-red-400 mt-1">{errors.postalCode}</p>
             )}
           </div>
         </div>
       </div>
 
       {/* Shipping Method */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="text-lg font-bold text-gray-900 mb-4">
+      <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6">
+        <h2 className="text-lg font-bold text-gold mb-4 tracking-wide">
           Metode Pengiriman
         </h2>
         <div className="space-y-3">
@@ -253,8 +253,8 @@ export default function CheckoutForm({
               key={method.id}
               className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${
                 shippingMethod === method.id
-                  ? 'border-primary-500 bg-primary-50'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'border-gold/50 bg-gold/5'
+                  : 'border-[#2A2A2A] hover:border-gold/30 bg-[#111111]'
               }`}
             >
               <input
@@ -263,19 +263,18 @@ export default function CheckoutForm({
                 value={method.id}
                 checked={shippingMethod === method.id}
                 onChange={(e) => setShippingMethod(e.target.value)}
-                className="w-4 h-4 text-primary-500 focus:ring-primary-500"
               />
               <div className="ml-3 flex-1">
-                <p className="font-medium text-gray-900">{method.name}</p>
-                <p className="text-sm text-gray-500">
+                <p className="font-medium text-white">{method.name}</p>
+                <p className="text-sm text-[#A3A3A3]">
                   Estimasi: {method.estimatedDays}
                 </p>
               </div>
               <div className="text-right">
-                <p className="font-semibold text-primary-500">
+                <p className="font-semibold text-gold">
                   {formatRupiah(method.pricePerKg)}/kg
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-[#A3A3A3]">
                   Min: {formatRupiah(method.minPrice)}
                 </p>
               </div>
@@ -283,13 +282,13 @@ export default function CheckoutForm({
           ))}
         </div>
         {errors.shippingMethod && (
-          <p className="text-xs text-red-500 mt-2">{errors.shippingMethod}</p>
+          <p className="text-xs text-red-400 mt-2">{errors.shippingMethod}</p>
         )}
       </div>
 
       {/* Payment Method */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="text-lg font-bold text-gray-900 mb-4">
+      <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6">
+        <h2 className="text-lg font-bold text-gold mb-4 tracking-wide">
           Metode Pembayaran
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -298,8 +297,8 @@ export default function CheckoutForm({
               key={method.id}
               className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${
                 paymentMethod === method.id
-                  ? 'border-primary-500 bg-primary-50'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'border-gold/50 bg-gold/5'
+                  : 'border-[#2A2A2A] hover:border-gold/30 bg-[#111111]'
               }`}
             >
               <input
@@ -308,22 +307,21 @@ export default function CheckoutForm({
                 value={method.id}
                 checked={paymentMethod === method.id}
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                className="w-4 h-4 text-primary-500 focus:ring-primary-500"
               />
-              <span className="ml-3 text-sm font-medium text-gray-900">
+              <span className="ml-3 text-sm font-medium text-white">
                 {method.label}
               </span>
             </label>
           ))}
         </div>
         {errors.paymentMethod && (
-          <p className="text-xs text-red-500 mt-2">{errors.paymentMethod}</p>
+          <p className="text-xs text-red-400 mt-2">{errors.paymentMethod}</p>
         )}
       </div>
 
       {/* Order Summary */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="text-lg font-bold text-gray-900 mb-4">
+      <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6">
+        <h2 className="text-lg font-bold text-gold mb-4 tracking-wide">
           Ringkasan Pesanan
         </h2>
         <div className="space-y-3">
@@ -332,41 +330,41 @@ export default function CheckoutForm({
               key={item.id}
               className="flex items-center justify-between text-sm"
             >
-              <span className="text-gray-600">
+              <span className="text-[#A3A3A3]">
                 {item.product.name} x{item.quantity}
               </span>
-              <span className="font-medium text-gray-900">
+              <span className="font-medium text-white">
                 {formatRupiah(item.product.price * item.quantity)}
               </span>
             </div>
           ))}
         </div>
-        <div className="border-t border-gray-100 mt-4 pt-4 space-y-2">
+        <div className="border-t border-[#2A2A2A] mt-4 pt-4 space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-500">Subtotal</span>
-            <span className="font-medium text-gray-900">{formatRupiah(subtotal)}</span>
+            <span className="text-[#A3A3A3]">Subtotal</span>
+            <span className="font-medium text-white">{formatRupiah(subtotal)}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-500">Biaya Pengiriman</span>
-            <span className="font-medium text-gray-900">
+            <span className="text-[#A3A3A3]">Biaya Pengiriman</span>
+            <span className="font-medium text-white">
               {shippingMethod ? formatRupiah(finalShippingCost) : '-'}
             </span>
           </div>
           {discount > 0 && (
-            <div className="flex justify-between text-sm text-primary-600">
+            <div className="flex justify-between text-sm text-gold">
               <span>Diskon ({discountPercent}%)</span>
               <span>-{formatRupiah(discount)}</span>
             </div>
           )}
           {freeShip && (
-            <div className="flex justify-between text-sm text-primary-600">
+            <div className="flex justify-between text-sm text-gold">
               <span>Gratis Ongkir</span>
               <span>-{formatRupiah(shippingCost)}</span>
             </div>
           )}
-          <div className="flex justify-between text-lg font-bold border-t border-gray-100 pt-2">
-            <span className="text-gray-900">Total</span>
-            <span className="text-primary-500">{formatRupiah(total)}</span>
+          <div className="flex justify-between text-lg font-bold border-t border-[#2A2A2A] pt-2">
+            <span className="text-white">Total</span>
+            <span className="text-gold">{formatRupiah(total)}</span>
           </div>
         </div>
       </div>
@@ -374,7 +372,7 @@ export default function CheckoutForm({
       {/* Submit Button */}
       <button
         type="submit"
-        className="w-full py-4 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-bold text-lg transition-colors shadow-sm hover:shadow-md"
+        className="w-full py-4 bg-gold hover:bg-gold-light text-black rounded-xl font-bold text-lg transition-all duration-300 shadow-lg shadow-gold/10 hover:shadow-gold/20"
       >
         Buat Pesanan
       </button>
