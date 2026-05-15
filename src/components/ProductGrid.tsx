@@ -15,14 +15,14 @@ export default function ProductGrid({ products, loading = false }: ProductGridPr
         {Array.from({ length: 8 }).map((_, i) => (
           <div
             key={i}
-            className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] overflow-hidden animate-pulse"
+            className="bg-surface-card rounded-xl border border-border overflow-hidden animate-pulse"
           >
-            <div className="h-48 sm:h-56 bg-[#2A2A2A]" />
+            <div className="h-48 sm:h-56 bg-surface-hover" />
             <div className="p-4 space-y-3">
-              <div className="h-5 bg-[#2A2A2A] rounded w-3/4" />
-              <div className="h-4 bg-[#2A2A2A] rounded w-1/2" />
-              <div className="h-3 bg-[#2A2A2A] rounded w-full" />
-              <div className="h-6 bg-[#2A2A2A] rounded w-1/3" />
+              <div className="h-5 bg-surface-hover rounded w-3/4" />
+              <div className="h-4 bg-surface-hover rounded w-1/2" />
+              <div className="h-3 bg-surface-hover rounded w-full" />
+              <div className="h-6 bg-surface-hover rounded w-1/3" />
             </div>
           </div>
         ))}
@@ -34,10 +34,10 @@ export default function ProductGrid({ products, loading = false }: ProductGridPr
     return (
       <div className="text-center py-16">
         <div className="text-6xl mb-4">🔍</div>
-        <h3 className="text-xl font-semibold text-white mb-2">
+        <h3 className="text-xl font-semibold text-text-primary mb-2">
           Produk Tidak Ditemukan
         </h3>
-        <p className="text-[#A3A3A3]">
+        <p className="text-text-secondary">
           Coba ubah filter atau kata kunci pencarian Anda
         </p>
       </div>

@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDynamicProducts, saveDynamicProducts } from '@/utils/productStore';
+import { db } from '@/db';
+import { products } from '@/db/schema';
+import { eq } from 'drizzle-orm';
 
 /**
  * DELETE /api/products/[id]
- * Menghapus produk dinamis (dari admin) berdasarkan ID
+ * Menghapus produk dari database Turso berdasarkan ID
  */
 export async function DELETE(
   _request: NextRequest,
@@ -11,24 +13,36 @@ export async function DELETE(
 ) {
   try {
     const { id } = params;
-    const existingProducts = getDynamicProducts();
+    const productId = Number(id);
 
-    const productIndex = existingProducts.findIndex((p) => p.id === id);
-    if (productIndex === -1) {
+    if (isNaN(productId)) {
+      return NextResponse.json(
+        { success: false, message: 'ID produk tidak valid' },
+        { status: 400 }
+      );
+    }
+
+    // Cari produk yang akan dihapus
+    const existingProduct = await db
+      .select()
+      .from(products)
+      .where(eq(products.id, productId))
+      .limit(1);
+
+    if (existingProduct.length === 0) {
       return NextResponse.json(
         { success: false, message: 'Produk tidak ditemukan' },
         { status: 404 }
       );
     }
 
-    const deletedProduct = existingProducts[productIndex];
-    const updatedProducts = existingProducts.filter((p) => p.id !== id);
-    saveDynamicProducts(updatedProducts);
+    // Hapus dari database
+    await db.delete(products).where(eq(products.id, productId));
 
     return NextResponse.json({
       success: true,
-      message: `Produk "${deletedProduct.name}" berhasil dihapus`,
-      data: deletedProduct,
+      message: `Produk "${existingProduct[0].name}" berhasil dihapus`,
+      data: existingProduct[0],
     });
   } catch (error) {
     console.error('Error deleting product:', error);

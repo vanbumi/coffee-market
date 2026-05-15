@@ -56,10 +56,10 @@ export default function CartPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
           <div className="text-8xl mb-6 opacity-50">🛒</div>
-          <h1 className="text-3xl font-bold text-white mb-3">
+          <h1 className="text-3xl font-bold text-text-primary mb-3">
             Keranjang Belanja Kosong
           </h1>
-          <p className="text-[#A3A3A3] mb-8 max-w-md mx-auto">
+          <p className="text-text-secondary mb-8 max-w-md mx-auto">
             Anda belum menambahkan produk apapun ke keranjang. Yuk, jelajahi katalog kami!
           </p>
           <Link
@@ -97,10 +97,10 @@ export default function CartPage() {
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">
+        <h1 className="text-3xl font-bold text-text-primary mb-2">
           Keranjang Belanja
         </h1>
-        <p className="text-[#A3A3A3]">
+        <p className="text-text-secondary">
           {items.length} item ({items.reduce((sum, i) => sum + i.quantity, 0)} kg)
         </p>
       </div>

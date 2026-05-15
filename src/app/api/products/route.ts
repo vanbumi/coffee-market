@@ -1,29 +1,48 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Product } from '@/types/product';
-import { getDynamicProducts, saveDynamicProducts, getAllProducts } from '@/utils/productStore';
+import { db } from '@/db';
+import { products } from '@/db/schema';
+// import { eq } from 'drizzle-orm';
 
 /**
  * GET /api/products
- * Mengembalikan semua produk (statis + dinamis)
- * Atau jika query ?source=dynamic, hanya produk dari admin
+ * Mengembalikan semua produk dari database Turso
+ * Atau jika query ?source=dynamic, ambil dari file (backward compatibility)
  */
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const source = searchParams.get('source');
 
+    // For backward compatibility: fallback to productStore if source=dynamic
     if (source === 'dynamic') {
+      const { getDynamicProducts } = await import('@/utils/productStore');
       return NextResponse.json({
         success: true,
         data: getDynamicProducts(),
       });
     }
 
-    // Default: return all products (static + dynamic)
-    const allProducts = getAllProducts();
+    // Default: read from database
+    const allProducts = await db.select().from(products);
     return NextResponse.json({
       success: true,
-      data: allProducts,
+      data: allProducts.map((p) => ({
+        id: String(p.id),
+        name: p.name,
+        origin: p.origin,
+        region: p.region || 'Indonesia',
+        type: p.type,
+        price: p.price,
+        rating: p.rating || 0,
+        images: p.images ? JSON.parse(p.images) : [],
+        description: p.description || '',
+        altitude: '-',
+        processing: p.processing || 'natural',
+        roastLevel: 'medium',
+        tastingNotes: p.tastingNotes ? JSON.parse(p.tastingNotes) : [],
+        stock: p.inStock || 0,
+        featured: p.featured === 1,
+      })),
     });
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -36,9 +55,7 @@ export async function GET(request: NextRequest) {
 
 /**
  * POST /api/products
- * Menambahkan produk baru ke penyimpanan dinamis (products.json)
- * 
- * Body: Omit<Product, 'id'> (id akan digenerate otomatis)
+ * Menambahkan produk baru ke database Turso
  */
 export async function POST(request: NextRequest) {
   try {
@@ -64,49 +81,27 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate ID dari nama produk
-    const id = body.name
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
-
-    // Cek duplikasi ID
-    const existingDynamic = getDynamicProducts();
-    if (existingDynamic.some((p) => p.id === id)) {
-      return NextResponse.json(
-        { success: false, message: `Produk dengan nama "${body.name}" sudah ada` },
-        { status: 409 }
-      );
-    }
-
-    // Buat objek produk baru
-    const newProduct: Product = {
-      id,
+    // Insert ke database Turso
+    const newProduct = await db.insert(products).values({
       name: body.name,
       origin: body.origin,
       region: body.region || 'Indonesia',
       type: body.type,
       price: Number(body.price),
-      rating: Number(body.rating) || 0,
-      images: body.images || [],
+      images: body.images ? JSON.stringify(body.images) : '[]',
       description: body.description || '',
-      altitude: body.altitude || '-',
+      tastingNotes: body.tastingNotes ? JSON.stringify(body.tastingNotes) : '[]',
       processing: body.processing || 'natural',
-      roastLevel: body.roastLevel || 'medium',
-      tastingNotes: body.tastingNotes || [],
-      stock: Number(body.stock) || 0,
-      featured: body.featured || false,
-    };
-
-    // Append ke array existing dan simpan
-    const updatedProducts = [...existingDynamic, newProduct];
-    saveDynamicProducts(updatedProducts);
+      rating: Number(body.rating) || 0,
+      featured: body.featured ? 1 : 0,
+      inStock: Number(body.stock) || 0,
+    }).returning();
 
     return NextResponse.json(
       {
         success: true,
         message: 'Produk berhasil ditambahkan',
-        data: newProduct,
+        data: newProduct[0],
       },
       { status: 201 }
     );

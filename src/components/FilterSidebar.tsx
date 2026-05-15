@@ -35,7 +35,7 @@ export default function FilterSidebar({
   onReset,
 }: FilterSidebarProps) {
   return (
-    <div className="bg-[#111111] rounded-xl border border-[#2A2A2A] p-6 space-y-6">
+    <div className="bg-surface-alt rounded-xl border border-border p-6 space-y-6">
       {/* Search */}
       <div>
         <label className="block text-sm font-semibold text-gold mb-2 tracking-wide">
@@ -47,10 +47,10 @@ export default function FilterSidebar({
             placeholder="Cari nama atau asal..."
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-[#1A1A1A] border border-[#2A2A2A] rounded-lg text-white placeholder-[#A3A3A3] text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300"
+            className="w-full pl-10 pr-4 py-2.5 bg-surface-card border border-border rounded-lg text-text-primary placeholder-text-secondary text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300"
           />
           <svg
-            className="absolute left-3 top-2.5 h-5 w-5 text-[#A3A3A3]"
+            className="absolute left-3 top-2.5 h-5 w-5 text-text-secondary"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -73,7 +73,7 @@ export default function FilterSidebar({
         <select
           value={sortBy}
           onChange={(e) => onSortChange(e.target.value)}
-          className="w-full px-3 py-2.5 bg-[#1A1A1A] border border-[#2A2A2A] rounded-lg text-white text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300"
+          className="w-full px-3 py-2.5 bg-surface-card border border-border rounded-lg text-text-primary text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300"
         >
           <option value="">Default</option>
           <option value="price-asc">Harga Terendah</option>
@@ -100,7 +100,7 @@ export default function FilterSidebar({
                 checked={selectedTypes.includes(type)}
                 onChange={() => onTypeToggle(type)}
               />
-              <span className="text-sm text-[#A3A3A3] group-hover:text-gold transition-colors">
+              <span className="text-sm text-text-secondary group-hover:text-gold transition-colors">
                 {type}
               </span>
             </label>
@@ -124,7 +124,7 @@ export default function FilterSidebar({
                 checked={selectedRegions.includes(region)}
                 onChange={() => onRegionToggle(region)}
               />
-              <span className="text-sm text-[#A3A3A3] group-hover:text-gold transition-colors">
+              <span className="text-sm text-text-secondary group-hover:text-gold transition-colors">
                 {region}
               </span>
             </label>
@@ -140,7 +140,7 @@ export default function FilterSidebar({
         <div className="space-y-3">
           <div>
             <div className="flex justify-between text-xs mb-1">
-              <span className="text-[#A3A3A3]">Min</span>
+              <span className="text-text-secondary">Min</span>
               <span className="text-gold">Rp {minPrice.toLocaleString()}</span>
             </div>
             <input
@@ -155,7 +155,7 @@ export default function FilterSidebar({
           </div>
           <div>
             <div className="flex justify-between text-xs mb-1">
-              <span className="text-[#A3A3A3]">Max</span>
+              <span className="text-text-secondary">Max</span>
               <span className="text-gold">Rp {maxPrice.toLocaleString()}</span>
             </div>
             <input
@@ -174,7 +174,7 @@ export default function FilterSidebar({
       {/* Reset */}
       <button
         onClick={onReset}
-        className="w-full py-2.5 bg-[#1A1A1A] hover:bg-gold hover:text-black text-gold border border-gold/30 rounded-lg transition-all duration-300 text-sm font-medium"
+        className="w-full py-2.5 bg-surface-card hover:bg-gold hover:text-black text-gold border border-gold/30 rounded-lg transition-all duration-300 text-sm font-medium"
       >
         Reset Filter
       </button>

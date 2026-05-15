@@ -66,10 +66,10 @@ export default function HomePage() {
       {/* ========== HERO SECTION ========== */}
       <section className="relative overflow-hidden">
         {/* Background */}
-        <div className="absolute inset-0 bg-[#0A0A0A]">
+        <div className="absolute inset-0 bg-surface">
           <div className="absolute inset-0 bg-dot-pattern opacity-30" />
           <div className="absolute inset-0 bg-hero-overlay" />
-          <div className="absolute inset-0 bg-gradient-to-b from-gold/5 via-transparent to-[#0A0A0A]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-gold/5 via-transparent to-surface" />
         </div>
         
         {/* Decorative elements */}
@@ -86,13 +86,13 @@ export default function HomePage() {
 
             {/* Heading */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-[1.1] animate-fade-in-up">
-              <span className="text-white">Discover the Art of</span>
+              <span className="text-text-primary">Discover the Art of</span>
               <br />
               <span className="text-gradient-hero">Premium Coffee</span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg md:text-xl text-[#A3A3A3] mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
+            <p className="text-lg md:text-xl text-text-secondary mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
               Menghadirkan biji kopi pilihan terbaik dari seluruh Nusantara. 
               Dari petani kopi pilihan, langsung ke cangkir Anda.
             </p>
@@ -119,7 +119,7 @@ export default function HomePage() {
         </div>
 
         {/* Decorative bottom gradient */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0A0A0A] to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface to-transparent" />
       </section>
 
       {/* ========== STATISTICS SECTION ========== */}
@@ -143,10 +143,10 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="text-center mb-16">
           <span className="text-gold text-sm tracking-widest uppercase font-medium">Categories</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-text-primary mt-3 mb-4">
             Pilih Kategori Kopi Favorit
           </h2>
-          <p className="text-[#A3A3A3] max-w-2xl mx-auto">
+          <p className="text-text-secondary max-w-2xl mx-auto">
             Kami menyediakan berbagai jenis biji kopi premium dari seluruh Nusantara
           </p>
         </div>
@@ -165,17 +165,17 @@ export default function HomePage() {
       </section>
 
       {/* ========== FEATURED PRODUCTS ========== */}
-      <section className="relative py-24 bg-gradient-to-b from-[#0A0A0A] via-[#111111] to-[#0A0A0A] border-y border-[#2A2A2A]">
+      <section className="relative py-24 bg-gradient-to-b from-surface via-surface-alt to-surface border-y border-border">
         {/* Background pattern */}
         <div className="absolute inset-0 bg-dot-pattern opacity-10" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-gold text-sm tracking-widest uppercase font-medium">Featured Products</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mt-3 mb-4">
               Produk Unggulan
             </h2>
-            <p className="text-[#A3A3A3] max-w-2xl mx-auto">
+            <p className="text-text-secondary max-w-2xl mx-auto">
               Koleksi biji kopi terbaik pilihan kami untuk Anda
             </p>
           </div>
@@ -202,7 +202,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="text-center mb-16">
           <span className="text-gold text-sm tracking-widest uppercase font-medium">Why Us</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-text-primary mt-3 mb-4">
             Mengapa Memilih Kami?
           </h2>
         </div>
@@ -215,19 +215,19 @@ export default function HomePage() {
           ].map((item, i) => (
             <div
               key={item.title}
-              className="text-center group p-6 rounded-xl bg-[#111111] border border-[#2A2A2A] hover:border-gold/30 transition-all duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.08)] animate-fade-in-up"
+              className="text-center group p-6 rounded-xl bg-surface-alt border border-border hover:border-gold/30 transition-all duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.08)] animate-fade-in-up"
               style={{ animationDelay: `${i * 100}ms`, animationFillMode: 'both' }}
             >
               <div className="text-5xl mb-5 group-hover:scale-110 transition-transform duration-500">{item.icon}</div>
-              <h3 className="font-bold text-lg text-white mb-2 group-hover:text-gold transition-colors duration-300">{item.title}</h3>
-              <p className="text-[#A3A3A3] text-sm leading-relaxed">{item.desc}</p>
+              <h3 className="font-bold text-lg text-text-primary mb-2 group-hover:text-gold transition-colors duration-300">{item.title}</h3>
+              <p className="text-text-secondary text-sm leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ========== TESTIMONIALS ========== */}
-      <section className="relative py-24 bg-[#111111] border-y border-[#2A2A2A] overflow-hidden">
+      <section className="relative py-24 bg-surface-alt border-y border-border overflow-hidden">
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-[0.03]">
           <div className="absolute inset-0" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=1920&q=10)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
@@ -236,10 +236,10 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-gold text-sm tracking-widest uppercase font-medium">Testimonials</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mt-3 mb-4">
               Apa Kata Pelanggan?
             </h2>
-            <p className="text-[#A3A3A3] max-w-2xl mx-auto">
+            <p className="text-text-secondary max-w-2xl mx-auto">
               Kepercayaan dan kepuasan pelanggan adalah prioritas utama kami
             </p>
           </div>
@@ -247,7 +247,7 @@ export default function HomePage() {
             {testimonials.map((t, i) => (
               <div
                 key={i}
-                className="bg-[#1A1A1A] rounded-2xl p-8 border border-[#2A2A2A] hover:border-gold/20 transition-all duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.08)] animate-fade-in-up"
+                className="bg-surface-card rounded-2xl p-8 border border-border hover:border-gold/20 transition-all duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.08)] animate-fade-in-up"
                 style={{ animationDelay: `${i * 150}ms`, animationFillMode: 'both' }}
               >
                 {/* Gold left border accent */}
@@ -261,7 +261,7 @@ export default function HomePage() {
                 </div>
                 
                 {/* Quote */}
-                <p className="text-[#A3A3A3] mb-6 italic leading-relaxed text-sm">
+                <p className="text-text-secondary mb-6 italic leading-relaxed text-sm">
                   &ldquo;{t.text}&rdquo;
                 </p>
                 
@@ -271,8 +271,8 @@ export default function HomePage() {
                     {t.avatar}
                   </div>
                   <div>
-                    <p className="font-semibold text-white text-sm">{t.name}</p>
-                    <p className="text-xs text-[#A3A3A3]">{t.role}</p>
+                    <p className="font-semibold text-text-primary text-sm">{t.name}</p>
+                    <p className="text-xs text-text-secondary">{t.role}</p>
                   </div>
                 </div>
               </div>
@@ -282,21 +282,21 @@ export default function HomePage() {
       </section>
 
       {/* ========== NEWSLETTER / CTA ========== */}
-      <section className="relative py-24 bg-gradient-to-b from-[#0A0A0A] to-[#1A1A0A]">
+      <section className="relative py-24 bg-gradient-to-b from-surface to-[#F5F0E0]">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-2xl mx-auto">
             <span className="text-gold text-sm tracking-widest uppercase font-medium">Newsletter</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mt-3 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mt-3 mb-4">
               Siap Menikmati Kopi Nusantara?
             </h2>
-            <p className="text-[#A3A3A3] text-lg mb-10 max-w-xl mx-auto">
+            <p className="text-text-secondary text-lg mb-10 max-w-xl mx-auto">
               Dapatkan informasi promo, produk baru, dan tips brewing langsung di email Anda.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input
                 type="email"
                 placeholder="Masukkan email Anda"
-                className="flex-1 px-5 py-3.5 bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl text-white placeholder-[#A3A3A3] focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300"
+                className="flex-1 px-5 py-3.5 bg-surface-card border border-border rounded-xl text-text-primary placeholder-text-secondary focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300"
               />
               <button
                 className="px-6 py-3.5 bg-gold hover:bg-gold-light text-black rounded-xl font-bold transition-all duration-300 shadow-lg shadow-gold/10 hover:shadow-gold/20"
@@ -304,7 +304,7 @@ export default function HomePage() {
                 Subscribe
               </button>
             </div>
-            <p className="text-[#A3A3A3] text-xs mt-4">
+            <p className="text-text-secondary text-xs mt-4">
               Bergabung dengan 500+ subscriber lainnya. Kami tidak mengirim spam.
             </p>
           </div>

@@ -44,19 +44,19 @@ export default function CartSummary({
   const total = subtotal - discount + finalShippingCost;
 
   return (
-    <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6 space-y-6 sticky top-24">
+    <div className="bg-surface-card rounded-xl border border-border p-6 space-y-6 sticky top-24">
       <h2 className="text-lg font-bold text-gold tracking-wide">Ringkasan Belanja</h2>
 
       {/* Shipping Method */}
       {items.length > 0 && (
         <div>
-          <label className="block text-sm font-semibold text-white mb-2">
+          <label className="block text-sm font-semibold text-text-primary mb-2">
             Metode Pengiriman
           </label>
           <select
             value={selectedShipping}
             onChange={(e) => onShippingChange(e.target.value)}
-            className="w-full px-3 py-2.5 bg-[#111111] border border-[#2A2A2A] rounded-lg text-white text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300"
+            className="w-full px-3 py-2.5 bg-surface-alt border border-border rounded-lg text-text-primary text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300"
           >
             <option value="">Pilih pengiriman</option>
             {shippingMethods.map((method) => (
@@ -66,7 +66,7 @@ export default function CartSummary({
             ))}
           </select>
           {shippingMethod && (
-            <p className="text-xs text-[#A3A3A3] mt-1">
+            <p className="text-xs text-text-secondary mt-1">
               Berat total: {totalWeight} kg | Estimasi: {shippingMethod.estimatedDays}
             </p>
           )}
@@ -75,7 +75,7 @@ export default function CartSummary({
 
       {/* Voucher */}
       <div>
-        <label className="block text-sm font-semibold text-white mb-2">
+        <label className="block text-sm font-semibold text-text-primary mb-2">
           Voucher / Kode Promo
         </label>
         {voucherCode ? (
@@ -114,18 +114,18 @@ export default function CartSummary({
       </div>
 
       {/* Totals */}
-      <div className="space-y-3 pt-4 border-t border-[#2A2A2A]">
+      <div className="space-y-3 pt-4 border-t border-border">
         <div className="flex justify-between text-sm">
-          <span className="text-[#A3A3A3]">Subtotal</span>
-          <span className="font-medium text-white">{formatRupiah(subtotal)}</span>
+          <span className="text-text-secondary">Subtotal</span>
+          <span className="font-medium text-text-primary">{formatRupiah(subtotal)}</span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-[#A3A3A3]">Berat Total</span>
-          <span className="font-medium text-white">{totalWeight} kg</span>
+          <span className="text-text-secondary">Berat Total</span>
+          <span className="font-medium text-text-primary">{totalWeight} kg</span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-[#A3A3A3]">Biaya Pengiriman</span>
-          <span className="font-medium text-white">
+          <span className="text-text-secondary">Biaya Pengiriman</span>
+          <span className="font-medium text-text-primary">
             {items.length > 0 ? formatRupiah(finalShippingCost) : '-'}
           </span>
         </div>
@@ -141,8 +141,8 @@ export default function CartSummary({
             <span className="font-medium">-{formatRupiah(shippingCost)}</span>
           </div>
         )}
-        <div className="flex justify-between text-lg font-bold border-t border-[#2A2A2A] pt-3">
-          <span className="text-white">Total</span>
+        <div className="flex justify-between text-lg font-bold border-t border-border pt-3">
+          <span className="text-text-primary">Total</span>
           <span className="text-gold">{formatRupiah(total)}</span>
         </div>
       </div>
@@ -151,7 +151,7 @@ export default function CartSummary({
       <button
         onClick={onCheckout}
         disabled={items.length === 0}
-        className="w-full py-3.5 bg-gold hover:bg-gold-light disabled:bg-[#2A2A2A] disabled:text-[#A3A3A3] disabled:cursor-not-allowed text-black rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-gold/10 hover:shadow-gold/20"
+        className="w-full py-3.5 bg-gold hover:bg-gold-light disabled:bg-surface-hover disabled:text-text-secondary disabled:cursor-not-allowed text-black rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-gold/10 hover:shadow-gold/20"
       >
         Lanjut ke Checkout
       </button>

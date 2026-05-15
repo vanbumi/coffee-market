@@ -21,12 +21,12 @@ export default function ImageGallery({ images, onRemoveImage }: ImageGalleryProp
 
   if (images.length === 0) {
     return (
-      <div className="text-center py-8 bg-[#0A0A0A] rounded-xl border-2 border-dashed border-[#2A2A2A]">
-        <svg className="mx-auto h-12 w-12 text-[#555555]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div className="text-center py-8 bg-surface rounded-xl border-2 border-dashed border-border">
+        <svg className="mx-auto h-12 w-12 text-text-tertiary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
-        <p className="mt-2 text-sm text-[#A3A3A3]">Belum ada gambar yang diupload</p>
-        <p className="text-xs text-[#555555]">Upload gambar menggunakan widget di atas</p>
+        <p className="mt-2 text-sm text-text-secondary">Belum ada gambar yang diupload</p>
+        <p className="text-xs text-text-tertiary">Upload gambar menggunakan widget di atas</p>
       </div>
     );
   }
@@ -45,7 +45,7 @@ export default function ImageGallery({ images, onRemoveImage }: ImageGalleryProp
           return (
             <div
               key={index}
-              className="relative group aspect-square rounded-lg overflow-hidden bg-[#0A0A0A] border border-[#2A2A2A] cursor-pointer"
+              className="relative group aspect-square rounded-lg overflow-hidden bg-surface border border-border cursor-pointer"
               onClick={() => setSelectedImage(imageUrl)}
             >
               {publicId ? (

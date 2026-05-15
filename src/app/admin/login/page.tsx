@@ -51,7 +51,7 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-surface flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gold/5 rounded-full blur-3xl" />
@@ -67,7 +67,7 @@ function LoginForm() {
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-gold/20 to-gold/5 border border-gold/30 mb-5">
             <span className="text-4xl">☕</span>
           </div>
-          <h1 className="text-3xl font-bold text-white">
+          <h1 className="text-3xl font-bold text-text-primary">
             Admin Panel
           </h1>
           <p className="text-gold mt-2 font-medium text-sm tracking-wide">
@@ -76,7 +76,7 @@ function LoginForm() {
         </div>
 
         {/* Login Card */}
-        <div className="bg-[#111111] rounded-2xl border border-[#2A2A2A] p-8 shadow-2xl shadow-black/50 animate-fade-in-up" style={{ animationDelay: '150ms', animationFillMode: 'both' }}>
+        <div className="bg-surface-alt rounded-2xl border border-border p-8 shadow-2xl shadow-black/50 animate-fade-in-up" style={{ animationDelay: '150ms', animationFillMode: 'both' }}>
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Error Message */}
             {(hasError) && (
@@ -96,12 +96,12 @@ function LoginForm() {
 
             {/* Username Field */}
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-[#A3A3A3] mb-1.5">
+              <label htmlFor="username" className="block text-sm font-medium text-text-secondary mb-1.5">
                 Username
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="w-5 h-5 text-[#555555]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-5 h-5 text-text-tertiary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                 </div>
@@ -111,7 +111,7 @@ function LoginForm() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Masukkan username"
-                  className="w-full pl-10 pr-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none transition-all text-sm text-white placeholder-[#555555]"
+                  className="w-full pl-10 pr-4 py-3 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none transition-all text-sm text-text-primary placeholder-text-tertiary"
                   required
                   disabled={isLoading}
                   autoFocus
@@ -121,12 +121,12 @@ function LoginForm() {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-[#A3A3A3] mb-1.5">
+              <label htmlFor="password" className="block text-sm font-medium text-text-secondary mb-1.5">
                 Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="w-5 h-5 text-[#555555]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-5 h-5 text-text-tertiary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </div>
@@ -136,7 +136,7 @@ function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Masukkan password"
-                  className="w-full pl-10 pr-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none transition-all text-sm text-white placeholder-[#555555]"
+                  className="w-full pl-10 pr-4 py-3 bg-surface border border-border rounded-xl focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none transition-all text-sm text-text-primary placeholder-text-tertiary"
                   required
                   disabled={isLoading}
                 />
@@ -169,8 +169,8 @@ function LoginForm() {
           </form>
 
           {/* Hint Credentials */}
-          <div className="mt-6 pt-5 border-t border-[#2A2A2A]">
-            <p className="text-xs text-[#555555] text-center">
+          <div className="mt-6 pt-5 border-t border-border">
+            <p className="text-xs text-text-tertiary text-center">
               Gunakan username:{' '}
               <span className="font-mono font-semibold text-gold bg-gold/10 px-2 py-0.5 rounded">admin</span>
               {' | '}password:{' '}
@@ -183,7 +183,7 @@ function LoginForm() {
         <div className="text-center mt-6 animate-fade-in-up" style={{ animationDelay: '300ms', animationFillMode: 'both' }}>
           <a
             href="/"
-            className="inline-flex items-center text-sm text-[#555555] hover:text-gold transition-colors"
+            className="inline-flex items-center text-sm text-text-tertiary hover:text-gold transition-colors"
           >
             <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -206,7 +206,7 @@ export default function AdminLoginPage() {
 
 function LoadingFallback() {
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
+    <div className="min-h-screen bg-surface flex items-center justify-center">
       <div className="text-center">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-gold/20 to-gold/5 border border-gold/30 mb-4">
           <span className="text-3xl">☕</span>

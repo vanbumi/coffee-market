@@ -111,20 +111,20 @@ function CatalogContent() {
   return (
     <div>
       {/* Header */}
-      <section className="relative bg-gradient-to-b from-[#111111] to-[#0A0A0A] border-b border-[#2A2A2A] py-12">
+      <section className="relative bg-gradient-to-b from-surface-alt to-surface border-b border-border py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
-          <nav className="flex items-center space-x-2 text-sm text-[#A3A3A3] mb-4">
+          <nav className="flex items-center space-x-2 text-sm text-text-secondary mb-4">
             <Link href="/" className="hover:text-gold transition-colors">
               Home
             </Link>
             <span>/</span>
             <span className="text-gold">Catalog</span>
           </nav>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+          <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-2">
             Our Premium <span className="text-gold">Collection</span>
           </h1>
-          <p className="text-[#A3A3A3]">
+          <p className="text-text-secondary">
             Menampilkan {filteredProducts.length} produk biji kopi premium
           </p>
         </div>
@@ -168,7 +168,7 @@ function CatalogContent() {
           {/* Product Grid */}
           <div className="flex-1">
             {visibleProducts.length > 0 && (
-              <div className="mb-4 text-sm text-[#A3A3A3] bg-[#111111] rounded-lg px-4 py-2 border border-[#2A2A2A]">
+              <div className="mb-4 text-sm text-text-secondary bg-surface-alt rounded-lg px-4 py-2 border border-border">
                 Menampilkan {visibleProducts.length} dari {filteredProducts.length} produk
               </div>
             )}
@@ -193,42 +193,42 @@ function CatalogContent() {
 function CatalogFallback() {
   return (
     <div>
-      <section className="relative bg-gradient-to-b from-[#111111] to-[#0A0A0A] border-b border-[#2A2A2A] py-12">
+      <section className="relative bg-gradient-to-b from-surface-alt to-surface border-b border-border py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+          <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-2">
             Our Premium <span className="text-gold">Collection</span>
           </h1>
-          <p className="text-[#A3A3A3]">Memuat katalog...</p>
+          <p className="text-text-secondary">Memuat katalog...</p>
         </div>
       </section>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="w-full lg:w-80 flex-shrink-0">
-            <div className="bg-[#111111] rounded-xl border border-[#2A2A2A] p-6 space-y-6 animate-pulse">
-              <div className="h-10 bg-[#2A2A2A] rounded-lg" />
-              <div className="h-10 bg-[#2A2A2A] rounded-lg" />
+            <div className="bg-surface-alt rounded-xl border border-border p-6 space-y-6 animate-pulse">
+              <div className="h-10 bg-surface-hover rounded-lg" />
+              <div className="h-10 bg-surface-hover rounded-lg" />
               <div className="space-y-2">
                 {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="h-6 bg-[#2A2A2A] rounded" />
+                  <div key={i} className="h-6 bg-surface-hover rounded" />
                 ))}
               </div>
               <div className="space-y-2">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-6 bg-[#2A2A2A] rounded" />
+                  <div key={i} className="h-6 bg-surface-hover rounded" />
                 ))}
               </div>
-              <div className="h-16 bg-[#2A2A2A] rounded-lg" />
-              <div className="h-10 bg-[#2A2A2A] rounded-lg" />
+              <div className="h-16 bg-surface-hover rounded-lg" />
+              <div className="h-10 bg-surface-hover rounded-lg" />
             </div>
           </div>
           <div className="flex-1">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-4 animate-pulse">
-                  <div className="aspect-square bg-[#2A2A2A] rounded-lg mb-4" />
-                  <div className="h-5 bg-[#2A2A2A] rounded mb-2" />
-                  <div className="h-4 bg-[#2A2A2A] rounded w-2/3 mb-2" />
-                  <div className="h-4 bg-[#2A2A2A] rounded w-1/2" />
+                <div key={i} className="bg-surface-card rounded-xl border border-border p-4 animate-pulse">
+                  <div className="aspect-square bg-surface-hover rounded-lg mb-4" />
+                  <div className="h-5 bg-surface-hover rounded mb-2" />
+                  <div className="h-4 bg-surface-hover rounded w-2/3 mb-2" />
+                  <div className="h-4 bg-surface-hover rounded w-1/2" />
                 </div>
               ))}
             </div>

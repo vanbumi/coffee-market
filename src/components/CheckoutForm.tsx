@@ -95,21 +95,21 @@ export default function CheckoutForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Shipping Form */}
-      <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6">
+      <div className="bg-surface-card rounded-xl border border-border p-6">
         <h2 className="text-lg font-bold text-gold mb-6 tracking-wide">
           Informasi Pengiriman
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-white mb-1">
+            <label className="block text-sm font-medium text-text-primary mb-1">
               Nama Lengkap <span className="text-red-400">*</span>
             </label>
             <input
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className={`w-full px-3 py-2.5 bg-[#111111] border rounded-lg text-white placeholder-[#A3A3A3] text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300 ${
-                errors.fullName ? 'border-red-500' : 'border-[#2A2A2A]'
+              className={`w-full px-3 py-2.5 bg-surface-alt border rounded-lg text-text-primary placeholder-text-secondary text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300 ${
+                errors.fullName ? 'border-red-500' : 'border-border'
               }`}
               placeholder="Masukkan nama lengkap"
             />
@@ -243,7 +243,7 @@ export default function CheckoutForm({
       </div>
 
       {/* Shipping Method */}
-      <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6">
+      <div className="bg-surface-card rounded-xl border border-border p-6">
         <h2 className="text-lg font-bold text-gold mb-4 tracking-wide">
           Metode Pengiriman
         </h2>
@@ -254,7 +254,7 @@ export default function CheckoutForm({
               className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${
                 shippingMethod === method.id
                   ? 'border-gold/50 bg-gold/5'
-                  : 'border-[#2A2A2A] hover:border-gold/30 bg-[#111111]'
+                  : 'border-border hover:border-gold/30 bg-surface-alt'
               }`}
             >
               <input
@@ -265,8 +265,8 @@ export default function CheckoutForm({
                 onChange={(e) => setShippingMethod(e.target.value)}
               />
               <div className="ml-3 flex-1">
-                <p className="font-medium text-white">{method.name}</p>
-                <p className="text-sm text-[#A3A3A3]">
+                <p className="font-medium text-text-primary">{method.name}</p>
+                <p className="text-sm text-text-secondary">
                   Estimasi: {method.estimatedDays}
                 </p>
               </div>
@@ -274,7 +274,7 @@ export default function CheckoutForm({
                 <p className="font-semibold text-gold">
                   {formatRupiah(method.pricePerKg)}/kg
                 </p>
-                <p className="text-xs text-[#A3A3A3]">
+                <p className="text-xs text-text-secondary">
                   Min: {formatRupiah(method.minPrice)}
                 </p>
               </div>
@@ -287,7 +287,7 @@ export default function CheckoutForm({
       </div>
 
       {/* Payment Method */}
-      <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6">
+      <div className="bg-surface-card rounded-xl border border-border p-6">
         <h2 className="text-lg font-bold text-gold mb-4 tracking-wide">
           Metode Pembayaran
         </h2>
@@ -298,7 +298,7 @@ export default function CheckoutForm({
               className={`flex items-center p-4 border rounded-lg cursor-pointer transition-all ${
                 paymentMethod === method.id
                   ? 'border-gold/50 bg-gold/5'
-                  : 'border-[#2A2A2A] hover:border-gold/30 bg-[#111111]'
+                  : 'border-border hover:border-gold/30 bg-surface-alt'
               }`}
             >
               <input
@@ -308,7 +308,7 @@ export default function CheckoutForm({
                 checked={paymentMethod === method.id}
                 onChange={(e) => setPaymentMethod(e.target.value)}
               />
-              <span className="ml-3 text-sm font-medium text-white">
+              <span className="ml-3 text-sm font-medium text-text-primary">
                 {method.label}
               </span>
             </label>
@@ -320,7 +320,7 @@ export default function CheckoutForm({
       </div>
 
       {/* Order Summary */}
-      <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6">
+      <div className="bg-surface-card rounded-xl border border-border p-6">
         <h2 className="text-lg font-bold text-gold mb-4 tracking-wide">
           Ringkasan Pesanan
         </h2>
@@ -330,23 +330,23 @@ export default function CheckoutForm({
               key={item.id}
               className="flex items-center justify-between text-sm"
             >
-              <span className="text-[#A3A3A3]">
+              <span className="text-text-secondary">
                 {item.product.name} x{item.quantity}
               </span>
-              <span className="font-medium text-white">
+              <span className="font-medium text-text-primary">
                 {formatRupiah(item.product.price * item.quantity)}
               </span>
             </div>
           ))}
         </div>
-        <div className="border-t border-[#2A2A2A] mt-4 pt-4 space-y-2">
+        <div className="border-t border-border mt-4 pt-4 space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-[#A3A3A3]">Subtotal</span>
-            <span className="font-medium text-white">{formatRupiah(subtotal)}</span>
+            <span className="text-text-secondary">Subtotal</span>
+            <span className="font-medium text-text-primary">{formatRupiah(subtotal)}</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-[#A3A3A3]">Biaya Pengiriman</span>
-            <span className="font-medium text-white">
+            <span className="text-text-secondary">Biaya Pengiriman</span>
+            <span className="font-medium text-text-primary">
               {shippingMethod ? formatRupiah(finalShippingCost) : '-'}
             </span>
           </div>
@@ -362,8 +362,8 @@ export default function CheckoutForm({
               <span>-{formatRupiah(shippingCost)}</span>
             </div>
           )}
-          <div className="flex justify-between text-lg font-bold border-t border-[#2A2A2A] pt-2">
-            <span className="text-white">Total</span>
+          <div className="flex justify-between text-lg font-bold border-t border-border pt-2">
+            <span className="text-text-primary">Total</span>
             <span className="text-gold">{formatRupiah(total)}</span>
           </div>
         </div>

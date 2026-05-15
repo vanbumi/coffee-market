@@ -30,10 +30,10 @@ export default function ProductDetailPage() {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center">
         <div className="text-6xl mb-4">🔍</div>
-        <h1 className="text-2xl font-bold text-white mb-2">
+        <h1 className="text-2xl font-bold text-text-primary mb-2">
           Produk Tidak Ditemukan
         </h1>
-        <p className="text-[#A3A3A3] mb-6">
+        <p className="text-text-secondary mb-6">
           Maaf, produk yang Anda cari tidak tersedia.
         </p>
         <Link
@@ -71,7 +71,7 @@ export default function ProductDetailPage() {
       />
 
       {/* Breadcrumb */}
-      <nav className="flex items-center space-x-2 text-sm text-[#A3A3A3] mb-8">
+      <nav className="flex items-center space-x-2 text-sm text-text-secondary mb-8">
         <Link href="/" className="hover:text-gold transition-colors">
           Beranda
         </Link>
@@ -87,7 +87,7 @@ export default function ProductDetailPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
         {/* Image Gallery */}
         <div>
-          <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden mb-4 bg-[#111111] border border-[#2A2A2A]">
+          <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden mb-4 bg-surface-alt border border-border">
             <Image
               src={product.images[selectedImage]}
               alt={product.name}
@@ -96,7 +96,7 @@ export default function ProductDetailPage() {
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           </div>
           {product.images.length > 1 && (
             <div className="flex gap-3">
@@ -107,7 +107,7 @@ export default function ProductDetailPage() {
                   className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
                     selectedImage === i
                       ? 'border-gold ring-2 ring-gold/20'
-                      : 'border-[#2A2A2A] hover:border-gold/50'
+                      : 'border-border hover:border-gold/50'
                   }`}
                 >
                   <Image
@@ -131,7 +131,7 @@ export default function ProductDetailPage() {
                 product.type === 'Arabica'
                   ? 'bg-gold/20 text-gold border-gold/30'
                   : product.type === 'Robusta'
-                  ? 'bg-[#A3A3A3]/20 text-[#A3A3A3] border-[#A3A3A3]/30'
+                  ? 'bg-text-secondary/20 text-text-secondary border-text-secondary/30'
                   : 'bg-gold/30 text-gold border-gold/40'
               }`}
             >
@@ -142,10 +142,10 @@ export default function ProductDetailPage() {
             </span>
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+          <h1 className="text-3xl md:text-4xl font-bold text-text-primary mb-2">
             {product.name}
           </h1>
-          <p className="text-lg text-[#A3A3A3] mb-6 flex items-center">
+          <p className="text-lg text-text-secondary mb-6 flex items-center">
             <svg className="w-5 h-5 mr-2 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -153,25 +153,25 @@ export default function ProductDetailPage() {
             {product.origin}, {product.region}
           </p>
 
-          <p className="text-[#A3A3A3] leading-relaxed mb-8">
+          <p className="text-text-secondary leading-relaxed mb-8">
             {product.description}
           </p>
 
           {/* Detail Info */}
           <div className="grid grid-cols-3 gap-4 mb-8">
-            <div className="bg-[#111111] rounded-xl p-4 text-center border border-[#2A2A2A]">
-              <p className="text-xs text-[#A3A3A3] mb-1">Ketinggian</p>
+            <div className="bg-surface-alt rounded-xl p-4 text-center border border-border">
+              <p className="text-xs text-text-secondary mb-1">Ketinggian</p>
               <p className="font-semibold text-sm text-gold">{product.altitude}</p>
             </div>
-            <div className="bg-[#111111] rounded-xl p-4 text-center border border-[#2A2A2A]">
-              <p className="text-xs text-[#A3A3A3] mb-1">Proses</p>
-              <p className="font-semibold text-sm text-white capitalize">
+            <div className="bg-surface-alt rounded-xl p-4 text-center border border-border">
+              <p className="text-xs text-text-secondary mb-1">Proses</p>
+              <p className="font-semibold text-sm text-text-primary capitalize">
                 {product.processing}
               </p>
             </div>
-            <div className="bg-[#111111] rounded-xl p-4 text-center border border-[#2A2A2A]">
-              <p className="text-xs text-[#A3A3A3] mb-1">Roast</p>
-              <p className="font-semibold text-sm text-white capitalize">
+            <div className="bg-surface-alt rounded-xl p-4 text-center border border-border">
+              <p className="text-xs text-text-secondary mb-1">Roast</p>
+              <p className="font-semibold text-sm text-text-primary capitalize">
                 {product.roastLevel}
               </p>
             </div>
@@ -186,7 +186,7 @@ export default function ProductDetailPage() {
               {product.tastingNotes.map((note) => (
                 <span
                   key={note}
-                  className="px-3 py-1.5 bg-[#1A1A1A] text-[#A3A3A3] border border-[#2A2A2A] rounded-full text-sm font-medium capitalize"
+                  className="px-3 py-1.5 bg-surface-card text-text-secondary border border-border rounded-full text-sm font-medium capitalize"
                 >
                   {note}
                 </span>
@@ -196,7 +196,7 @@ export default function ProductDetailPage() {
 
           {/* Price */}
           <div className="mb-6">
-            <p className="text-sm text-[#A3A3A3]">Harga per kg</p>
+            <p className="text-sm text-text-secondary">Harga per kg</p>
             <p className="text-4xl font-bold text-gold">
               {formatRupiah(product.price)}
             </p>
@@ -204,21 +204,21 @@ export default function ProductDetailPage() {
 
           {/* Quantity & Add to Cart */}
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-            <div className="flex items-center border border-[#2A2A2A] rounded-xl bg-[#111111]">
+            <div className="flex items-center border border-border rounded-xl bg-surface-alt">
               <button
                 onClick={decrementQty}
                 disabled={quantity <= 1}
-                className="px-4 py-3 text-[#A3A3A3] hover:text-gold disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xl font-medium rounded-l-xl"
+                className="px-4 py-3 text-text-secondary hover:text-gold disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xl font-medium rounded-l-xl"
               >
                 -
               </button>
-              <span className="px-6 py-3 text-white font-semibold text-lg min-w-[60px] text-center border-x border-[#2A2A2A]">
+              <span className="px-6 py-3 text-text-primary font-semibold text-lg min-w-[60px] text-center border-x border-border">
                 {quantity}
               </span>
               <button
                 onClick={incrementQty}
                 disabled={quantity >= 10}
-                className="px-4 py-3 text-[#A3A3A3] hover:text-gold disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xl font-medium rounded-r-xl"
+                className="px-4 py-3 text-text-secondary hover:text-gold disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xl font-medium rounded-r-xl"
               >
                 +
               </button>
@@ -245,7 +245,7 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Stock Info */}
-          <p className="text-sm text-[#A3A3A3] mt-4">
+          <p className="text-sm text-text-secondary mt-4">
             {product.stock > 0
               ? `Stok tersedia: ${product.stock} kg`
               : 'Stok habis'}
@@ -254,8 +254,8 @@ export default function ProductDetailPage() {
       </div>
 
       {/* Recommended Products */}
-      <section className="border-t border-[#2A2A2A] pt-12">
-        <h2 className="text-2xl font-bold text-white mb-8">
+      <section className="border-t border-border pt-12">
+        <h2 className="text-2xl font-bold text-text-primary mb-8">
           Produk Rekomendasi
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">

@@ -10,7 +10,7 @@ interface StatCardProps {
 export default function StatCard({ value, label, icon, index }: StatCardProps) {
   return (
     <div
-      className="relative bg-[#111111] border border-[#2A2A2A] rounded-xl p-6 text-center group hover:border-gold/30 transition-all duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.08)] animate-fade-in-up"
+      className="relative bg-surface-alt border border-border rounded-xl p-6 text-center group hover:border-gold/30 transition-all duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.08)] animate-fade-in-up"
       style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
     >
       {/* Gold accent */}
@@ -25,7 +25,7 @@ export default function StatCard({ value, label, icon, index }: StatCardProps) {
       <p className="text-4xl font-bold text-gold mb-1">{value}</p>
       
       {/* Label */}
-      <p className="text-[#A3A3A3] text-sm">{label}</p>
+      <p className="text-text-secondary text-sm">{label}</p>
     </div>
   );
 }
