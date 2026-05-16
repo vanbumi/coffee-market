@@ -4,8 +4,10 @@ import { useState, useEffect, useCallback } from 'react';
 import { CldUploadWidget } from 'next-cloudinary';
 import { Product } from '@/types/product';
 import { CoffeeType } from '@/types/product';
+import { Customer } from '@/db/schema';
 import ImageGallery from '@/components/admin/ImageGallery';
 import ProductManagement from '@/components/admin/ProductManagement';
+import CustomerManagement from '@/components/admin/CustomerManagement';
 import SalesChart from '@/components/admin/SalesChart';
 
 /** Tipe untuk hasil upload Cloudinary */
@@ -72,7 +74,9 @@ export default function AdminDashboardPage() {
     type: 'success' | 'error';
     message: string;
   } | null>(null);
-  const [activeTab, setActiveTab] = useState<'add' | 'manage' | 'orders'>('add');
+  const [activeTab, setActiveTab] = useState<'add' | 'manage' | 'orders' | 'customers'>('add');
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [isLoadingCustomers, setIsLoadingCustomers] = useState(false);
 
   // Ambil semua produk dari database Turso
   const fetchAdminProducts = useCallback(async () => {
@@ -106,10 +110,27 @@ export default function AdminDashboardPage() {
     }
   }, []);
 
+  // Ambil semua customer dari database
+  const fetchCustomers = useCallback(async () => {
+    try {
+      setIsLoadingCustomers(true);
+      const res = await fetch('/api/customers');
+      const json = await res.json();
+      if (json.success) {
+        setCustomers(json.data);
+      }
+    } catch (error) {
+      console.error('Gagal mengambil data customer:', error);
+    } finally {
+      setIsLoadingCustomers(false);
+    }
+  }, []);
+
   useEffect(() => {
     fetchAdminProducts();
     fetchOrders();
-  }, [fetchAdminProducts, fetchOrders]);
+    fetchCustomers();
+  }, [fetchAdminProducts, fetchOrders, fetchCustomers]);
 
   /** Tampilkan notifikasi */
   const showNotification = (type: 'success' | 'error', message: string) => {
@@ -203,6 +224,25 @@ export default function AdminDashboardPage() {
       console.error('Error submitting product:', error);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  /** Handle hapus customer */
+  const handleDeleteCustomer = async (id: number) => {
+    try {
+      const res = await fetch(`/api/customers?id=${id}`, {
+        method: 'DELETE',
+      });
+      const json = await res.json();
+      if (res.ok && json.success) {
+        showNotification('success', json.message || 'Customer berhasil dihapus');
+        fetchCustomers();
+      } else {
+        showNotification('error', json.message || 'Gagal menghapus customer');
+      }
+    } catch (error) {
+      showNotification('error', 'Gagal menghapus customer');
+      console.error('Error deleting customer:', error);
     }
   };
 
@@ -348,6 +388,17 @@ export default function AdminDashboardPage() {
           <div className="bg-surface-alt rounded-xl border border-border p-4">
             <div className="flex items-center justify-between">
               <div>
+                <p className="text-sm text-text-secondary">Total Customer</p>
+                <p className="text-2xl font-bold text-text-primary mt-1">{customers.length}</p>
+              </div>
+              <div className="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center">
+                <span className="text-purple-400 text-lg">👥</span>
+              </div>
+            </div>
+          </div>
+          <div className="bg-surface-alt rounded-xl border border-border p-4">
+            <div className="flex items-center justify-between">
+              <div>
                 <p className="text-sm text-text-secondary">Total Pendapatan</p>
                 <p className="text-2xl font-bold text-text-primary mt-1">
                   {formatPrice(orders.reduce((sum, o) => sum + o.totalAmount, 0))}
@@ -434,6 +485,20 @@ export default function AdminDashboardPage() {
           >
             <span className="hidden sm:inline">📋 </span>
             Pesanan ({orders.length})
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab('customers');
+              fetchCustomers();
+            }}
+            className={`flex-1 px-4 py-2.5 text-sm font-medium rounded-lg transition-all ${
+              activeTab === 'customers'
+                ? 'bg-gold text-black shadow-sm shadow-gold/20'
+                : 'text-text-secondary hover:text-text-primary hover:bg-surface-card'
+            }`}
+          >
+            <span className="hidden sm:inline">👥 </span>
+            Customer ({customers.length})
           </button>
         </div>
 
@@ -693,6 +758,49 @@ export default function AdminDashboardPage() {
                 </div>
               </form>
             </div>
+          </div>
+        ) : activeTab === 'customers' ? (
+          /* Customers Tab */
+          <div className="bg-surface-alt rounded-xl border border-border p-6 shadow-sm shadow-black/20">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-lg font-semibold text-text-primary">
+                  Data Customer
+                </h2>
+                <p className="text-sm text-text-secondary mt-1">
+                  Daftar semua customer yang telah melakukan pemesanan
+                </p>
+              </div>
+              <button
+                onClick={fetchCustomers}
+                className="p-2 text-text-tertiary hover:text-gold hover:bg-gold/10 rounded-lg transition-all"
+                title="Refresh data"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+              </button>
+            </div>
+
+            {isLoadingCustomers ? (
+              <div className="space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="bg-surface-card rounded-lg p-4 animate-pulse flex items-center gap-4 border border-border">
+                    <div className="w-10 h-10 bg-surface-hover rounded-full" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 bg-surface-hover rounded w-1/3" />
+                      <div className="h-3 bg-surface-hover rounded w-1/2" />
+                    </div>
+                    <div className="w-8 h-8 bg-surface-hover rounded-lg" />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <CustomerManagement
+                customers={customers}
+                onDeleteCustomer={handleDeleteCustomer}
+              />
+            )}
           </div>
         ) : activeTab === 'manage' ? (
           /* Manage Products Tab */
