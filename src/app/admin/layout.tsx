@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
   title: 'Admin Dashboard - Saudara Coffee',
@@ -7,9 +8,9 @@ export const metadata: Metadata = {
 
 export default function AdminLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{
+  children: ReactNode;
+}>) {
   return (
     <div className="min-h-screen bg-surface">
       {children}

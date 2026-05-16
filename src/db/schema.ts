@@ -17,9 +17,18 @@ export const products = sqliteTable('products', {
   createdAt: text('created_at').default("CURRENT_TIMESTAMP"),
 });
 
+export const customers = sqliteTable('customers', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  name: text('name').notNull(),
+  phone: text('phone').notNull(),
+  address: text('address').notNull(),
+  createdAt: text('created_at').default("CURRENT_TIMESTAMP"),
+});
+
 export const orders = sqliteTable('orders', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   orderNumber: text('order_number').unique().notNull(),
+  customerId: integer('customer_id'),
   customerName: text('customer_name').notNull(),
   customerPhone: text('customer_phone').notNull(),
   customerAddress: text('customer_address').notNull(),
@@ -42,6 +51,8 @@ export const orderItems = sqliteTable('order_items', {
 
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
+export type Customer = typeof customers.$inferSelect;
+export type NewCustomer = typeof customers.$inferInsert;
 export type Order = typeof orders.$inferSelect;
 export type NewOrder = typeof orders.$inferInsert;
 export type OrderItem = typeof orderItems.$inferSelect;

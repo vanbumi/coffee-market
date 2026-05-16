@@ -143,7 +143,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-text-secondary text-sm">
-            &copy; {new Date().getFullYear()} Saudara Coffee. All rights reserved.
+            &copy; 2026 Saudara Coffee by revaktor.com. All rights reserved.
           </p>
           <p className="text-text-secondary text-xs">
             Crafted with ☕ and ❤️
