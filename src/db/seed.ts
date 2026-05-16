@@ -2,6 +2,14 @@ import { db } from './index';
 import { products, customers, orders, orderItems } from './schema';
 import { products as existingProducts } from '@/data/products';
 
+// ─── Helper: generate tanggal random (30-365 hari lalu) ─────────────────────
+function randomPastDate(): string {
+  const now = Date.now();
+  const daysAgo = Math.floor(Math.random() * 336) + 30; // 30-365 hari
+  const date = new Date(now - daysAgo * 86400000);
+  return date.toISOString();
+}
+
 // ─── 30 Dummy Customers ───────────────────────────────────────────────────────
 const customerData = [
   { name: 'Budi Santoso',         phone: '081234567890', address: 'Jl. Merdeka No. 10, Bandung, Jawa Barat 40111' },
@@ -361,6 +369,7 @@ async function seed() {
       name: c.name,
       phone: c.phone,
       address: c.address,
+      createdAt: randomPastDate(),
     });
   }
   console.log('Customers seeded!');

@@ -1,4 +1,5 @@
 import { sqliteTable, text, integer, real } from 'drizzle-orm/sqlite-core';
+import { sql } from 'drizzle-orm';
 
 export const products = sqliteTable('products', {
   id: integer('id').primaryKey({ autoIncrement: true }),
@@ -14,7 +15,7 @@ export const products = sqliteTable('products', {
   rating: real('rating').default(0),
   featured: integer('featured').default(0),
   inStock: integer('in_stock').default(1),
-  createdAt: text('created_at').default("CURRENT_TIMESTAMP"),
+  createdAt: text('created_at').default(sql`(CURRENT_TIMESTAMP)`),
 });
 
 export const customers = sqliteTable('customers', {
@@ -22,7 +23,7 @@ export const customers = sqliteTable('customers', {
   name: text('name').notNull(),
   phone: text('phone').notNull(),
   address: text('address').notNull(),
-  createdAt: text('created_at').default("CURRENT_TIMESTAMP"),
+  createdAt: text('created_at').default(sql`(CURRENT_TIMESTAMP)`),
 });
 
 export const orders = sqliteTable('orders', {
@@ -37,7 +38,7 @@ export const orders = sqliteTable('orders', {
   discount: integer('discount').default(0),
   status: text('status').default('pending'),
   paymentMethod: text('payment_method'),
-  createdAt: text('created_at').default("CURRENT_TIMESTAMP"),
+  createdAt: text('created_at').default(sql`(CURRENT_TIMESTAMP)`),
 });
 
 export const orderItems = sqliteTable('order_items', {

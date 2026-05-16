@@ -28,17 +28,20 @@ export default function CustomerManagement({ customers, onDeleteCustomer }: Cust
     setDeleteConfirm(null);
   };
 
-  /** Format tanggal */
+  /** Format tanggal - handle invalid date gracefully */
   const formatDate = (dateStr: string | null) => {
-    if (!dateStr) return '-';
+    if (!dateStr || dateStr === 'CURRENT_TIMESTAMP') return '-';
     try {
-      return new Date(dateStr).toLocaleDateString('id-ID', {
+      const date = new Date(dateStr);
+      // Cek apakah date valid
+      if (isNaN(date.getTime())) return '-';
+      return date.toLocaleDateString('id-ID', {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
       });
     } catch {
-      return dateStr;
+      return '-';
     }
   };
 
