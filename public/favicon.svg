@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3E5AB" />
+      <stop offset="50%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#B8960F" />
+    </linearGradient>
+    <linearGradient id="steamGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#D4AF37" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="#0A0A0A" stroke="url(#goldGrad)" stroke-width="2" />
+
+  <!-- Coffee Bean -->
+  <ellipse cx="50" cy="55" rx="20" ry="28" fill="url(#goldGrad)" />
+  <ellipse cx="50" cy="55" rx="10" ry="18" fill="#0A0A0A" />
+  <path d="M50 32 Q56 55 50 78" stroke="url(#goldGrad)" stroke-width="1.5" fill="none" />
+
+  <!-- Steam -->
+  <path d="M40 24 Q37 16 40 8" stroke="url(#steamGrad)" stroke-width="2" stroke-linecap="round" fill="none" />
+  <path d="M50 20 Q47 12 50 4" stroke="url(#steamGrad)" stroke-width="2" stroke-linecap="round" fill="none" />
+  <path d="M60 24 Q57 16 60 8" stroke="url(#steamGrad)" stroke-width="2" stroke-linecap="round" fill="none" />
+</svg>

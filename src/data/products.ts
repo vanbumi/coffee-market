@@ -183,7 +183,7 @@ export const products: Product[] = [
   // },
   {
     id: 'blend-signature',
-    name: 'Blend Signature "Saudara"',
+    name: 'Blend Signature "Sundara"',
     origin: 'Indonesia',
     region: 'Jawa',
     type: 'Blend',
@@ -193,7 +193,7 @@ export const products: Product[] = [
       'https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=600&h=600&fit=crop',
       'https://images.unsplash.com/photo-1604881991720-f91add269bed?w=600&h=600&fit=crop',
     ],
-    description: 'Blend Signature "Saudara" adalah racikan eksklusif perpaduan Arabica dan Robusta pilihan. Dipanggang dengan level full city roast untuk menghasilkan keseimbangan sempurna antara acidity, body, dan rasa. Cocok untuk segala metode seduh.',
+    description: 'Blend Signature "Sundara" adalah racikan eksklusif perpaduan Arabica dan Robusta pilihan. Dipanggang dengan level full city roast untuk menghasilkan keseimbangan sempurna antara acidity, body, dan rasa. Cocok untuk segala metode seduh.',
     altitude: '800-1.400 masl',
     processing: 'washed',
     roastLevel: 'medium',

@@ -68,7 +68,7 @@ export default function OrderSuccessPage() {
           Pesanan Berhasil Dibuat!
         </h1>
         <p className="text-lg text-text-secondary">
-          Terima kasih telah berbelanja di Saudara Coffee
+          Terima kasih telah berbelanja di Sundara Coffee
         </p>
       </div>
 
@@ -201,7 +201,7 @@ export default function OrderSuccessPage() {
       {/* Thank You Message */}
       <div className="text-center mt-12 p-8 bg-gold/5 rounded-2xl border border-gold/20">
         <p className="text-lg text-gold font-semibold">
-          ☕ Terima kasih telah berbelanja di Saudara Coffee!
+          ☕ Terima kasih telah berbelanja di Sundara Coffee!
         </p>
         <p className="text-text-secondary mt-2">
           Kami akan segera memproses pesanan Anda. Nikmati kopi Nusantara terbaik!

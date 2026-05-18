@@ -36,10 +36,10 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <span className="text-3xl group-hover:scale-110 transition-transform duration-300">☕</span>
+            <img src="/logo.PNG" alt="Sundara Coffee" className="h-10 w-auto group-hover:scale-110 transition-transform duration-300" />
             <div className="flex flex-col">
               <span className="font-bold text-xl text-gold tracking-wide">
-                Saudara Coffee
+                Sundara Coffee
               </span>
               <span className="text-[10px] text-text-secondary -mt-1 tracking-[0.2em] uppercase">
                 Premium Roastery
@@ -61,6 +61,13 @@ export default function Navbar() {
               className="text-text-secondary hover:text-gold transition-all duration-300 font-medium text-sm tracking-wide relative group"
             >
               Katalog
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full" />
+            </Link>
+            <Link
+              href="/contact"
+              className="text-text-secondary hover:text-gold transition-all duration-300 font-medium text-sm tracking-wide relative group"
+            >
+              Kontak
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full" />
             </Link>
             <Link
@@ -187,6 +194,13 @@ export default function Navbar() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Katalog
+            </Link>
+            <Link
+              href="/contact"
+              className="block px-4 py-3 rounded-lg text-text-secondary hover:text-gold hover:bg-surface-card transition-all duration-300 text-sm font-medium"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Kontak
             </Link>
             <Link
               href="/cart"

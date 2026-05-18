@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Admin Dashboard - Saudara Coffee',
+  title: 'Admin Dashboard - Sundara Coffee',
   description: 'Kelola produk dan upload gambar kopi - Premium Coffee Roastery',
 };
 

@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `faq_ai_ip_date_idx` ON `faq_ai_usage` (`ip`,`date`);

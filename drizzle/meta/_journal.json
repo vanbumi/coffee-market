@@ -15,6 +15,20 @@
       "when": 1778897363469,
       "tag": "0001_jazzy_goliath",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1779077252417,
+      "tag": "0002_woozy_silver_samurai",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1779078306297,
+      "tag": "0003_broad_wind_dancer",
+      "breakpoints": true
     }
   ]
 }

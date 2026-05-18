@@ -2,7 +2,7 @@
 
 ## 1. Gambaran Umum
 
-Menambahkan **Light Mode** ke aplikasi "Saudara Coffee" yang saat ini 100% dark theme, dengan toggle switch di navigasi yang memungkinkan user beralih kapan saja. Preferensi akan tersimpan di `localStorage` dan menghormati preferensi sistem (`prefers-color-scheme`).
+Menambahkan **Light Mode** ke aplikasi "Sundara Coffee" yang saat ini 100% dark theme, dengan toggle switch di navigasi yang memungkinkan user beralih kapan saja. Preferensi akan tersimpan di `localStorage` dan menghormati preferensi sistem (`prefers-color-scheme`).
 
 ---
 

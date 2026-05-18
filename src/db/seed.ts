@@ -328,7 +328,7 @@ const productPrices: Record<number, { name: string; price: number }> = {
   4: { name: 'Kintamani Bali', price: 210000 },
   5: { name: 'Wamena', price: 350000 },
   6: { name: 'Robusta Temanggung', price: 95000 },
-  7: { name: 'Blend Signature "Saudara"', price: 150000 },
+  7: { name: 'Blend Signature "Sundara"', price: 150000 },
   8: { name: 'Java Preanger', price: 200000 },
 };
 

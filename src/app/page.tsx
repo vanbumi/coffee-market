@@ -41,7 +41,7 @@ export default function HomePage() {
     {
       name: 'Rina Wijaya',
       role: 'Barista, Jakarta',
-      text: 'Kualitas biji kopi dari Saudara Coffee luar biasa! Gayo Arabica menjadi favorit pelanggan di kafe saya. Benar-benar premium!',
+      text: 'Kualitas biji kopi dari Sundara Coffee luar biasa! Gayo Arabica menjadi favorit pelanggan di kafe saya. Benar-benar premium!',
       rating: 5,
       avatar: 'RW',
     },

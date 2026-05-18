@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer, real } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, text, integer, real, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
 
 export const products = sqliteTable('products', {
@@ -56,5 +56,17 @@ export type Customer = typeof customers.$inferSelect;
 export type NewCustomer = typeof customers.$inferInsert;
 export type Order = typeof orders.$inferSelect;
 export type NewOrder = typeof orders.$inferInsert;
+export const faqAiUsage = sqliteTable('faq_ai_usage', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  ip: text('ip').notNull(),
+  date: text('date').notNull(), // format: YYYY-MM-DD
+  count: integer('count').notNull().default(0),
+  lastUsedAt: text('last_used_at').default(sql`(CURRENT_TIMESTAMP)`),
+}, (table) => ({
+  ipDateUnique: uniqueIndex('faq_ai_ip_date_idx').on(table.ip, table.date),
+}));
+
 export type OrderItem = typeof orderItems.$inferSelect;
 export type NewOrderItem = typeof orderItems.$inferInsert;
+export type FaqAiUsage = typeof faqAiUsage.$inferSelect;
+export type NewFaqAiUsage = typeof faqAiUsage.$inferInsert;

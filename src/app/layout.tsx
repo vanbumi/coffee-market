@@ -6,10 +6,10 @@ import { CartProvider } from "@/context/CartContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata: Metadata = {
-  title: "Saudara Coffee - Premium Coffee Roastery",
+  title: "Sundara Coffee - Premium Coffee Roastery",
   description:
     "Premium coffee roastery menghadirkan biji kopi pilihan terbaik Nusantara. Arabica, Robusta, dan Blend spesial dari petani kopi Indonesia.",
-  keywords: "kopi premium, coffee bean, arabica, robusta, biji kopi, indonesia, roastery, saudara coffee",
+  keywords: "kopi premium, coffee bean, arabica, robusta, biji kopi, indonesia, roastery, sundara coffee",
 };
 
 export default function RootLayout({
