@@ -4,10 +4,12 @@ import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useState, useEffect } from 'react';
+import { useStoreSettings } from '@/hooks/useStoreSettings';
 
 export default function Navbar() {
   const { itemCount } = useCart();
   const { theme, toggleTheme } = useTheme();
+  const { settings } = useStoreSettings();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -36,13 +38,13 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <img src="/logo.PNG" alt="Sundara Coffee" className="h-10 w-auto group-hover:scale-110 transition-transform duration-300" />
+            <img src="/logo.PNG" alt={settings.storeName || 'Sundara Coffee'} className="h-10 w-auto group-hover:scale-110 transition-transform duration-300" />
             <div className="flex flex-col">
               <span className="font-bold text-xl text-gold tracking-wide">
-                Sundara Coffee
+                {settings.storeName || 'Sundara Coffee'}
               </span>
               <span className="text-[10px] text-text-secondary -mt-1 tracking-[0.2em] uppercase">
-                Premium Roastery
+                {settings.slogan || 'Premium Roastery'}
               </span>
             </div>
           </Link>

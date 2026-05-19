@@ -5,6 +5,7 @@ import ProductCard from '@/components/ProductCard';
 import CategoryCard from '@/components/CategoryCard';
 import StatCard from '@/components/StatCard';
 import { useAllProducts } from '@/hooks/useAllProducts';
+import { useStoreSettings } from '@/hooks/useStoreSettings';
 
 const categories = [
   {
@@ -35,6 +36,7 @@ const stats = [
 ];
 
 export default function HomePage() {
+  const { settings } = useStoreSettings();
   const { allProducts } = useAllProducts();
   const featuredProducts = allProducts.filter((p) => p.featured).slice(0, 4);
   const testimonials = [
@@ -67,8 +69,20 @@ export default function HomePage() {
       <section className="relative overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0 bg-surface">
+          {/* Hero banner image from settings */}
+          {settings.heroBanner && (
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${settings.heroBanner})` }}
+            />
+          )}
           <div className="absolute inset-0 bg-dot-pattern opacity-30" />
-          <div className="absolute inset-0 bg-hero-overlay" />
+          {/* Lighter overlay when banner image is present */}
+          {settings.heroBanner ? (
+            <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(212, 175, 55, 0.15) 0%, rgba(10, 10, 10, 0.75) 70%)' }} />
+          ) : (
+            <div className="absolute inset-0 bg-hero-overlay" />
+          )}
           <div className="absolute inset-0 bg-gradient-to-b from-gold/5 via-transparent to-surface" />
         </div>
         
@@ -81,7 +95,7 @@ export default function HomePage() {
             {/* Badge */}
             <div className="inline-flex items-center px-4 py-1.5 border border-gold/30 rounded-full text-xs text-gold tracking-wider uppercase mb-8 animate-fade-in-down">
               <span className="w-1.5 h-1.5 bg-gold rounded-full mr-2 animate-glow-pulse" />
-              Since 2025 — Premium Coffee Roastery
+              Since 2025 — {settings.heroTitle || 'Premium Coffee Roastery'}
             </div>
 
             {/* Heading */}
@@ -93,8 +107,7 @@ export default function HomePage() {
 
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-text-secondary mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-              Menghadirkan biji kopi pilihan terbaik dari seluruh Nusantara. 
-              Dari petani kopi pilihan, langsung ke cangkir Anda.
+              {settings.heroSubtitle || 'Menghadirkan biji kopi pilihan terbaik dari seluruh Nusantara. Dari petani kopi pilihan, langsung ke cangkir Anda.'}
             </p>
 
             {/* CTA Buttons */}
@@ -103,7 +116,7 @@ export default function HomePage() {
                 href="/catalog"
                 className="inline-flex items-center justify-center px-8 py-4 bg-gold hover:bg-gold-light text-black rounded-xl font-bold text-lg transition-all duration-300 shadow-lg shadow-gold/20 hover:shadow-gold/30 hover:scale-105"
               >
-                Shop Now
+                {settings.heroCta || 'Shop Now'}
                 <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>

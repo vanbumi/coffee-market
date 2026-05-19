@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 interface StoreSettings {
   id?: number;
   storeName: string;
+  slogan: string;
   npwp: string;
   address: string;
   phone: string;
@@ -36,6 +37,7 @@ const defaultOperatingHours = {
 
 const initialSettings: StoreSettings = {
   storeName: 'Sundara Coffee',
+  slogan: 'Exotic Aesthetic Coffee for the World',
   npwp: '',
   address: '',
   phone: '',
@@ -92,10 +94,13 @@ export default function AdminSettingsPage() {
   const handleSave = async () => {
     setIsSaving(true);
     try {
+      // Strip metadata keys before sending to API
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id: _id, updatedAt: _updatedAt, ...payload } = settings;
       const res = await fetch('/api/settings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(settings),
+        body: JSON.stringify(payload),
       });
       const json = await res.json();
       if (res.ok && json.success) {
@@ -176,6 +181,10 @@ export default function AdminSettingsPage() {
                 <div>
                   <label className="block text-sm text-text-secondary mb-1">Nama Perusahaan</label>
                   <input type="text" value={settings.storeName} onChange={(e) => setSettings(p => ({ ...p, storeName: e.target.value }))} className="w-full px-4 py-2.5 bg-surface border border-border rounded-lg text-sm text-text-primary focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none" />
+                </div>
+                <div>
+                  <label className="block text-sm text-text-secondary mb-1">Slogan Perusahaan</label>
+                  <input type="text" value={settings.slogan} onChange={(e) => setSettings(p => ({ ...p, slogan: e.target.value }))} placeholder="Exotic Aesthetic Coffee for the World" className="w-full px-4 py-2.5 bg-surface border border-border rounded-lg text-sm text-text-primary focus:ring-2 focus:ring-gold/20 focus:border-gold/50 outline-none" />
                 </div>
                 <div>
                   <label className="block text-sm text-text-secondary mb-1">NPWP</label>

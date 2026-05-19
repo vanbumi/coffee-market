@@ -20,7 +20,8 @@ export async function GET() {
       }
     });
     return NextResponse.json({ success: true, data });
-  } catch {
+  } catch (err) {
+    console.error('[settings GET] Error:', err);
     return NextResponse.json({ success: false, message: 'Gagal mengambil pengaturan' }, { status: 500 });
   }
 }
@@ -33,8 +34,12 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    // Iterate over all keys in body
+    // Metadata keys that should never be stored as settings
+    const metaKeys = new Set(['id', 'updatedAt', 'updated_at', 'createdAt', 'created_at']);
+
+    // Iterate over all keys in body, skipping metadata
     for (const [key, value] of Object.entries(body)) {
+      if (metaKeys.has(key)) continue;
       const stringValue = typeof value === 'string' ? value : JSON.stringify(value);
 
       // Check if key exists
@@ -55,7 +60,8 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ success: true, message: 'Pengaturan berhasil disimpan' });
-  } catch {
+  } catch (err) {
+    console.error('[settings POST] Error:', err);
     return NextResponse.json({ success: false, message: 'Gagal menyimpan pengaturan' }, { status: 500 });
   }
 }
