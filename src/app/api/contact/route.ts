@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
 
 interface ContactBody {
   name: string;
@@ -45,9 +46,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const nodemailer = await import('nodemailer');
-
-    const transporter = nodemailer.default.createTransport({
+    const transporter = nodemailer.createTransport({
       host: SMTP_HOST,
       port: SMTP_PORT,
       secure: SMTP_PORT === 465,
