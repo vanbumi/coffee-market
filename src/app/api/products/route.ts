@@ -1,19 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { products } from '@/db/schema';
-// import { eq } from 'drizzle-orm';
+import { requireWriteAccess } from '@/lib/auth-helpers';
 
 /**
  * GET /api/products
- * Mengembalikan semua produk dari database Turso
- * Atau jika query ?source=dynamic, ambil dari file (backward compatibility)
+ * Mengembalikan semua produk dari database Turso (PUBLIC - store frontend)
  */
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const source = searchParams.get('source');
 
-    // For backward compatibility: fallback to productStore if source=dynamic
     if (source === 'dynamic') {
       const { getDynamicProducts } = await import('@/utils/productStore');
       return NextResponse.json({
@@ -22,7 +20,6 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // Default: read from database
     const allProducts = await db.select().from(products);
     return NextResponse.json({
       success: true,
@@ -55,13 +52,14 @@ export async function GET(request: NextRequest) {
 
 /**
  * POST /api/products
- * Menambahkan produk baru ke database Turso
+ * Menambahkan produk baru — superuser only
  */
 export async function POST(request: NextRequest) {
   try {
+    await requireWriteAccess();
+
     const body = await request.json();
 
-    // Validasi field wajib
     const requiredFields = ['name', 'price', 'origin', 'type'];
     for (const field of requiredFields) {
       if (!body[field]) {
@@ -72,7 +70,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Validasi tipe kopi
     const validTypes = ['Arabica', 'Robusta', 'Blend'];
     if (!validTypes.includes(body.type)) {
       return NextResponse.json(
@@ -81,7 +78,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Insert ke database Turso
     const newProduct = await db.insert(products).values({
       name: body.name,
       origin: body.origin,
@@ -106,6 +102,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
+    if (error instanceof Response) throw error;
     console.error('Error adding product:', error);
     return NextResponse.json(
       { success: false, message: 'Gagal menambahkan produk' },

@@ -1,5 +1,5 @@
 import { db } from './index';
-import { products, customers, orders, orderItems } from './schema';
+import { products, customers, orders, orderItems, reviews } from './schema';
 import { products as existingProducts } from '@/data/products';
 
 // ─── Helper: generate tanggal random (30-365 hari lalu) ─────────────────────
@@ -374,7 +374,82 @@ async function seed() {
   }
   console.log('Customers seeded!');
 
-  // ─── 3. Seed Orders & Order Items ──────────────────────────────────────────
+  // ─── 3. Seed Reviews ────────────────────────────────────────────────────────
+  console.log('Seeding 6 reviews...');
+  const reviewData = [
+    // --- 3 Approved (tampil di homepage testimoni) ---
+    {
+      productId: 1,
+      productName: 'Gayo Arabica',
+      customerName: 'Rina Wijaya',
+      rating: 5,
+      comment: 'Kualitas biji kopi dari Sundara Coffee luar biasa! Gayo Arabica menjadi favorit pelanggan di kafe saya. Benar-benar premium!',
+      status: 'approved',
+      dateOffset: 5,
+    },
+    {
+      productId: 4,
+      productName: 'Kintamani Bali',
+      customerName: 'Bambang Setiawan',
+      rating: 5,
+      comment: 'Pengiriman cepat, biji kopi masih segar. Kintamani Bali recommended banget untuk manual brew. Aromanya sempurna!',
+      status: 'approved',
+      dateOffset: 8,
+    },
+    {
+      productId: 7,
+      productName: 'Blend Signature "Sundara"',
+      customerName: 'Dewi Lestari',
+      rating: 5,
+      comment: 'Sudah langganan sejak 2 tahun lalu. Kualitas konsisten dan pelayanan ramah. Highly recommended untuk pebisnis kopi!',
+      status: 'approved',
+      dateOffset: 12,
+    },
+    // --- 2 Pending (menunggu moderasi admin) ---
+    {
+      productId: 2,
+      productName: 'Mandheling',
+      customerName: 'Agus Hermawan',
+      rating: 4,
+      comment: 'Kopi Mandheling-nya enak, body tebal dan aftertaste panjang. Tapi kemasan bisa lebih diperbaiki lagi.',
+      status: 'pending',
+      dateOffset: 2,
+    },
+    {
+      productId: 5,
+      productName: 'Wamena',
+      customerName: 'Sari Wahyuni',
+      rating: 5,
+      comment: 'Wamena Papua ini benar-benar eksotis! Fruity dan winey-nya bikin nagih. Harga agak mahal tapi worth it.',
+      status: 'pending',
+      dateOffset: 1,
+    },
+    // --- 1 Rejected (ditolak admin) ---
+    {
+      productId: 6,
+      productName: 'Robusta Temanggung',
+      customerName: 'Budi S',
+      rating: 3,
+      comment: 'Kurang suka aja sama rasanya. Terlalu pahit buat saya.',
+      status: 'rejected',
+      dateOffset: 15,
+    },
+  ];
+
+  for (const r of reviewData) {
+    await db.insert(reviews).values({
+      productId: r.productId,
+      productName: r.productName,
+      customerName: r.customerName,
+      rating: r.rating,
+      comment: r.comment,
+      status: r.status,
+      createdAt: formatDate(r.dateOffset),
+    });
+  }
+  console.log('Reviews seeded!');
+
+  // ─── 4. Seed Orders & Order Items ──────────────────────────────────────────
   console.log('Seeding 30 orders...');
   for (let i = 0; i < orderData.length; i++) {
     const o = orderData[i];

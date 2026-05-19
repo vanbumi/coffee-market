@@ -36,6 +36,13 @@
       "when": 1779105569151,
       "tag": "0004_glorious_goblin_queen",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1779198722395,
+      "tag": "0005_volatile_bishop",
+      "breakpoints": true
     }
   ]
 }

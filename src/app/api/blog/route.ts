@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { blogPosts } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { requireAnyAuth, requireWriteAccess } from '@/lib/auth-helpers';
 
 function generateSlug(title: string): string {
   return title
@@ -10,17 +11,28 @@ function generateSlug(title: string): string {
     .replace(/(^-|-$)/g, '');
 }
 
+/**
+ * GET /api/blog — admin only (any role)
+ */
 export async function GET() {
   try {
+    await requireAnyAuth();
+
     const data = await db.select().from(blogPosts).orderBy(blogPosts.createdAt);
     return NextResponse.json({ success: true, data });
-  } catch {
+  } catch (error) {
+    if (error instanceof Response) throw error;
     return NextResponse.json({ success: false, message: 'Gagal mengambil artikel' }, { status: 500 });
   }
 }
 
+/**
+ * POST /api/blog — superuser only
+ */
 export async function POST(req: NextRequest) {
   try {
+    await requireWriteAccess();
+
     const body = await req.json();
     const slug = generateSlug(body.title);
 
@@ -38,6 +50,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, data: result[0] });
   } catch (error: unknown) {
+    if (error instanceof Response) throw error;
     if (error instanceof Error && error.message?.includes('UNIQUE')) {
       return NextResponse.json({ success: false, message: 'Slug artikel sudah ada, gunakan judul berbeda' }, { status: 400 });
     }
@@ -45,8 +58,13 @@ export async function POST(req: NextRequest) {
   }
 }
 
+/**
+ * PUT /api/blog — superuser only
+ */
 export async function PUT(req: NextRequest) {
   try {
+    await requireWriteAccess();
+
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
     if (!id) return NextResponse.json({ success: false, message: 'ID diperlukan' }, { status: 400 });
@@ -68,13 +86,19 @@ export async function PUT(req: NextRequest) {
     }).where(eq(blogPosts.id, Number(id)));
 
     return NextResponse.json({ success: true, message: 'Artikel berhasil diperbarui' });
-  } catch {
+  } catch (error) {
+    if (error instanceof Response) throw error;
     return NextResponse.json({ success: false, message: 'Gagal memperbarui artikel' }, { status: 500 });
   }
 }
 
+/**
+ * PATCH /api/blog — superuser only
+ */
 export async function PATCH(req: NextRequest) {
   try {
+    await requireWriteAccess();
+
     const body = await req.json();
     const { id, status } = body;
     if (!id) return NextResponse.json({ success: false, message: 'ID diperlukan' }, { status: 400 });
@@ -86,20 +110,27 @@ export async function PATCH(req: NextRequest) {
 
     await db.update(blogPosts).set(updateData).where(eq(blogPosts.id, Number(id)));
     return NextResponse.json({ success: true, message: `Status artikel diubah ke ${status}` });
-  } catch {
+  } catch (error) {
+    if (error instanceof Response) throw error;
     return NextResponse.json({ success: false, message: 'Gagal memperbarui artikel' }, { status: 500 });
   }
 }
 
+/**
+ * DELETE /api/blog — superuser only
+ */
 export async function DELETE(req: NextRequest) {
   try {
+    await requireWriteAccess();
+
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
     if (!id) return NextResponse.json({ success: false, message: 'ID diperlukan' }, { status: 400 });
 
     await db.delete(blogPosts).where(eq(blogPosts.id, Number(id)));
     return NextResponse.json({ success: true, message: 'Artikel berhasil dihapus' });
-  } catch {
+  } catch (error) {
+    if (error instanceof Response) throw error;
     return NextResponse.json({ success: false, message: 'Gagal menghapus artikel' }, { status: 500 });
   }
 }

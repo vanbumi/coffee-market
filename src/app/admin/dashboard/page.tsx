@@ -86,9 +86,9 @@ export default function AdminDashboardPage() {
         <div className="px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-text-primary">🏠 Dashboard</h1>
+              <h1 className="text-2xl font-bold text-text-primary">📊 Dashboard</h1>
               <p className="text-sm text-text-secondary mt-1">
-                Ringkasan bisnis kopi Sundara Coffee
+                Ringkasan bisnis kopi Revaktor
               </p>
             </div>
             <div className="flex items-center gap-3">

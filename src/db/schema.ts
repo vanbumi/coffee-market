@@ -1,6 +1,18 @@
 import { sqliteTable, text, integer, real, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { sql } from 'drizzle-orm';
 
+// ============================================================
+// Tabel Users (NextAuth Credentials)
+// ============================================================
+export const users = sqliteTable('users', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  username: text('username').notNull().unique(),
+  password: text('password').notNull(), // bcrypt hashed
+  role: text('role').notNull().default('user'), // 'superuser' | 'user'
+  name: text('name'),
+  createdAt: text('created_at').default(sql`(CURRENT_TIMESTAMP)`),
+});
+
 export const products = sqliteTable('products', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   name: text('name').notNull(),
@@ -132,6 +144,8 @@ export const storeSettings = sqliteTable('store_settings', {
 });
 
 // Export types
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
 export type OrderItem = typeof orderItems.$inferSelect;
 export type NewOrderItem = typeof orderItems.$inferInsert;
 export type FaqAiUsage = typeof faqAiUsage.$inferSelect;

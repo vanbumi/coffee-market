@@ -2,7 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { categories } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { requireWriteAccess } from '@/lib/auth-helpers';
 
+/**
+ * GET /api/categories — PUBLIC (used by store frontend filters)
+ */
 export async function GET() {
   try {
     const data = await db.select().from(categories).orderBy(categories.name);
@@ -12,8 +16,13 @@ export async function GET() {
   }
 }
 
+/**
+ * POST /api/categories — superuser only
+ */
 export async function POST(req: NextRequest) {
   try {
+    await requireWriteAccess();
+
     const body = await req.json();
     const slug = body.name
       .toLowerCase()
@@ -29,6 +38,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, data: result[0] });
   } catch (error: unknown) {
+    if (error instanceof Response) throw error;
     if (error instanceof Error && error.message?.includes('UNIQUE')) {
       return NextResponse.json({ success: false, message: 'Kategori dengan nama tersebut sudah ada' }, { status: 400 });
     }
@@ -36,15 +46,21 @@ export async function POST(req: NextRequest) {
   }
 }
 
+/**
+ * DELETE /api/categories — superuser only
+ */
 export async function DELETE(req: NextRequest) {
   try {
+    await requireWriteAccess();
+
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
     if (!id) return NextResponse.json({ success: false, message: 'ID diperlukan' }, { status: 400 });
 
     await db.delete(categories).where(eq(categories.id, Number(id)));
     return NextResponse.json({ success: true, message: 'Kategori berhasil dihapus' });
-  } catch {
+  } catch (error) {
+    if (error instanceof Response) throw error;
     return NextResponse.json({ success: false, message: 'Gagal menghapus kategori' }, { status: 500 });
   }
 }

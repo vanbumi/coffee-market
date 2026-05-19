@@ -1,34 +1,32 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { auth } from "@/auth";
+import { NextResponse } from "next/server";
 
 /**
- * Middleware untuk melindungi route /admin/*
- * Menggunakan cookie-based authentication (admin_auth)
- * Route /admin/login tidak diproteksi
+ * Middleware NextAuth v5 — proteksi route /admin/*
+ * Semua route /admin/* kecuali /admin/login wajib terautentikasi
  */
-export function middleware(request: NextRequest) {
-  // Lewati proteksi untuk halaman login
-  if (request.nextUrl.pathname === '/admin/login') {
+export default auth((req) => {
+  const { pathname } = req.nextUrl;
+
+  // Bypass halaman login
+  if (pathname === "/admin/login") {
     return NextResponse.next();
   }
 
-  // Hanya proteksi route admin
-  if (!request.nextUrl.pathname.startsWith('/admin')) {
+  // Proteksi semua route /admin/*
+  if (pathname.startsWith("/admin")) {
+    if (!req.auth) {
+      const loginUrl = new URL("/admin/login", req.url);
+      loginUrl.searchParams.set("callbackUrl", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+    // Terautentikasi — lanjutkan
     return NextResponse.next();
   }
 
-  // Cek cookie admin_auth
-  const adminAuth = request.cookies.get('admin_auth');
-
-  if (adminAuth?.value === 'true') {
-    // User terautentikasi, lanjutkan
-    return NextResponse.next();
-  }
-
-  // Tidak terautentikasi, redirect ke halaman login
-  return NextResponse.redirect(new URL('/admin/login', request.url));
-}
+  return NextResponse.next();
+});
 
 export const config = {
-  matcher: '/admin/:path*',
+  matcher: ["/admin/:path*"],
 };

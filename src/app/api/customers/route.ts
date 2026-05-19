@@ -2,13 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { customers } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { requireAnyAuth, requireWriteAccess } from '@/lib/auth-helpers';
 
 /**
- * GET /api/customers
- * Ambil semua data customer, diurutkan berdasarkan createdAt DESC
+ * GET /api/customers — admin only (any role)
  */
 export async function GET() {
   try {
+    await requireAnyAuth();
+
     const allCustomers = await db
       .select()
       .from(customers)
@@ -19,6 +21,7 @@ export async function GET() {
       data: allCustomers,
     });
   } catch (error) {
+    if (error instanceof Response) throw error;
     console.error('Gagal mengambil data customer:', error);
     return NextResponse.json(
       { success: false, message: 'Gagal mengambil data customer' },
@@ -28,11 +31,12 @@ export async function GET() {
 }
 
 /**
- * DELETE /api/customers?id=123
- * Hapus customer berdasarkan ID
+ * DELETE /api/customers?id=123 — superuser only
  */
 export async function DELETE(request: NextRequest) {
   try {
+    await requireWriteAccess();
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
@@ -51,7 +55,6 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Cek apakah customer ada
     const existing = await db
       .select()
       .from(customers)
@@ -65,7 +68,6 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Hapus customer
     await db.delete(customers).where(eq(customers.id, customerId));
 
     return NextResponse.json({
@@ -73,6 +75,7 @@ export async function DELETE(request: NextRequest) {
       message: `Customer "${existing[0].name}" berhasil dihapus`,
     });
   } catch (error) {
+    if (error instanceof Response) throw error;
     console.error('Gagal menghapus customer:', error);
     return NextResponse.json(
       { success: false, message: 'Gagal menghapus customer' },

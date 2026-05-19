@@ -36,7 +36,7 @@ const defaultOperatingHours = {
 };
 
 const initialSettings: StoreSettings = {
-  storeName: 'Sundara Coffee',
+  storeName: 'Revaktor',
   slogan: 'Exotic Aesthetic Coffee for the World',
   npwp: '',
   address: '',
@@ -134,7 +134,7 @@ export default function AdminSettingsPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-text-primary">⚙️ Pengaturan Toko</h1>
-              <p className="text-sm text-text-secondary mt-1">Konfigurasi informasi bisnis Sundara Coffee</p>
+              <p className="text-sm text-text-secondary mt-1">Konfigurasi informasi bisnis Revaktor</p>
             </div>
             <button
               onClick={handleSave}

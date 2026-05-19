@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useStoreSettings } from '@/hooks/useStoreSettings';
 
 export default function Footer() {
@@ -20,9 +21,9 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-4">
-              <img src="/logo.PNG" alt={settings.storeName || 'Sundara Coffee'} className="h-10 w-auto" />
+              <Image src="/logo.PNG" alt={settings.storeName || 'Revaktor'} width={120} height={40} className="h-10 w-auto" />
               <div>
-                <span className="font-bold text-xl text-gold tracking-wide">{settings.storeName || 'Sundara Coffee'}</span>
+                <span className="font-bold text-xl text-gold tracking-wide">{settings.storeName || 'Revaktor'}</span>
                 <p className="text-[10px] text-text-secondary -mt-1 tracking-[0.2em] uppercase">{settings.slogan || 'Premium Roastery'}</p>
               </div>
             </div>
@@ -41,7 +42,7 @@ export default function Footer() {
                 <svg className="h-4 w-4 mr-3 text-gold group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                {settings.email || 'hello@sundaracoffee.com'}
+                {settings.email || 'hello@revaktor.com'}
               </p>
               <p className="flex items-center text-sm group">
                 <svg className="h-4 w-4 mr-3 text-gold group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -163,7 +164,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-text-secondary text-sm">
-            &copy; {new Date().getFullYear()} {settings.storeName || 'Sundara Coffee'} by revaktor.com. All rights reserved.
+            &copy; {new Date().getFullYear()} {settings.storeName || 'Revaktor'} by revaktor.com. All rights reserved.
           </p>
           <p className="text-text-secondary text-xs">
             Crafted with ☕ and ❤️

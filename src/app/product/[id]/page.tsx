@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,6 +9,36 @@ import { useCart } from '@/context/CartContext';
 import Toast from '@/components/Toast';
 import ProductCard from '@/components/ProductCard';
 import { useAllProducts } from '@/hooks/useAllProducts';
+import type { Product } from '@/types/product';
+
+function StarPicker({
+  rating,
+  onChange,
+  disabled,
+}: {
+  rating: number;
+  onChange: (r: number) => void;
+  disabled?: boolean;
+}) {
+  return (
+    <div className="flex gap-1">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <button
+          key={star}
+          type="button"
+          disabled={disabled}
+          onClick={() => onChange(star)}
+          className={`text-2xl transition-colors ${
+            disabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer hover:scale-110'
+          } ${star <= rating ? 'text-gold' : 'text-text-tertiary/30'}`}
+          title={`${star} bintang`}
+        >
+          ★
+        </button>
+      ))}
+    </div>
+  );
+}
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -16,15 +46,42 @@ export default function ProductDetailPage() {
   const { allProducts } = useAllProducts();
   const product = allProducts.find((p) => p.id === params.id);
 
-  // Get 3 random recommended products
-  const recommended = allProducts
-    .filter((p) => p.id !== product?.id)
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 3);
+  // Compute recommendations client-side only (useEffect) to avoid SSR
+  // hydration mismatch from Math.random producing different results
+  // on server vs client.
+  const [recommended, setRecommended] = useState<Product[]>([]);
+
+  useEffect(() => {
+    if (allProducts.length > 0) {
+      setRecommended(
+        allProducts
+          .filter((p) => p.id !== product?.id)
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3),
+      );
+    }
+  }, [allProducts, product?.id]);
+
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
+
+  // Cart toast
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState<'success' | 'error'>('success');
+
+  // Review form
+  const [reviewName, setReviewName] = useState('');
+  const [reviewRating, setReviewRating] = useState(0);
+  const [reviewComment, setReviewComment] = useState('');
+  const [reviewSubmitting, setReviewSubmitting] = useState(false);
+  const [reviewDone, setReviewDone] = useState(false);
+
+  const showToast = (message: string, type: 'success' | 'error') => {
+    setToastMessage(message);
+    setToastType(type);
+    setToastVisible(true);
+  };
 
   if (!product) {
     return (
@@ -48,8 +105,7 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     addItem(product, quantity);
-    setToastMessage(`${product.name} ditambahkan ke keranjang!`);
-    setToastVisible(true);
+    showToast(`${product.name} ditambahkan ke keranjang!`, 'success');
   };
 
   const incrementQty = () => {
@@ -60,12 +116,46 @@ export default function ProductDetailPage() {
     if (quantity > 1) setQuantity((q) => q - 1);
   };
 
+  const handleSubmitReview = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!reviewName.trim() || reviewRating === 0 || !reviewComment.trim()) return;
+
+    setReviewSubmitting(true);
+    try {
+      const res = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: reviewName.trim(),
+          rating: reviewRating,
+          comment: reviewComment.trim(),
+          productName: product.name,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setReviewDone(true);
+        setReviewName('');
+        setReviewRating(0);
+        setReviewComment('');
+        showToast('Review berhasil dikirim! Menunggu moderasi admin.', 'success');
+      } else {
+        showToast(data.message || 'Gagal mengirim review.', 'error');
+      }
+    } catch {
+      showToast('Gagal mengirim review. Silakan coba lagi.', 'error');
+    } finally {
+      setReviewSubmitting(false);
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Toast */}
       <Toast
         message={toastMessage}
-        type="success"
+        type={toastType}
         isVisible={toastVisible}
         onClose={() => setToastVisible(false)}
       />
@@ -253,17 +343,116 @@ export default function ProductDetailPage() {
         </div>
       </div>
 
-      {/* Recommended Products */}
-      <section className="border-t border-border pt-12">
-        <h2 className="text-2xl font-bold text-text-primary mb-8">
-          Produk Rekomendasi
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-          {recommended.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
+      {/* ========== REVIEW FORM ========== */}
+      <section className="border-t border-border pt-12 mb-12">
+        <h2 className="text-2xl font-bold text-text-primary mb-2">Beri Review</h2>
+        <p className="text-text-secondary mb-8 text-sm">
+          Bagikan pengalaman Anda dengan produk ini. Review akan ditinjau oleh admin sebelum ditampilkan.
+        </p>
+
+        {reviewDone ? (
+          <div className="bg-gold/10 border border-gold/30 rounded-xl p-6 text-center max-w-lg mx-auto">
+            <div className="text-4xl mb-3">✅</div>
+            <h3 className="text-lg font-semibold text-gold mb-1">Review Terkirim!</h3>
+            <p className="text-text-secondary text-sm">
+              Terima kasih! Review Anda sedang menunggu moderasi admin.
+            </p>
+            <button
+              onClick={() => setReviewDone(false)}
+              className="mt-4 px-6 py-2 bg-gold hover:bg-gold-light text-black rounded-xl font-semibold text-sm transition-all duration-300"
+            >
+              Tulis Review Lain
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmitReview} className="max-w-lg bg-surface-alt border border-border rounded-xl p-6">
+            {/* Name */}
+            <div className="mb-4">
+              <label htmlFor="review-name" className="block text-sm font-medium text-text-primary mb-1.5">
+                Nama <span className="text-red-400">*</span>
+              </label>
+              <input
+                id="review-name"
+                type="text"
+                required
+                maxLength={100}
+                value={reviewName}
+                onChange={(e) => setReviewName(e.target.value)}
+                placeholder="Nama Anda"
+                className="w-full px-4 py-2.5 bg-surface-card border border-border rounded-xl text-text-primary placeholder-text-secondary focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300 text-sm"
+              />
+            </div>
+
+            {/* Rating */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-text-primary mb-1.5">
+                Rating <span className="text-red-400">*</span>
+              </label>
+              <StarPicker rating={reviewRating} onChange={setReviewRating} disabled={reviewSubmitting} />
+              {reviewRating > 0 && (
+                <p className="text-xs text-text-secondary mt-1">
+                  {reviewRating === 1 && 'Sangat Buruk'}
+                  {reviewRating === 2 && 'Buruk'}
+                  {reviewRating === 3 && 'Cukup'}
+                  {reviewRating === 4 && 'Bagus'}
+                  {reviewRating === 5 && 'Sangat Bagus'}
+                </p>
+              )}
+            </div>
+
+            {/* Comment */}
+            <div className="mb-4">
+              <label htmlFor="review-comment" className="block text-sm font-medium text-text-primary mb-1.5">
+                Komentar <span className="text-red-400">*</span>
+              </label>
+              <textarea
+                id="review-comment"
+                required
+                rows={4}
+                maxLength={500}
+                value={reviewComment}
+                onChange={(e) => setReviewComment(e.target.value)}
+                placeholder="Ceritakan pengalaman Anda dengan produk ini..."
+                className="w-full px-4 py-2.5 bg-surface-card border border-border rounded-xl text-text-primary placeholder-text-secondary focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/30 transition-all duration-300 text-sm resize-none"
+              />
+              <p className="text-xs text-text-secondary mt-1 text-right">{reviewComment.length}/500</p>
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={reviewSubmitting || !reviewName.trim() || reviewRating === 0 || !reviewComment.trim()}
+              className="w-full px-6 py-3 bg-gold hover:bg-gold-light text-black rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-gold/10 hover:shadow-gold/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gold disabled:hover:shadow-gold/10 flex items-center justify-center"
+            >
+              {reviewSubmitting ? (
+                <>
+                  <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Mengirim...
+                </>
+              ) : (
+                'Kirim Review'
+              )}
+            </button>
+          </form>
+        )}
       </section>
+
+      {/* Recommended Products */}
+      {recommended.length > 0 && (
+        <section className="border-t border-border pt-12">
+          <h2 className="text-2xl font-bold text-text-primary mb-8">
+            Produk Rekomendasi
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {recommended.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

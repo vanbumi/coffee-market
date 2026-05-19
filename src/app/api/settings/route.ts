@@ -2,15 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { storeSettings } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { requireWriteAccess } from '@/lib/auth-helpers';
 
 /**
- * GET /api/settings
- * Ambil semua pengaturan sebagai object key-value
+ * GET /api/settings — public (no auth required)
  */
 export async function GET() {
   try {
     const rows = await db.select().from(storeSettings);
-    // Convert to single object
     const data: Record<string, unknown> = {};
     rows.forEach((row) => {
       try {
@@ -21,37 +20,34 @@ export async function GET() {
     });
     return NextResponse.json({ success: true, data });
   } catch (err) {
+    if (err instanceof Response) throw err;
     console.error('[settings GET] Error:', err);
     return NextResponse.json({ success: false, message: 'Gagal mengambil pengaturan' }, { status: 500 });
   }
 }
 
 /**
- * POST /api/settings
- * Simpan semua pengaturan (upsert per key)
+ * POST /api/settings — superuser only
  */
 export async function POST(req: NextRequest) {
   try {
+    await requireWriteAccess();
+
     const body = await req.json();
 
-    // Metadata keys that should never be stored as settings
     const metaKeys = new Set(['id', 'updatedAt', 'updated_at', 'createdAt', 'created_at']);
 
-    // Iterate over all keys in body, skipping metadata
     for (const [key, value] of Object.entries(body)) {
       if (metaKeys.has(key)) continue;
       const stringValue = typeof value === 'string' ? value : JSON.stringify(value);
 
-      // Check if key exists
       const existing = await db.select().from(storeSettings).where(eq(storeSettings.key, key)).limit(1);
 
       if (existing.length > 0) {
-        // Update
         await db.update(storeSettings)
           .set({ value: stringValue, updatedAt: new Date().toISOString() })
           .where(eq(storeSettings.key, key));
       } else {
-        // Insert
         await db.insert(storeSettings).values({
           key,
           value: stringValue,
@@ -61,6 +57,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, message: 'Pengaturan berhasil disimpan' });
   } catch (err) {
+    if (err instanceof Response) throw err;
     console.error('[settings POST] Error:', err);
     return NextResponse.json({ success: false, message: 'Gagal menyimpan pengaturan' }, { status: 500 });
   }

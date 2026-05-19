@@ -23,14 +23,14 @@ export interface StoreSettingsData {
 }
 
 const defaultSettings: StoreSettingsData = {
-  storeName: 'Sundara Coffee',
+  storeName: 'Revaktor',
   slogan: 'Exotic Aesthetic Coffee for the World',
   heroTitle: 'Premium Coffee Roastery',
   heroSubtitle: 'Nikmati kopi terbaik dari seluruh nusantara',
   heroCta: 'Jelajahi Katalog',
   address: 'Jl. Kopi Nikmat No. 123, Bandung',
   phone: '+62 812-3456-7890',
-  email: 'hello@sundaracoffee.com',
+  email: 'hello@revaktor.com',
   flatShippingCost: '15000',
   freeShippingMin: '500000',
 };

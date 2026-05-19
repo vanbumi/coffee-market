@@ -3,11 +3,13 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { useSession, signOut } from 'next-auth/react';
 
 /**
  * Komponen Sidebar untuk navigasi admin panel.
  * Menampilkan menu-menu admin dengan active state berdasarkan pathname.
- * Collapsible di mobile view.
+ * Collapsible di mobile view. Role-based menu rendering.
  */
 
 interface NavItem {
@@ -15,6 +17,7 @@ interface NavItem {
   href: string;
   icon: React.ReactNode;
   badge?: number | null;
+  requiredRole?: 'superuser'; // hanya tampil untuk superuser
 }
 
 interface NavSection {
@@ -24,9 +27,13 @@ interface NavSection {
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const { data: session } = useSession();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [pendingCount, setPendingCount] = useState<number | null>(null);
+
+  const role = (session?.user as { role?: string })?.role;
+  const userName = session?.user?.name || 'Admin';
 
   // Fetch pending orders count for badge
   useEffect(() => {
@@ -52,7 +59,7 @@ export default function Sidebar() {
     setIsMobileOpen(false);
   }, [pathname]);
 
-  const navSections: NavSection[] = [
+  const allSections: NavSection[] = [
     {
       title: 'Utama',
       items: [
@@ -87,6 +94,7 @@ export default function Sidebar() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
             </svg>
           ),
+          requiredRole: 'superuser',
         },
         {
           label: 'Kategori & Kupon',
@@ -96,6 +104,7 @@ export default function Sidebar() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
             </svg>
           ),
+          requiredRole: 'superuser',
         },
       ],
     },
@@ -163,6 +172,7 @@ export default function Sidebar() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
           ),
+          requiredRole: 'superuser',
         },
         {
           label: 'Laporan Detail',
@@ -172,10 +182,22 @@ export default function Sidebar() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           ),
+          requiredRole: 'superuser',
         },
       ],
     },
   ];
+
+  // Filter sections based on user role
+  const navSections: NavSection[] = allSections
+    .map((section) => ({
+      ...section,
+      items: section.items.filter((item) => {
+        if (!item.requiredRole) return true;
+        return role === item.requiredRole;
+      }),
+    }))
+    .filter((section) => section.items.length > 0);
 
   const isActive = (href: string) => {
     if (href === '/admin/dashboard') {
@@ -189,21 +211,37 @@ export default function Sidebar() {
       {/* Logo & Brand */}
       <div className="px-5 py-5 border-b border-border">
         <Link href="/admin/dashboard" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gold/30 to-gold/5 border border-gold/30 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-            <span className="text-xl">☕</span>
-          </div>
+          <Image
+            src="/revaktor-logo.png"
+            alt="Revaktor"
+            width={120}
+            height={40}
+            className="h-10 w-auto flex-shrink-0 group-hover:scale-105 transition-transform"
+          />
           {!isCollapsed && (
-            <div className="flex flex-col min-w-0">
-              <span className="font-bold text-text-primary text-sm leading-tight">
-                Sundara Coffee
-              </span>
-              <span className="text-[10px] text-text-tertiary tracking-widest uppercase">
-                Admin Panel
-              </span>
-            </div>
+            <span className="font-bold text-text-primary text-xl leading-none">
+              Revaktor
+            </span>
           )}
         </Link>
       </div>
+
+      {/* User Info */}
+      {!isCollapsed && (
+        <div className="px-5 py-3 border-b border-border">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center text-xs text-gold font-bold">
+              {userName.charAt(0).toUpperCase()}
+            </div>
+            <div className="flex flex-col min-w-0">
+              <span className="text-xs font-medium text-text-primary truncate">{userName}</span>
+              <span className={`text-[10px] font-semibold uppercase ${role === 'superuser' ? 'text-gold' : 'text-blue-400'}`}>
+                {role === 'superuser' ? 'Superuser' : 'View Only'}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Navigation */}
       <nav className="flex-1 px-3 py-4 overflow-y-auto space-y-5">
@@ -256,17 +294,15 @@ export default function Sidebar() {
           </svg>
           {!isCollapsed && <span>Kembali ke Toko</span>}
         </Link>
-        <form action="/api/admin/logout" method="POST">
-          <button
-            type="submit"
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-red-400/70 hover:text-red-400 hover:bg-red-500/10 border border-transparent transition-all group"
-          >
-            <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            {!isCollapsed && <span>Logout</span>}
-          </button>
-        </form>
+        <button
+          onClick={() => signOut({ callbackUrl: '/admin/login' })}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-red-400/70 hover:text-red-400 hover:bg-red-500/10 border border-transparent transition-all group"
+        >
+          <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          {!isCollapsed && <span>Logout</span>}
+        </button>
       </div>
     </div>
   );

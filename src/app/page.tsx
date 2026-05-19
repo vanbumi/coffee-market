@@ -1,11 +1,30 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import CategoryCard from '@/components/CategoryCard';
 import StatCard from '@/components/StatCard';
 import { useAllProducts } from '@/hooks/useAllProducts';
 import { useStoreSettings } from '@/hooks/useStoreSettings';
+
+interface Testimonial {
+  name: string;
+  text: string;
+  rating: number;
+  avatar: string;
+  productName?: string;
+}
+
+interface ReviewApiEntry {
+  id: number;
+  customerName: string;
+  comment: string;
+  rating: number;
+  productName: string | null;
+  status: string;
+  createdAt: string | null;
+}
 
 const categories = [
   {
@@ -35,33 +54,65 @@ const stats = [
   { value: '500+', label: 'Pelanggan Setia', icon: <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg> },
 ];
 
+/** Fallback testimonials used when API is unavailable (no data yet) */
+const fallbackTestimonials: Testimonial[] = [
+  {
+    name: 'Rina Wijaya',
+    text: 'Kualitas biji kopi dari Sundara Coffee luar biasa! Gayo Arabica menjadi favorit pelanggan di kafe saya. Benar-benar premium!',
+    rating: 5,
+    avatar: 'RW',
+  },
+  {
+    name: 'Bambang Setiawan',
+    text: 'Pengiriman cepat, biji kopi masih segar. Kintamani Bali recommended banget untuk manual brew. Aromanya sempurna!',
+    rating: 5,
+    avatar: 'BS',
+  },
+  {
+    name: 'Dewi Lestari',
+    text: 'Sudah langganan sejak 2 tahun lalu. Kualitas konsisten dan pelayanan ramah. Highly recommended untuk pebisnis kopi!',
+    rating: 5,
+    avatar: 'DL',
+  },
+];
+
+function getAvatarInitials(name: string): string {
+  return name
+    .split(' ')
+    .map((n) => n.charAt(0))
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+}
+
 export default function HomePage() {
   const { settings } = useStoreSettings();
   const { allProducts } = useAllProducts();
   const featuredProducts = allProducts.filter((p) => p.featured).slice(0, 4);
-  const testimonials = [
-    {
-      name: 'Rina Wijaya',
-      role: 'Barista, Jakarta',
-      text: 'Kualitas biji kopi dari Sundara Coffee luar biasa! Gayo Arabica menjadi favorit pelanggan di kafe saya. Benar-benar premium!',
-      rating: 5,
-      avatar: 'RW',
-    },
-    {
-      name: 'Bambang Setiawan',
-      role: 'Home Brewer, Bandung',
-      text: 'Pengiriman cepat, biji kopi masih segar. Toraja-nya recommended banget untuk manual brew. Aromanya sempurna!',
-      rating: 5,
-      avatar: 'BS',
-    },
-    {
-      name: 'Dewi Lestari',
-      role: 'Coffee Shop Owner, Surabaya',
-      text: 'Sudah langganan sejak 2 tahun lalu. Kualitas konsisten dan pelayanan ramah. Highly recommended untuk pebisnis kopi!',
-      rating: 5,
-      avatar: 'DL',
-    },
-  ];
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(fallbackTestimonials);
+
+  useEffect(() => {
+    async function fetchTestimonials() {
+      try {
+        const res = await fetch('/api/reviews/public');
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          const mapped: Testimonial[] = json.data.map((r: ReviewApiEntry) => ({
+            name: r.customerName,
+            text: r.comment,
+            rating: r.rating,
+            avatar: getAvatarInitials(r.customerName),
+            productName: r.productName || undefined,
+          }));
+          setTestimonials(mapped);
+        }
+        // If API returns empty array, keep fallback
+      } catch {
+        // Keep fallback on error
+      }
+    }
+    fetchTestimonials();
+  }, []);
 
   return (
     <div>
@@ -260,7 +311,7 @@ export default function HomePage() {
             {testimonials.map((t, i) => (
               <div
                 key={i}
-                className="bg-surface-card rounded-2xl p-8 border border-border hover:border-gold/20 transition-all duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.08)] animate-fade-in-up"
+                className="relative bg-surface-card rounded-2xl p-8 border border-border hover:border-gold/20 transition-all duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.08)] animate-fade-in-up"
                 style={{ animationDelay: `${i * 150}ms`, animationFillMode: 'both' }}
               >
                 {/* Gold left border accent */}
@@ -285,7 +336,9 @@ export default function HomePage() {
                   </div>
                   <div>
                     <p className="font-semibold text-text-primary text-sm">{t.name}</p>
-                    <p className="text-xs text-text-secondary">{t.role}</p>
+                    {t.productName && (
+                      <p className="text-xs text-gold mt-0.5">{t.productName}</p>
+                    )}
                   </div>
                 </div>
               </div>

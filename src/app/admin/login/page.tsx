@@ -3,50 +3,38 @@
 import { useState, FormEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
+import { signIn } from 'next-auth/react';
+import Image from 'next/image';
+import { useStoreSettings } from '@/hooks/useStoreSettings';
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { settings } = useStoreSettings();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  // Ambil error dari query parameter (redirect dari API jika login gagal)
-  const hasError = searchParams.get('error') === '1';
+  const callbackUrl = searchParams.get('callbackUrl') || '/admin/dashboard';
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMsg('');
 
-    try {
-      const res = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
+    const result = await signIn('credentials', {
+      username,
+      password,
+      redirect: false,
+    });
 
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        // Login berhasil, redirect ke dashboard
-        router.push('/admin/dashboard');
-      } else {
-        // Tampilkan error di form
-        setIsLoading(false);
-        // Trigger re-render untuk menampilkan error
-        const errorInput = document.getElementById('login-error');
-        if (errorInput) {
-          errorInput.textContent = data.message || 'Username atau password salah';
-          errorInput.classList.remove('hidden');
-        }
-      }
-    } catch {
+    if (result?.ok) {
+      router.push(callbackUrl);
+      router.refresh();
+    } else {
       setIsLoading(false);
-      const errorInput = document.getElementById('login-error');
-      if (errorInput) {
-        errorInput.textContent = 'Terjadi kesalahan. Silakan coba lagi.';
-        errorInput.classList.remove('hidden');
-      }
+      setErrorMsg(result?.error ? 'Username atau password salah' : 'Terjadi kesalahan. Silakan coba lagi.');
     }
   };
 
@@ -64,14 +52,18 @@ function LoginForm() {
       <div className="w-full max-w-md relative z-10">
         {/* Logo & Title */}
         <div className="text-center mb-8 animate-fade-in-down">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-gold/20 to-gold/5 border border-gold/30 mb-5">
-            <span className="text-4xl">☕</span>
-          </div>
+          <Image
+            src="/revaktor-logo.png"
+            alt="Revaktor"
+            width={200}
+            height={64}
+            className="h-16 w-auto mx-auto mb-5"
+          />
           <h1 className="text-3xl font-bold text-text-primary">
             Admin Panel
           </h1>
           <p className="text-gold mt-2 font-medium text-sm tracking-wide">
-            SAUDARA COFFEE — PREMIUM ROASTERY
+            {settings.storeName ? `${settings.storeName} — ${settings.slogan || ''}` : 'Revaktor'}
           </p>
         </div>
 
@@ -79,20 +71,14 @@ function LoginForm() {
         <div className="bg-surface-alt rounded-2xl border border-border p-8 shadow-2xl shadow-black/50 animate-fade-in-up" style={{ animationDelay: '150ms', animationFillMode: 'both' }}>
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Error Message */}
-            {(hasError) && (
+            {errorMsg && (
               <div className="bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
                 <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                Username atau password salah
+                {errorMsg}
               </div>
             )}
-            <div id="login-error" className="hidden bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
-              <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span></span>
-            </div>
 
             {/* Username Field */}
             <div>
@@ -167,16 +153,6 @@ function LoginForm() {
               )}
             </button>
           </form>
-
-          {/* Hint Credentials */}
-          <div className="mt-6 pt-5 border-t border-border">
-            <p className="text-xs text-text-tertiary text-center">
-              Gunakan username:{' '}
-              <span className="font-mono font-semibold text-gold bg-gold/10 px-2 py-0.5 rounded">admin</span>
-              {' | '}password:{' '}
-              <span className="font-mono font-semibold text-gold bg-gold/10 px-2 py-0.5 rounded">coffeemarket123</span>
-            </p>
-          </div>
         </div>
 
         {/* Back to Store Link */}
@@ -208,9 +184,13 @@ function LoadingFallback() {
   return (
     <div className="min-h-screen bg-surface flex items-center justify-center">
       <div className="text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-gold/20 to-gold/5 border border-gold/30 mb-4">
-          <span className="text-3xl">☕</span>
-        </div>
+        <Image
+          src="/revaktor-logo.png"
+          alt="Revaktor"
+          width={160}
+          height={48}
+          className="h-12 w-auto mx-auto mb-4"
+        />
         <div className="text-gold text-lg animate-pulse">Loading...</div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useState, useEffect } from 'react';
@@ -38,10 +39,10 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <img src="/logo.PNG" alt={settings.storeName || 'Sundara Coffee'} className="h-10 w-auto group-hover:scale-110 transition-transform duration-300" />
+            <Image src="/logo.PNG" alt={settings.storeName || 'Revaktor'} width={120} height={40} className="h-10 w-auto group-hover:scale-110 transition-transform duration-300" />
             <div className="flex flex-col">
               <span className="font-bold text-xl text-gold tracking-wide">
-                {settings.storeName || 'Sundara Coffee'}
+                {settings.storeName || 'Revaktor'}
               </span>
               <span className="text-[10px] text-text-secondary -mt-1 tracking-[0.2em] uppercase">
                 {settings.slogan || 'Premium Roastery'}
